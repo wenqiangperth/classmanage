@@ -1,7 +1,8 @@
 package com.example.common.entity;
 
 import lombok.Data;
-import java.util.Date;
+
+import java.sql.Date;
 
 /**
  * @ClassName Seminar
@@ -22,5 +23,15 @@ public class Seminar {
     private int seminarSerial;
     private Date enrollStartTime;
     private Date enrollEndTime;
+
+    public boolean getIsVisible(){
+        return isVisible;
+    }
+    public Date getEnrollStartTime(){
+        return enrollStartTime;
+    }
+    public Date getEnrollEndTime(){
+        return enrollEndTime;
+    }
 
 }

@@ -8,4 +8,5 @@ package com.example.user.service;
  * @Version 1.0
  **/
 public class RequestService {
+
 }
