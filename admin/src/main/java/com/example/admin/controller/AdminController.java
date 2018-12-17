@@ -21,6 +21,11 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    /**
+     *
+     * @param administrator
+     * @return
+     */
     @PostMapping(value = "/login")
     public String administratorLogin(@RequestBody Administrator administrator){
         System.out.println("jinru");

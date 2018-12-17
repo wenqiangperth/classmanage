@@ -6,6 +6,14 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+
+/**
+ * @ClassName AdministratorMapper
+ * @Description 处理管理员对象与数据库的交互
+ * @author perth
+ * @Date 2018/12/15 21:50
+ * @Version 1.0
+ **/
 @Mapper
 @Repository
 public interface AdministratorMapper {
