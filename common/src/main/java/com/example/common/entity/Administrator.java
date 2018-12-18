@@ -2,6 +2,10 @@ package com.example.common.entity;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @ClassName AdministratorDao
  * @Description 这是一个管理员实体类
@@ -14,4 +18,10 @@ public class Administrator {
     private Long id;
     private String account;
     private String password;
+    private List<String> roles;
+
+    public List<String> getRoles() {
+        this.roles=new ArrayList<>(Arrays.asList("ROLE_ADMIN"));
+        return roles;
+    }
 }
