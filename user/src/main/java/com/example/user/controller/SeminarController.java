@@ -22,6 +22,11 @@ public class SeminarController {
     @Autowired
     private SeminarService seminarService;
 
+    /**
+     * 创建讨论课
+     * @param seminar
+     * @return讨论课ID
+     */
     @PostMapping(value = "")
     public long createSeminar(@RequestBody Seminar seminar){
         return seminarService.createSeminar(seminar);
