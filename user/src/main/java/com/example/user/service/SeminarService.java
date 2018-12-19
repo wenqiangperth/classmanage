@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SeminarService {
     @Autowired
-    SeminarDao seminarDao;
+    private SeminarDao seminarDao;
 
     public long createSeminar(Seminar seminar){
         return seminarDao.insertSeminar(seminar.getCourseId(),seminar.getRoundId(),seminar.getSeminarName(),seminar.getIntroduction(),seminar.getMaxTeam(),seminar.getIsVisible(),seminar.getSeminarSerial(),seminar.getEnrollStartTime(),seminar.getEnrollEndTime());

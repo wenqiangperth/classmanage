@@ -2,6 +2,7 @@ package com.example.user.service;
 
 import com.example.common.entity.Course;
 import com.example.common.dao.CourseDao;
+import com.example.common.entity.Round;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,11 @@ public class CourseService {
     public List<Course> getAllCourse()
     {
         return courseDao.getAllCourse();
+    }
+
+    public List<Round> getAllRoundByCourseId(long courseId)
+    {
+        return courseDao.getAllRoundByCourseId(courseId);
     }
 
 

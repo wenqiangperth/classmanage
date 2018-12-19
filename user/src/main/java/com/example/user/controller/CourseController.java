@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.example.common.entity.Course;
+import com.example.common.entity.Round;
 import com.example.user.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,12 @@ public class CourseController {
     public long deleteCourseById(@PathVariable(value="courseId")long courseId)
     {
         return courseService.deleteCourseById(courseId);
+    }
+
+    @GetMapping(value="course/{courseId}/round")
+    public List<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId)
+    {
+        return courseService.getAllRoundByCourseId(courseId);
     }
 
 }
