@@ -2,6 +2,8 @@ package com.example.user.controller;
 
 import com.example.common.entity.Course;
 import com.example.common.entity.Round;
+import com.example.common.entity.TeamShareVO;
+import com.example.common.entity.SeminarShareVO;
 import com.example.user.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,11 +78,18 @@ public class CourseController {
      * @return
      */
     @GetMapping(value="course/{courseId}/round")
-    public ArrayList<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId)
-    {
-        return courseService.getAllRoundByCourseId(courseId);
+    public ArrayList<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId) {
+     return courseService.getAllRoundByCourseId(courseId);
     }
 
+    @GetMapping(value="course/{courseId}/teamshare")
+    public ArrayList<TeamShareVO> getAllTeamShare(@PathVariable(value="courseId") long courseId){
+         return courseService.getAllTeamShare(courseId);
+    }
 
+     @GetMapping(value="course/{courseId}/seminarshare")
+     public ArrayList<SeminarShareVO> getAllSeminarShare(@PathVariable(value="courseId") long courseId){
+          return courseService.getAllSeminarShare(courseId);
+     }
 
 }
