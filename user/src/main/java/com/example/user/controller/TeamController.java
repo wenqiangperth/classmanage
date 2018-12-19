@@ -41,8 +41,35 @@ public class TeamController {
         return teamService.getTeamById(teamId);
     }
 
+    /**
+     * 根据ID删除小组
+     * @param teamId
+     * @return
+     */
     @DeleteMapping(value = "/{teamId}")
-    public Long deleteTeam(@PathVariable("teamId")Long teamId){
+    public Long deleteTeamById(@PathVariable("teamId")Long teamId){
         return teamService.deleteTeamById(teamId);
+    }
+
+    /**
+     * 增加组员
+     * @param teamId
+     * @param studentId
+     * @return
+     */
+    @PutMapping(value = "/{teamId}/add")
+    public Long addTeamMemberById(@PathVariable("teamId")Long teamId ,@RequestBody Long studentId){
+        return teamService.addTeamMemberById(teamId,studentId);
+    }
+
+    /**
+     * 移除组员
+     * @param teamId
+     * @param studentId
+     * @return
+     */
+    @PutMapping(value = "/{teamId}/remove")
+    public Long removeTeamMember(@PathVariable("teamId")Long teamId,@RequestBody Long studentId){
+        return teamService.removeTeamMember(teamId,studentId);
     }
 }

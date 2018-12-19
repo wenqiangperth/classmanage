@@ -10,7 +10,7 @@ import java.util.ArrayList;
 /**
  * @author perth
  * @ClassName TeamService
- * @Description TODO
+ * @Description 处理Team的事务
  * @Date 2018/12/17 19:08
  * @Version 1.0
  **/
@@ -44,7 +44,26 @@ public class TeamService {
         return teamDao.getTeamById(teamId);
     }
 
+    /**
+     * 根据ID删除小组
+     * @param id
+     * @return
+     */
     public Long deleteTeamById(Long id){
         return teamDao.deleteTeamById(id);
+    }
+
+    /**
+     * 增加组员
+     * @param teamId
+     * @param studentId
+     * @return
+     */
+    public Long addTeamMemberById(Long teamId,Long studentId){
+        return teamDao.addTeamMemberById(teamId,studentId);
+    }
+
+    public Long removeTeamMember(Long teamId,Long studentId){
+        return teamDao.removeTeamMember(teamId,studentId);
     }
 }
