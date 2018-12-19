@@ -1,0 +1,35 @@
+package com.example.admin.config;
+
+import com.example.common.entity.Administrator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
+import java.util.List;
+import java.util.stream.Collectors;
+/**
+ * @author perth
+ * @ClassName JwtUser
+ * @Description 生成JwtUser
+ * @Date 2018/12/18 22:17
+ * @Version 1.0
+ **/
+public final class JwtUserFactory {
+
+    private JwtUserFactory() {
+    }
+
+    public static JwtUser create(Administrator user) {
+        return new JwtUser(
+                user.getId(),
+                user.getAccount(),
+                user.getPassword(),
+                mapToGrantedAuthorities(user.getRoles())
+        );
+    }
+
+    private static List<GrantedAuthority> mapToGrantedAuthorities(List<String> authorities) {
+        return authorities.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
+}
