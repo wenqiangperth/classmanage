@@ -15,7 +15,11 @@ public class TeamShareVO {
     private long id;
     private long mainCourseId;
     private long mainCourseTeacherId;
+    private String mainCourseName;
+    private String mainCourseTeacherName;
     private long subCourseId;
     private long subCourseTeacherId;
+    private String subCourseName;
+    private String subCourseTeacherName;
     private boolean status;
 }

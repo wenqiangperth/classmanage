@@ -68,6 +68,7 @@ public class CourseDao {
 
     public ArrayList<TeamShareVO> getAllTeamShare(long courseId)
     {
+
         return courseMapper.getAllTeamShare(courseId);
     }
 
