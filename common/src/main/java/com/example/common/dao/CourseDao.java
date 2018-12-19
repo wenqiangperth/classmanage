@@ -51,5 +51,6 @@ public class CourseDao {
     public List<Klass> getAllClassByCourseId(long courseId)
     {
         return courseMapper.getAllClassByCourseId(courseId);
+
     }
 }
