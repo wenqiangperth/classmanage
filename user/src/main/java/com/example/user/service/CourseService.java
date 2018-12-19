@@ -1,9 +1,7 @@
 package com.example.user.service;
 
-import com.example.common.entity.Course;
+import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
-import com.example.common.entity.Round;
-import com.example.common.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,6 +88,16 @@ public class CourseService {
     public ArrayList<Student> getAllNoTeamByCourseId(long courseId)
     {
         return courseDao.getAllNoTeamByCourseId(courseId);
+    }
+
+    public ArrayList<TeamShareVO> getAllTeamShare(long courseId)
+    {
+        return courseDao.getAllTeamShare(courseId);
+    }
+
+    public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
+    {
+        return courseDao.getAllSeminarShare(courseId);
     }
 
 

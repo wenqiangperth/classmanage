@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.ArrayList;
 import com.example.common.entity.Klass;
 import com.example.common.entity.Round;
+import com.example.common.entity.TeamShareVO;
+import com.example.common.entity.SeminarShareVO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +23,20 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CourseMapper {
 
+    /**
+     * 添加课程
+     * @param teacherId
+     * @param courseName
+     * @param introduction
+     * @param presentationPercentage
+     * @param questionPercentage
+     * @param reportPercentage
+     * @param teamStartTime
+     * @param teamEndTime
+     * @param teamMainCourseId
+     * @param seminarMainCourseId
+     * @return
+     */
     @Insert("insert into course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id)values (#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime},#{teamMainCourseId},#{seminarMainCourseId})")
     public long addCourse(@Param(value = "teacherId") long teacherId,@Param(value = "courseName")String courseName,@Param(value = "introduction")String introduction,@Param(value = "presentationPercentage")int presentationPercentage,@Param(value = "questionPercentage")int questionPercentage,@Param(value = "reportPercentage")int reportPercentage,@Param(value = "teamStartTime")Date teamStartTime,@Param(value = "teamEndTime")Date teamEndTime,@Param(value = "teamMainCourseId")long teamMainCourseId,@Param(value = "seminarMainCourseId")long seminarMainCourseId);
 
@@ -75,10 +91,51 @@ public interface CourseMapper {
     })
     public ArrayList<Round> getAllRoundByCourseId(@Param(value="courseId") long courseId);
 
+    /**
+     * 根据课程id查看班级
+     * @param courseId
+     * @return
+     */
     @Select("select * from klass where course_id=#{courseId}")
-        public ArrayList<Klass> getAllClassByCourseId(@Param(value="courseId") long courseId);
+    @Results(id = "KlassMap",value = {
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "grade",column = "grade"),
+            @Result(property = "klassSerial",column = "klass_serial"),
+            @Result(property = "klassTime",column = "klass_time"),
+            @Result(property = "klassLocation",column = "klass_location")
+    })
+    public ArrayList<Klass> getAllClassByCourseId(@Param(value="courseId") long courseId);
 
     @Select("select student_id from klass_student where course_id=#{courseId} and team_id is null")
     public ArrayList<Long> getAllNoTeamStudentByCourseId(@Param(value="courseId") long courseId);
+
+    /**
+     * 获得所有共享分组请求
+     * @param courseId
+     * @return
+     */
+    @Select("select * from share_team_application where main_course_id=#{courseId} or sub_course_id=#{courseId}")
+    @Results(id = "TeamShareMap",value = {
+            @Result(property = "mainCourseId",column = "main_course_id"),
+            @Result(property = "subCourseId",column = "sub_course_id"),
+            @Result(property = "subCourseTeacherId",column = "sub_course_teacher_id"),
+            @Result(property = "status",column = "status")
+    })
+    public ArrayList<TeamShareVO> getAllTeamShare(@Param(value="courseId") long courseId);
+
+    /**
+     * 获得所有共享讨论课请求
+     * @param courseId
+     * @return
+     */
+    @Select("select * from share_seminar_application where main_course_id=#{courseId} or sub_course_id=#{courseId}")
+    @Results(id = "SeminarShareMap",value = {
+            @Result(property = "mainCourseId",column = "main_course_id"),
+            @Result(property = "subCourseId",column = "sub_course_id"),
+            @Result(property = "subCourseTeacherId",column = "sub_course_teacher_id"),
+            @Result(property = "status",column = "status")
+    })
+    public ArrayList<SeminarShareVO> getAllSeminarShare(@Param(value="courseId") long courseId);
+
 }
 

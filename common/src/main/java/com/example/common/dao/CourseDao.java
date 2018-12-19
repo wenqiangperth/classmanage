@@ -1,9 +1,6 @@
 package com.example.common.dao;
 
-import com.example.common.entity.Course;
-import com.example.common.entity.Klass;
-import com.example.common.entity.Round;
-import com.example.common.entity.Student;
+import com.example.common.entity.*;
 import com.example.common.mapper.CourseMapper;
 import com.example.common.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +64,15 @@ public class CourseDao {
             students.add(student);
         }
         return students;
+    }
+
+    public ArrayList<TeamShareVO> getAllTeamShare(long courseId)
+    {
+        return courseMapper.getAllTeamShare(courseId);
+    }
+
+    public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
+    {
+        return courseMapper.getAllSeminarShare(courseId);
     }
 }
