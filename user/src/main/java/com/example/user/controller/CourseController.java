@@ -89,7 +89,7 @@ public class CourseController {
 
      @GetMapping(value="course/{courseId}/seminarshare")
      public ArrayList<SeminarShareVO> getAllSeminarShare(@PathVariable(value="courseId") long courseId){
-          return courseService.getAllSeminarShare(courseId);
+         return courseService.getAllSeminarShare(courseId);
      }
 
 }

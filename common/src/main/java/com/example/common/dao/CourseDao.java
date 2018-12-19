@@ -3,6 +3,7 @@ package com.example.common.dao;
 import com.example.common.entity.*;
 import com.example.common.mapper.CourseMapper;
 import com.example.common.mapper.StudentMapper;
+import com.example.common.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,6 +24,9 @@ public class CourseDao {
 
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private TeacherMapper teacherMapper;
 
     public Course getCourseById(long courseId) {
         return courseMapper.getCourseById(courseId);
@@ -74,6 +78,21 @@ public class CourseDao {
 
     public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
     {
-        return courseMapper.getAllSeminarShare(courseId);
+        ArrayList<SeminarShareVO> seminarShareVOS=courseMapper.getAllSeminarShare(courseId);
+        for(SeminarShareVO seminarShareVO:seminarShareVOS)
+        {
+            Course mainCourse = courseMapper.getCourseById(seminarShareVO.getMainCourseId());
+            seminarShareVO.setMainCourseName(mainCourse.getCourseName());
+            seminarShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
+            seminarShareVO.setMainCourseTeacherName(teacherMapper.getTeacherById(mainCourse.getTeacherId()).getTeacherName());
+
+            Course subCourse = courseMapper.getCourseById(seminarShareVO.getSubCourseId());
+            seminarShareVO.setSubCourseName(subCourse.getCourseName());
+            seminarShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
+            seminarShareVO.setSubCourseTeacherName(teacherMapper.getTeacherById(subCourse.getTeacherId()).getTeacherName());
+
+        }
+        return seminarShareVOS;
+
     }
 }
