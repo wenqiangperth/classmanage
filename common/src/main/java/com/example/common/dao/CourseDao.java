@@ -3,12 +3,13 @@ package com.example.common.dao;
 import com.example.common.entity.Course;
 import com.example.common.entity.Klass;
 import com.example.common.entity.Round;
+import com.example.common.entity.Student;
 import com.example.common.mapper.CourseMapper;
+import com.example.common.mapper.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @ClassName CourseDao
@@ -22,6 +23,9 @@ public class CourseDao {
 
     @Autowired
     private  CourseMapper courseMapper;
+
+    @Autowired
+    private StudentMapper studentMapper;
 
     public Course getCourseById(long courseId) {
         return courseMapper.getCourseById(courseId);
@@ -37,20 +41,31 @@ public class CourseDao {
         return courseMapper.deleteCourseById(courseId);
     }
 
-    public List<Course> getAllCourse()
+    public ArrayList<Course> getAllCourse()
     {
 
         return courseMapper.getAllCourse();
     }
 
-    public List<Round> getAllRoundByCourseId(long courseId)
+    public ArrayList<Round> getAllRoundByCourseId(long courseId)
     {
         return courseMapper.getAllRoundByCourseId(courseId);
     }
 
-    public List<Klass> getAllClassByCourseId(long courseId)
+    public ArrayList<Klass> getAllClassByCourseId(long courseId)
     {
         return courseMapper.getAllClassByCourseId(courseId);
+    }
 
+    public ArrayList<Student> getAllNoTeamByCourseId(long courseId)
+    {
+        ArrayList<Student> students = new ArrayList<Student>();
+        ArrayList<Long> studentIds = courseMapper.getAllNoTeamStudentByCourseId(courseId);
+        for(Long studentId:studentIds)
+        {
+            Student student = studentMapper.getStudentById(studentId);
+            students.add(student);
+        }
+        return students;
     }
 }

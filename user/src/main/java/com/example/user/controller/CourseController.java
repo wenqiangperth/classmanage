@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * @author perth
@@ -25,37 +25,62 @@ import java.util.List;
 @RequestMapping
 public class CourseController {
 
-    @Autowired
+   @Autowired
     private CourseService courseService;
 
+    /**
+     * 添加课程
+     * @param course
+     * @return
+     */
     @PostMapping
     public long addCourse(@RequestBody Course course)
     {
         return courseService.addCourse(course.getTeacherId(),course.getCourseName(),course.getIntroduction(),course.getPresentationPercentage(),course.getQuestionPercentage(),course.getReportPercentage(),course.getTeamStartTime(),course.getTeamEndTime(),course.getTeamMainCourseId(),course.getSeminarMainCourseId());
     }
 
-    @PostMapping(value = "/course/{courseId}")
+    /**
+     * 根据课程id获取课程信息
+     * @param courseId
+     * @return
+     */
+    @GetMapping(value = "/course/{courseId}")
     public Course getCourseById(@PathVariable(value="courseId") long courseId){
         return courseService.getCourseById(courseId);
     }
 
+    /**
+     * 查看所有课程
+     * @return
+     */
     @GetMapping(value="course")
-    public List<Course> getAllCourse()
+    public ArrayList<Course> getAllCourse()
     {
-
         return courseService.getAllCourse();
     }
 
+    /**
+     * 根据课程id删除课程信息
+     * @param courseId
+     * @return
+     */
     @DeleteMapping(value="course/{courseId}")
     public long deleteCourseById(@PathVariable(value="courseId")long courseId)
     {
         return courseService.deleteCourseById(courseId);
     }
 
+    /**
+     * 根据课程Id查询所有轮次
+     * @param courseId
+     * @return
+     */
     @GetMapping(value="course/{courseId}/round")
-    public List<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId)
+    public ArrayList<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId)
     {
         return courseService.getAllRoundByCourseId(courseId);
     }
+
+
 
 }
