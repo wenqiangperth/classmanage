@@ -4,6 +4,7 @@ import com.example.common.entity.Course;
 import java.util.Date;
 import java.util.List;
 
+import com.example.common.entity.Klass;
 import com.example.common.entity.Round;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -35,5 +36,8 @@ public interface CourseMapper {
 
     @Select("select * from round where course_id=#{courseId}")
     public List<Round> getAllRoundByCourseId(@Param(value="course_id") long courseId);
+
+    @Select("select * from klass where course_id=#{courseId}")
+    public List<Klass> getAllClassByCourseId(@Param(value="course_id") long courseId);
 }
 
