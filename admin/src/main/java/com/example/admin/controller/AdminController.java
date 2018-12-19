@@ -21,7 +21,7 @@ public class AdminController {
     private AdminService adminService;
 
     /**
-     *
+     *这是管理员登陆
      * @param administrator
      * @return
      */

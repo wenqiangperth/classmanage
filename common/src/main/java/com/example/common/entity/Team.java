@@ -2,6 +2,8 @@ package com.example.common.entity;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+
 /**
  * @ClassName Team
  * @Description
@@ -19,4 +21,5 @@ public class Team {
     private String teamName;
     private int teamSerial;
     private int status;
+    private ArrayList<Student> students;
 }
