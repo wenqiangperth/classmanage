@@ -1,7 +1,6 @@
 package com.example.common.dao;
 
-import com.example.common.entity.Student;
-import com.example.common.entity.Team;
+import com.example.common.entity.*;
 import com.example.common.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -99,5 +98,59 @@ public class TeamDao {
     public Long removeTeamMember(Long teamId,Long studentId){
         Team team=teamMapper.selectTeamById(teamId);
         return teamMapper.updateKlassStudent(team.getKlassId(),studentId,null);
+    }
+
+    /**
+     * 查找课程组队策略总表
+     * @param courseId
+     * @return
+     */
+    public TeamStrategy getTeamStrategy(Long courseId){
+        return teamMapper.getTeamStrategy(courseId);
+    }
+
+    /**
+     * 查找冲突课程
+     * @param id
+     * @return
+     */
+    public ArrayList<Long>getConflictCourseId(Long id){
+        return teamMapper.getConflictCourseId(id);
+    }
+
+    /**
+     * 查找小组人数量限制
+     * @param id
+     * @return
+     */
+    public MemberLimitStrategy getMemberLimitStrategy(Long id){
+        return teamMapper.getMemberLimitStrategy(id);
+    }
+
+    /**
+     * 查找小组内选择某一课程的人数限制
+     * @param id
+     * @return
+     */
+    public MemberLimitStrategy getCourseMemberLimit(Long id){
+        return teamMapper.getCourseMemberLimit(id);
+    }
+
+    /**
+     * 组队与策略
+     * @param id
+     * @return
+     */
+    public TeamAndOrStrategy getTeamAndStrategy(Long id){
+        return teamMapper.getTeamAndStrategy(id);
+    }
+
+    /**
+     * 组队或策略
+     * @param id
+     * @return
+     */
+    public TeamAndOrStrategy getTeamOrStrategy(Long id){
+        return teamMapper.getTeamOrStrategy(id);
     }
 }

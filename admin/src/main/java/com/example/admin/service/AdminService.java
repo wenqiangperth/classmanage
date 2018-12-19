@@ -21,12 +21,15 @@ public class AdminService {
 
     public String adminstratorLogin(Administrator administrator){
         Administrator admin=administratorDao.getAdministratorByAccount(administrator.getAccount());
-        if(administrator.getPassword().equals(admin.getPassword())){
-            return "登陆成功";
-        }else{
+        try {
+            if (administrator.getPassword().equals(admin.getPassword())) {
+                return "登陆成功";
+            } else {
+                return "登陆失败";
+            }
+        }catch (Exception e){
             return "登陆失败";
         }
-
     }
 
 }

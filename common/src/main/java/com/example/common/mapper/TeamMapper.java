@@ -1,7 +1,6 @@
 package com.example.common.mapper;
 
-import com.example.common.entity.Student;
-import com.example.common.entity.Team;
+import com.example.common.entity.*;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -98,6 +97,72 @@ public interface TeamMapper {
     @Delete("delete from team where id=#{teamId}")
     public Long deleteTeamById(@Param("teamId") Long teamId);
 
+    /**
+     * 查找课程的组队策略总表
+     * @param courseId
+     * @return
+     */
+    @Select("select * from team_strategy where course_id=#{courseId}")
+    @Results({
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "strategyId",column = "strategy_id"),
+            @Result(property = "strategyName",column = "strategy_name")
+    })
+    public TeamStrategy getTeamStrategy(@Param("courseId")Long courseId);
 
+    /**
+     * 获得组队中课程冲突的课程号
+     * @param id
+     * @return
+     */
+    @Select("select course_1_id,course_2_id from conflict_course_strategy where id=#{id}")
+    public ArrayList<Long>getConflictCourseId(@Param("id") Long id);
 
+    /**
+     * 获得小组人数限制
+     * @param id
+     * @return
+     */
+    @Select("select * from member_limit_strategy where id=#{id}")
+    @Results(id = "memberMap",value = {
+            @Result(property = "minMember",column = "min_member"),
+            @Result(property = "maxMember",column = "max_member")
+    })
+    public MemberLimitStrategy getMemberLimitStrategy(@Param("id")Long id);
+
+    /**
+     * 组内选择某一课程的人数限制
+     * @param id
+     * @return
+     */
+    @Select("select * from course_member_limit_strategy where id=#{id}")
+    @ResultMap(value = "memberMap")
+    @Results({
+            @Result(property = "courseId",column = "course_id")
+    })
+    public MemberLimitStrategy getCourseMemberLimit(@Param("id")Long id);
+
+    /**
+     * 组队与策略
+     * @param id
+     * @return
+     */
+    @Select("select * from team_and_strategy where id=#{id}")
+    @Results(id = "strategyMap",value = {
+            @Result(property = "id",column = "id"),
+            @Result(property = "strategyName1",column = "strategy_1_name"),
+            @Result(property = "strategyId1",column = "strategy_1_id"),
+            @Result(property = "strategyName1",column ="strategy_2_name" ),
+            @Result(property = "strategyId2",column = "strategy_2_id")
+    })
+    public TeamAndOrStrategy getTeamAndStrategy(@Param("id") Long id);
+
+    /**
+     * 组队或策略
+     * @param id
+     * @return
+     */
+    @Select("select * from team_or_strategy where id=#{id}")
+    @ResultMap(value = "strategyMap")
+    public TeamAndOrStrategy getTeamOrStrategy(@Param("id")Long id);
 }
