@@ -1,5 +1,10 @@
 package com.example.user.service;
 
+import com.example.common.entity.Student;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
 /**
  * @author perth
  * @ClassName StudentService
@@ -8,4 +13,5 @@ package com.example.user.service;
  * @Version 1.0
  **/
 public class StudentService {
+
 }
