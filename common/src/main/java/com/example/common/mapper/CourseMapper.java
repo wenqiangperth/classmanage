@@ -1,12 +1,10 @@
 package com.example.common.mapper;
 
-import com.example.common.entity.Course;
+import com.example.common.entity.*;
+
 import java.util.Date;
 import java.util.ArrayList;
-import com.example.common.entity.Klass;
-import com.example.common.entity.Round;
-import com.example.common.entity.TeamShareVO;
-import com.example.common.entity.SeminarShareVO;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -69,12 +67,27 @@ public interface CourseMapper {
     public long deleteCourseById(@Param(value="id") long courseId);
 
     /**
-     * 查看所有课程
+     * 根据学生ID返回我的课程
+     * @param studentId
      * @return
      */
-    @Select("select * from course")
-    @ResultMap(value = "courseMap")
-    public ArrayList<Course> getAllCourse();
+    @Select("select * from klass_student where student_id=#{studentId}")
+    @Results(id = "studentCourseMap",value = {
+            @Result(property = "klassId",column = "klass_id"),
+            @Result(property = "studentId",column = "student_id"),
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "teamId",column = "team_id")
+    })
+    public ArrayList<StudentCourseVO> getAllCourseByStudentId(@Param(value="studentId") long studentId);
+
+    /**
+     * 老师查看课程
+     * @param teacherId
+     * @return
+     */
+    @Select("select * from course where teacher_id=#{teacherId}")
+    @ResultMap(value="courseMap")
+    public ArrayList<Course> getAllCourseByTeacherId(@Param(value="teacherId") long teacherId);
 
     /**
      * 根据课程id查询所有轮次
@@ -128,5 +141,13 @@ public interface CourseMapper {
     })
     public ArrayList<SeminarShareVO> getAllSeminarShare(@Param(value="courseId") long courseId);
 
+    /**
+     * 根据学生id和课程id获得队伍Id
+     * @param studentId
+     * @param courseId
+     * @return
+     */
+    @Select("select team_id from klass_student where student_id=#{studentId} and course_id=#{courseId}")
+    public long getTeamIdByCourseIdAndStudentId(@Param(value="studentId") long studentId,@Param(value="courseId") long courseId);
 }
 

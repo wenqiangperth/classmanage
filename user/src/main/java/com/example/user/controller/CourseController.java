@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 
@@ -53,9 +54,9 @@ public class CourseController {
      * @return
      */
     @GetMapping(value="")
-    public ArrayList<Course> getAllCourse()
+    public ArrayList<StudentCourseVO> getAllCourse(HttpServletRequest request)
     {
-        return courseService.getAllCourse();
+        return courseService.getAllCourseById(request);
     }
 
     /**
@@ -129,5 +130,18 @@ public class CourseController {
   @GetMapping(value="/{courseId}/class")
   public ArrayList<Klass> getAllClassByCourseId(@PathVariable(value="courseId")long courseId){
       return courseService.getAllClassByCourseId(courseId);
+  }
+
+    /**
+     * 查看我的组队
+     * @param request
+     * @param courseId
+     * @return
+     */
+  @GetMapping(value="/{courseId}/team")
+  public Team getTeamByCourseIdAndStudentId(HttpServletRequest request,@PathVariable(value="courseId")long courseId)
+  {
+      long studentId=(long)request.getAttribute("id");
+      return courseService.getTeamByCourseIdAndStudentId(studentId,courseId);
   }
 }

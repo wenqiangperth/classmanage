@@ -46,10 +46,30 @@ public class CourseDao {
         return courseMapper.deleteCourseById(courseId);
     }
 
-    public ArrayList<Course> getAllCourse()
+    public ArrayList<StudentCourseVO> getAllCourseByStudentId(long studentId)
     {
+        ArrayList<StudentCourseVO> studentCourseVOS= courseMapper.getAllCourseByStudentId(studentId);
+        for(StudentCourseVO studentCourseVO:studentCourseVOS)
+        {
+            studentCourseVO.setKlass(klassMapper.getKlassByKlassId(studentCourseVO.getKlassId()));
+            studentCourseVO.setCourseName(courseMapper.getCourseById(studentCourseVO.getCourseId()).getCourseName());
+        }
+        return studentCourseVOS;
+    }
 
-        return courseMapper.getAllCourse();
+    public ArrayList<StudentCourseVO> getAllCourseByTeacherId(long teacherId)
+    {
+        ArrayList<Course> courses = courseMapper.getAllCourseByTeacherId(teacherId);
+        ArrayList<StudentCourseVO> teacherCourseVOS = new ArrayList<>();
+        for(Course course:courses)
+        {
+            StudentCourseVO temp= new StudentCourseVO();
+            temp.setCourseId(course.getId());
+            temp.setCourseName(course.getCourseName());
+            temp.setStudentId(course.getTeacherId());
+            teacherCourseVOS.add(temp);
+        }
+        return teacherCourseVOS;
     }
 
     public ArrayList<Round> getAllRoundByCourseId(long courseId)
@@ -83,7 +103,7 @@ public class CourseDao {
             teamShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
             teamShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
             if(courseId==teamShareVO.getMainCourseId()) {
-                teamShareVO.setMainCourse(true);
+                teamShareVO.setMainCourse(1);
             }
             Course subCourse = courseMapper.getCourseById(teamShareVO.getSubCourseId());
             teamShareVO.setSubCourseName(subCourse.getCourseName());
@@ -92,6 +112,26 @@ public class CourseDao {
         }
         return teamShareVOS;
     }
+
+    public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
+    {
+        ArrayList<SeminarShareVO> seminarShareVOS=courseMapper.getAllSeminarShare(courseId);
+        for(SeminarShareVO seminarShareVO:seminarShareVOS){
+            Course mainCourse = courseMapper.getCourseById(seminarShareVO.getMainCourseId());
+            seminarShareVO.setMainCourseName(mainCourse.getCourseName());
+            seminarShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
+            seminarShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
+            if(courseId==seminarShareVO.getMainCourseId()) {
+                seminarShareVO.setMainCourse(1);
+            }
+            Course subCourse = courseMapper.getCourseById(seminarShareVO.getSubCourseId());
+            seminarShareVO.setSubCourseName(subCourse.getCourseName());
+            seminarShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
+            seminarShareVO.setSubCourseTeacherName(teacherMapper.selectTeacherById(subCourse.getTeacherId()).getTeacherName());
+        }
+        return seminarShareVOS;
+    }
+
 
     public ArrayList<Team> getAllTeamByCourseId(long courseId)
     {
@@ -107,5 +147,13 @@ public class CourseDao {
                teams.addAll(temps);
            }
            return teams;
+    }
+
+    public Team getTeamByCourseIdAndStudentId(long studentId,long courseId)
+    {
+        long teamId=courseMapper.getTeamIdByCourseIdAndStudentId(courseId,studentId);
+        Team team = teamMapper.selectTeamById(teamId);
+        team.setStudents(teamMapper.selectStudentsByTeamId(teamId));
+        return team;
     }
 }
