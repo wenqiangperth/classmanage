@@ -2,9 +2,11 @@ package com.example.user.service;
 
 import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
+import com.sun.deploy.net.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.ArrayList;
 
@@ -65,9 +67,15 @@ public class CourseService {
      * 查询所有课程
      * @return
      */
-    public ArrayList<Course> getAllCourse()
+    public ArrayList<StudentCourseVO> getAllCourseById(HttpServletRequest request)
     {
-        return courseDao.getAllCourse();
+        String role = (String)request.getAttribute("role");
+        if(role=="student"){
+            return courseDao.getAllCourseByStudentId((long)request.getAttribute("id"));
+        }
+        else{
+            return courseDao.getAllCourseByTeacherId((long)request.getAttribute("id"));
+        }
     }
 
     /**

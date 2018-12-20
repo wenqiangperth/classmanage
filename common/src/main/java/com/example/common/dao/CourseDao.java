@@ -46,10 +46,30 @@ public class CourseDao {
         return courseMapper.deleteCourseById(courseId);
     }
 
-    public ArrayList<Course> getAllCourse()
+    public ArrayList<StudentCourseVO> getAllCourseByStudentId(long studentId)
     {
+        ArrayList<StudentCourseVO> studentCourseVOS= courseMapper.getAllCourseByStudentId(studentId);
+        for(StudentCourseVO studentCourseVO:studentCourseVOS)
+        {
+            studentCourseVO.setKlass(klassMapper.getKlassByKlassId(studentCourseVO.getKlassId()));
+            studentCourseVO.setCourseName(courseMapper.getCourseById(studentCourseVO.getCourseId()).getCourseName());
+        }
+        return studentCourseVOS;
+    }
 
-        return courseMapper.getAllCourse();
+    public ArrayList<StudentCourseVO> getAllCourseByTeacherId(long teacherId)
+    {
+        ArrayList<Course> courses = courseMapper.getAllCourseByTeacherId(teacherId);
+        ArrayList<StudentCourseVO> teacherCourseVOS = new ArrayList<>();
+        for(Course course:courses)
+        {
+            StudentCourseVO temp= new StudentCourseVO();
+            temp.setCourseId(course.getId());
+            temp.setCourseName(course.getCourseName());
+            temp.setStudentId(course.getTeacherId());
+            teacherCourseVOS.add(temp);
+        }
+        return teacherCourseVOS;
     }
 
     public ArrayList<Round> getAllRoundByCourseId(long courseId)
