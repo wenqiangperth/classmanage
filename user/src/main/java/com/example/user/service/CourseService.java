@@ -117,4 +117,9 @@ public class CourseService {
         return courseDao.getAllClassByCourseId(courseId);
     }
 
+    public Team getTeamByCourseIdAndStudentId(long studentId,long courseId)
+    {
+        return courseDao.getTeamByCourseIdAndStudentId(studentId,courseId);
+    }
+
 }
