@@ -105,5 +105,8 @@ public class CourseService {
         return courseDao.getAllTeamByCourseId(courseId);
     }
 
+    public ArrayList<Klass> getAllClassByCourseId(long courseId){
+        return courseDao.getAllClassByCourseId(courseId);
+    }
 
 }

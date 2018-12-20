@@ -92,7 +92,11 @@ public interface CourseMapper {
     public ArrayList<Round> getAllRoundByCourseId(@Param(value="courseId") long courseId);
 
 
-
+    /**
+     * 根据课程id找所有没有组队的学生id
+     * @param courseId
+     * @return
+     */
     @Select("select student_id from klass_student where course_id=#{courseId} and team_id is null")
     public ArrayList<Long> getAllNoTeamStudentByCourseId(@Param(value="courseId") long courseId);
 

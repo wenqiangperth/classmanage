@@ -22,7 +22,7 @@ import java.util.ArrayList;
  **/
 
 @RestController
-@RequestMapping
+@RequestMapping(value="/course")
 public class CourseController {
 
    @Autowired
@@ -43,7 +43,7 @@ public class CourseController {
      * @param courseId
      * @return
      */
-    @GetMapping(value = "/course/{courseId}")
+    @GetMapping(value = "/{courseId}")
     public Course getCourseById(@PathVariable(value="courseId") long courseId){
         return courseService.getCourseById(courseId);
     }
@@ -52,7 +52,7 @@ public class CourseController {
      * 查看所有课程
      * @return
      */
-    @GetMapping(value="course")
+    @GetMapping(value="")
     public ArrayList<Course> getAllCourse()
     {
         return courseService.getAllCourse();
@@ -63,7 +63,7 @@ public class CourseController {
      * @param courseId
      * @return
      */
-    @DeleteMapping(value="course/{courseId}")
+    @DeleteMapping(value="/{courseId}")
     public long deleteCourseById(@PathVariable(value="courseId")long courseId)
     {
         return courseService.deleteCourseById(courseId);
@@ -74,7 +74,7 @@ public class CourseController {
      * @param courseId
      * @return
      */
-    @GetMapping(value="course/{courseId}/round")
+    @GetMapping(value="/{courseId}/round")
     public ArrayList<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId) {
      return courseService.getAllRoundByCourseId(courseId);
     }
@@ -84,7 +84,7 @@ public class CourseController {
    * @param courseId
    * @return
    */
-  @GetMapping(value="course/{courseId}/teamshare")
+  @GetMapping(value="/{courseId}/teamshare")
   public ArrayList<TeamShareVO> getAllTeamShare(@PathVariable(value="courseId") long courseId){
        return courseService.getAllTeamShare(courseId);
   }
@@ -94,16 +94,40 @@ public class CourseController {
   * @param courseId
   * @return
   */
- @GetMapping(value="course/{courseId}/seminarshare")
+ @GetMapping(value="/{courseId}/seminarshare")
     public ArrayList<SeminarShareVO> getAllSeminarShare(@PathVariable(value="courseId") long courseId){
          return courseService.getAllSeminarShare(courseId);
      }
 
-  @GetMapping(value="course/{courseId}/team")
+    /**
+     * 根据课程id获得所有队伍
+     * @param courseId
+     * @return
+     */
+  @GetMapping(value="/{courseId}/team")
   public ArrayList<Team> getAllTeamByCourseId(@PathVariable(value="courseId")long courseId)
   {
       return courseService.getAllTeamByCourseId(courseId);
   }
 
+    /**
+     * 根据课程id获取所有未组队学生信息
+     * @param courseId
+     * @return
+     */
+  @GetMapping(value="/{courseId}/noTeam")
+  public ArrayList<Student> getAllNoTeamByCourseId(@PathVariable(value="courseId")long courseId)
+  {
+      return courseService.getAllNoTeamByCourseId(courseId);
+  }
 
+    /**
+     * 根据课程id获得所有班级
+     * @param courseId
+     * @return
+     */
+  @GetMapping(value="/{courseId}/class")
+  public ArrayList<Klass> getAllClassByCourseId(@PathVariable(value="courseId")long courseId){
+      return courseService.getAllClassByCourseId(courseId);
+  }
 }

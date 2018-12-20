@@ -20,7 +20,14 @@ import java.util.ArrayList;
 public interface StudentMapper {
 
     @Select("select * from student where id=#{studentId}")
-    public Student getStudentById(@Param(value="id") long studentId);
+    @Results(id="studentMap",value = {
+            @Result(property = "account",column = "account"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "isActive",column = "is_active"),
+            @Result(property = "studentName",column ="student_name" ),
+            @Result(property = "email",column = "email")
+    })
+    public Student getStudentById(@Param(value="studentId") long studentId);
 
 
     /**
@@ -30,7 +37,7 @@ public interface StudentMapper {
      */
     @Select("select c.id,c.teacher_id,c.course_name,c.introduction,c.presentation_percentage," +
             "c.question_percentage,c.report_percentage,c.team_start_time,c.team_end_time,c.team_main_course_id,c.seminar_main_course_id from course c,klass_student ks where c.id=ks.course_id and ks.student_id=#{studentId}")
-    @Results(id="studentMap",value = {
+    @Results(id="courseMap",value = {
             @Result(property = "teacherId",column = "teacher_id"),
             @Result(property = "courseName",column = "course_name"),
             @Result(property = "presentationPercentage",column = "presentation_percentage"),
