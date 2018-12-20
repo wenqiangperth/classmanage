@@ -16,7 +16,7 @@ public class Attendance {
     private long klassSeminarId;
     private long teamId;
     private int teamOrder;
-    private boolean isPresent;
+    private int isPresent;
     private String reportName;
     private String reportUrl;
     private String pptName;

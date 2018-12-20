@@ -1,6 +1,8 @@
 package com.example.common.entity;
 
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.Date;
 /**
  * @ClassName Course
@@ -23,5 +25,6 @@ public class Course {
     private Date teamEndTime;
     private long teamMainCourseId;
     private long seminarMainCourseId;
+    private ArrayList<Team> teams;
 
 }

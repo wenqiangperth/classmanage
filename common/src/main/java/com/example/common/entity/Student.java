@@ -15,7 +15,7 @@ public class Student {
     private long id;
     private String account;
     private String password;
-    private boolean isActive;
+    private int isActive;
     private String studentName;
     private String email;
 

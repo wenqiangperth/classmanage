@@ -19,12 +19,12 @@ public class Seminar {
     private String seminarName;
     private String introduction;
     private int maxTeam;
-    private boolean isVisible;
+    private int isVisible;
     private int seminarSerial;
     private Date enrollStartTime;
     private Date enrollEndTime;
 
-    public boolean getIsVisible(){
+    public int getIsVisible(){
         return isVisible;
     }
     public Date getEnrollStartTime(){

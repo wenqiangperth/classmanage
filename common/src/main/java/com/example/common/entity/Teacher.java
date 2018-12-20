@@ -16,6 +16,6 @@ public class Teacher {
     private String account;
     private String password;
     private String teacherName;
-    private boolean isActive;
+    private int isActive;
     private String email;
 }

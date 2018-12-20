@@ -102,4 +102,7 @@ public class CourseController {
          return courseService.getAllSeminarShare(courseId);
      }
 
+
+
+
 }

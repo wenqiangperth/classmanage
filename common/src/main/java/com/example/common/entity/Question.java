@@ -17,6 +17,6 @@ public class Question {
     private long attendanceId;
     private long teamId;
     private long studentId;
-    private boolean isSelected;
+    private int isSelected;
     private double score;
 }
