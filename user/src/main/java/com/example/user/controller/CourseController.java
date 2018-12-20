@@ -82,13 +82,23 @@ public class CourseController {
      return courseService.getAllRoundByCourseId(courseId);
     }
 
-    @GetMapping(value="course/{courseId}/teamshare")
-    public ArrayList<TeamShareVO> getAllTeamShare(@PathVariable(value="courseId") long courseId){
-         return courseService.getAllTeamShare(courseId);
-    }
+  /**
+   * 根据课程id查看所有共享组队信息
+   * @param courseId
+   * @return
+   */
+  @GetMapping(value="course/{courseId}/teamshare")
+  public ArrayList<TeamShareVO> getAllTeamShare(@PathVariable(value="courseId") long courseId){
+       return courseService.getAllTeamShare(courseId);
+  }
 
-     @GetMapping(value="course/{courseId}/seminarshare")
-     public ArrayList<SeminarShareVO> getAllSeminarShare(@PathVariable(value="courseId") long courseId){
+ /**
+  * 根据课程id查看所有共享讨论课信息
+  * @param courseId
+  * @return
+  */
+ @GetMapping(value="course/{courseId}/seminarshare")
+    public ArrayList<SeminarShareVO> getAllSeminarShare(@PathVariable(value="courseId") long courseId){
          return courseService.getAllSeminarShare(courseId);
      }
 

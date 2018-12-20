@@ -30,4 +30,12 @@ public interface SeminarMapper {
 
     @Select("select * from seminar where course_id=#{courseId} and round_id=#{roundId} and seminar_name=#{seminarName}")
     public Seminar selectSeminarByCoureseIdAndRoundIdAndSeminarName(@Param("courseId") Long courseId,@Param("roundId")Long roundId,@Param("seminarName")String seminarName);
+
+    /**
+     * 根据课程id删除讨论课
+     * @param courseId
+     * @return
+     */
+    @Delete("delete from seminar where course_id=#{courseId}")
+    public long deleteSeminarByCourseId(@Param(value="courseId")long courseId);
 }
