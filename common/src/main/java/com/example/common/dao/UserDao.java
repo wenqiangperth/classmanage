@@ -20,6 +20,11 @@ public class UserDao {
     @Autowired
     private TeacherMapper teacherMapper;
 
+    /**
+     * 通过账号获得用户
+     * @param account
+     * @return
+     */
     public User getUserByAccount(String account){
         User user=teacherMapper.selectTeahcerByAccount(account);
         if(user!=null){
@@ -32,5 +37,14 @@ public class UserDao {
             return user;
         }
         return null;
+    }
+
+    public Long updateUserPassword(Long id,String role,String password){
+        if(role.equals("teacher")){
+            return teacherMapper.updateTeahcerPassword(password,id);
+        }else if(role.equals("student")){
+            return studentMapper.updateStundentPassword(password,id);
+        }
+        return 0L;
     }
 }

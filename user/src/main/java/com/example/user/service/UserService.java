@@ -19,6 +19,8 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-
+    public Long changeUserPassword(Long id,String role,String password){
+        return userDao.updateUserPassword(id,role,password);
+    }
 
 }

@@ -28,12 +28,12 @@ public interface TeacherMapper {
     public User selectTeahcerByAccount(String account);
 
     /**
-     * 根据ID查询教师信息
+     * 查询：ID->teacher
      * @param teacherId
      * @return
      */
     @Select("select * from teacher where id=#{teacherId}")
-    @Results(id = "TeacherMap",value = {
+    @Results(id = "teacherMap",value = {
             @Result(property = "account",column = "account"),
             @Result(property = "password",column = "password"),
             @Result(property = "teacherName",column = "teacher_name"),
@@ -41,4 +41,13 @@ public interface TeacherMapper {
             @Result(property = "email",column = "email")
     })
     public Teacher selectTeacherById(@Param(value="teacherId") long teacherId);
+
+    /**
+     * 更新：password
+     * @param password
+     * @param id
+     * @return
+     */
+    @Update("update teacher set password=#{password} where id=#{id}")
+    public Long updateTeahcerPassword(@Param("password")String password,@Param("id") Long id);
 }

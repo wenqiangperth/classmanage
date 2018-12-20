@@ -67,4 +67,12 @@ public interface StudentMapper {
     public ArrayList<Course> getAllCoursesByStundetId(@Param("studentId")Long stundetId);
 
 
+    /**
+     * 更新：password
+     * @param password
+     * @param id
+     * @return
+     */
+    @Update("update student set password=#{password} where id=#{id}")
+    public Long updateStundentPassword(@Param("password") String password,@Param("id")Long id);
 }
