@@ -2,6 +2,7 @@ package com.example.common.mapper;
 
 import com.example.common.entity.Course;
 import com.example.common.entity.Student;
+import com.example.common.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,21 @@ import java.util.ArrayList;
 @Repository
 public interface StudentMapper {
 
+
+    /**
+     * 查询：根据账号获取student
+     * @param account
+     * @return
+     */
+    @Select("select * from student where account=#{account}")
+    @ResultMap(value = "studentMap")
+    public User selectStudentByAccount(@Param("account")String account);
+
+    /**
+     * 查询：根据ID获取学生
+     * @param studentId
+     * @return
+     */
     @Select("select * from student where id=#{studentId}")
     @Results(id="studentMap",value = {
             @Result(property = "account",column = "account"),
@@ -27,11 +43,11 @@ public interface StudentMapper {
             @Result(property = "studentName",column ="student_name" ),
             @Result(property = "email",column = "email")
     })
-    public Student getStudentById(@Param(value="studentId") long studentId);
+    public Student selectStudentById(@Param(value="studentId") long studentId);
 
 
     /**
-     * 根据学生id获取他的所有课程
+     * 查询：根据学生id获取他的所有课程
      * @param stundetId
      * @return
      */
