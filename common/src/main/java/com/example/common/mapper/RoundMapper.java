@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 /**
  * @ClassName RoundMapper
  * @Description
@@ -37,7 +39,7 @@ public interface RoundMapper {
             @Result(property = "enrollStartTime",column = "enroll_start_time"),
             @Result(property = "enrollEndTime",column = "enroll_end_time")
     })
-    public ArrayList<Seminar>selectAllSeminarsByRoundId(Long roundId);
+    public ArrayList<Seminar> selectAllSeminarsByRoundId(Long roundId);
     /**
      * 根据课程id删除轮次
      * @param courseId

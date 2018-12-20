@@ -12,34 +12,34 @@ import lombok.Data;
 
 @Data
 public class TeamShareVO {
-    private long id;
-    private long mainCourseId;
-    private long mainCourseTeacherId;
+    private Long id;
+    private Long mainCourseId;
+    private Long mainCourseTeacherId;
     private String mainCourseName;
     private String mainCourseTeacherName;
-    private long subCourseId;
-    private long subCourseTeacherId;
+    private Long subCourseId;
+    private Long subCourseTeacherId;
     private String subCourseName;
     private String subCourseTeacherName;
-    private boolean status;
-    private boolean mainCourse;
+    private Integer status;
+    private Integer mainCourse;
 
-    public void setStatus(boolean Status)
+    public void setStatus(int tempStatus)
     {
-        this.status=Status;
+        this.status=tempStatus;
     }
 
-    public boolean getStatus()
+    public int getStatus()
     {
         return this.status;
     }
 
-    public void setMainCourse(boolean MainCourse)
+    public void setMainCourse(int tempMainCourse)
     {
-        this.mainCourse=MainCourse;
+        this.mainCourse=tempMainCourse;
     }
 
-    public boolean getMainCourse()
+    public int getMainCourse()
     {
         return this.mainCourse;
     }

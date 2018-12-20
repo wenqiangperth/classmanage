@@ -1,6 +1,7 @@
 package com.example.common.mapper;
 
 import com.example.common.entity.Teacher;
+import com.example.common.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeacherMapper {
 
+
+    /**
+     * 查询：根据账号获取teacher->User
+     * @param account
+     * @return
+     */
+    @Select("select * from teacher where account=#{account}")
+    @ResultMap(value = "teacherMap")
+    public User selectTeahcerByAccount(String account);
+
     /**
      * 根据ID查询教师信息
      * @param teacherId
@@ -29,5 +40,5 @@ public interface TeacherMapper {
             @Result(property = "isActive",column = "is_active"),
             @Result(property = "email",column = "email")
     })
-    public Teacher getTeacherById(@Param(value="teacherId") long teacherId);
+    public Teacher selectTeacherById(@Param(value="teacherId") long teacherId);
 }
