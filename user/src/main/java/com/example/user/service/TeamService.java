@@ -23,10 +23,19 @@ public class TeamService {
     private StudentDao studentDao;
 
 
+    /**
+     * 组队是否合法
+     * @param teamId
+     * @return
+     */
     public boolean isTeamValid(Long teamId){
         Team team=teamDao.getTeamById(teamId);
         TeamStrategy teamStrategy=teamDao.getTeamStrategy(team.getCourseId());
-        return isStrategyOK(teamStrategy.getStrategyName(),teamStrategy.getStrategyId(),team);
+        if(teamStrategy==null){
+            return true;
+        }else {
+            return isStrategyOK(teamStrategy.getStrategyName(), teamStrategy.getStrategyId(), team);
+        }
     }
 
     /**
@@ -58,24 +67,30 @@ public class TeamService {
      * @return
      */
     public boolean isTeamOrStrategy(Long strategyId,Team team){
-        TeamAndOrStrategy teamAndOrStrategy=teamDao.getTeamOrStrategy(strategyId);
-        if(isStrategyOK(teamAndOrStrategy.getStrategyName1(),teamAndOrStrategy.getStrategyId1(),team)
-        ||isStrategyOK(teamAndOrStrategy.getStrategyName2(),teamAndOrStrategy.getStrategyId2(),team)){
+        TeamAndOrStrategy teamOrStrategy=teamDao.getTeamOrStrategy(strategyId);
+        if(teamOrStrategy==null){
+            return true;
+        }
+        if(isStrategyOK(teamOrStrategy.getStrategyName1(),teamOrStrategy.getStrategyId1(),team)
+        ||isStrategyOK(teamOrStrategy.getStrategyName2(),teamOrStrategy.getStrategyId2(),team)){
             return true;
         }
         return false;
     }
 
     /**
-     * 组队或策略是否符合
+     * 组队与策略是否符合
      * @param strategyId
      * @param team
      * @return
      */
     public boolean isTeamAndStrategy(Long strategyId,Team team){
-        TeamAndOrStrategy teamAndOrStrategy=teamDao.getTeamAndStrategy(strategyId);
-        if(isStrategyOK(teamAndOrStrategy.getStrategyName1(),teamAndOrStrategy.getStrategyId1(),team)
-                &&isStrategyOK(teamAndOrStrategy.getStrategyName2(),teamAndOrStrategy.getStrategyId2(),team)){
+        TeamAndOrStrategy teamAndStrategy=teamDao.getTeamAndStrategy(strategyId);
+        if(teamAndStrategy==null){
+            return true;
+        }
+        if(isStrategyOK(teamAndStrategy.getStrategyName1(),teamAndStrategy.getStrategyId1(),team)
+                &&isStrategyOK(teamAndStrategy.getStrategyName2(),teamAndStrategy.getStrategyId2(),team)){
             return true;
         }
         return false;
@@ -89,6 +104,9 @@ public class TeamService {
      */
     public boolean isCourseMemberLimit(Long strategyId,Team team){
         MemberLimitStrategy memberLimitStrategy=teamDao.getCourseMemberLimit(strategyId);
+        if(memberLimitStrategy==null){
+            return true;
+        }
         ArrayList<Student>students=team.getStudents();
         int count=0;
         for (Student student:students
@@ -115,6 +133,9 @@ public class TeamService {
      */
     public boolean isMemberLimit(Long strategyId,Team team){
         MemberLimitStrategy memberLimitStrategy=teamDao.getMemberLimitStrategy(strategyId);
+        if(memberLimitStrategy==null){
+            return true;
+        }
         int num=team.getStudents().size();
         if(num>=memberLimitStrategy.getMinMember()&&num<=memberLimitStrategy.getMaxMember()){
             return  true;
@@ -129,6 +150,9 @@ public class TeamService {
      */
     public boolean isConflictCourseStrategy(Long strategyId,Team team){
         ConflictCourseStrstegy conflictCourseStrstegy =teamDao.getConflictCourseId(strategyId);
+        if(conflictCourseStrstegy==null){
+            return true;
+        }
         ArrayList<Student>students=team.getStudents();
         boolean courseId1=false,courseId2=false;
         for (Student student:students
@@ -202,5 +226,14 @@ public class TeamService {
      */
     public Long removeTeamMember(Long teamId,Long studentId){
         return teamDao.removeTeamMember(teamId,studentId);
+    }
+
+    /**
+     * 同意特殊组队申请,设置status为1，合法
+     * @param teamId
+     * @return
+     */
+    public Long approveTeam(Long teamId){
+        return teamDao.updateTeamStatus(teamId,1);
     }
 }

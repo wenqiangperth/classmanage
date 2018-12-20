@@ -22,16 +22,22 @@ public class TeamDao {
     private TeamMapper teamMapper;
 
     /**
-     * 创建小组，同时在klass_student表设置了teamID
+     * 创建小组，同时在klass_student表设置了teamID->team和student之间的关系
      * @param team
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public Long addTeam(Team team){
-        Long i=teamMapper.insertTeam(team.getKlassId(),team.getCourseId(),team.getLeaderId(),team.getTeamName(),team.getTeamSerial(),team.getStatus());
+        Long i=teamMapper.insertTeam(team);
         if(i<=0){return i;}
+        Student leaderStudent=new Student();
+        leaderStudent.setId(team.getLeaderId());
         ArrayList<Student> students=team.getStudents();
-        Long teamId=teamMapper.selectTeamByCourseIdAndLeaderId(team.getKlassId(),team.getCourseId(),team.getLeaderId()).getId();
+        if(students==null){
+            students=new ArrayList<>();
+        }
+        students.add(leaderStudent);
+        Long teamId=team.getId();
         for (Student student:students
              ) {
           Long j=teamMapper.updateKlassStudent(team.getKlassId(),student.getId(),teamId);
@@ -58,6 +64,9 @@ public class TeamDao {
     public Team getTeamById(Long teamId){
         ArrayList<Student>students=teamMapper.selectStudentsByTeamId(teamId);
         Team team=teamMapper.selectTeamById(teamId);
+        if(team==null){
+            return null;
+        }
         team.setStudents(students);
         return team;
     }
@@ -86,6 +95,9 @@ public class TeamDao {
      */
     public Long addTeamMemberById(Long teamId,Long studentId){
         Team team=teamMapper.selectTeamById(teamId);
+        if(team==null){
+            return 0L;
+        }
         return teamMapper.updateKlassStudent(team.getKlassId(),studentId,teamId);
     }
 
@@ -97,6 +109,9 @@ public class TeamDao {
      */
     public Long removeTeamMember(Long teamId,Long studentId){
         Team team=teamMapper.selectTeamById(teamId);
+        if(team==null){
+            return 0L;
+        }
         return teamMapper.updateKlassStudent(team.getKlassId(),studentId,null);
     }
 
@@ -153,4 +168,15 @@ public class TeamDao {
     public TeamAndOrStrategy getTeamOrStrategy(Long id){
         return teamMapper.getTeamOrStrategy(id);
     }
+
+    /**
+     * 设置队伍状态
+     * @param teamId
+     * @return
+     */
+    public Long updateTeamStatus(Long teamId,int status){
+        return teamMapper.updateTeamStatus(teamId,status);
+    }
+
+
 }

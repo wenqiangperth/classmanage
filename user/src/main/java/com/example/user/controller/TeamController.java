@@ -72,4 +72,15 @@ public class TeamController {
     public Long removeTeamMember(@PathVariable("teamId")Long teamId,@RequestBody Long studentId){
         return teamService.removeTeamMember(teamId,studentId);
     }
+
+
+    /**
+     * 同意学生特殊组队申请，设置team状态
+     * @param teamId
+     * @return
+     */
+    @PutMapping(value = "/{teamId}/approve")
+    public Long approveTeam(@PathVariable("teamId") Long teamId){
+        return teamService.approveTeam(teamId);
+    }
 }

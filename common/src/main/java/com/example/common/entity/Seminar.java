@@ -24,9 +24,6 @@ public class Seminar {
     private Date enrollStartTime;
     private Date enrollEndTime;
 
-    public int getIsVisible(){
-        return isVisible;
-    }
     public Date getEnrollStartTime(){
         return enrollStartTime;
     }

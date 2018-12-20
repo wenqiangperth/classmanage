@@ -19,20 +19,15 @@ import java.util.ArrayList;
 public interface TeamMapper {
 
     /**
-     * 插入一个新的小组
-     * @param klassId
-     * @param courseId
-     * @param leaderId
-     * @param teamName
-     * @param teamSerial
-     * @param status
+     * 插入:一个team
+     * @param team
      * @return
      */
     @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
-    public Long insertTeam(@Param("klassId") Long klassId, @Param("courseId") Long courseId, @Param("leaderId") Long leaderId, @Param("teamName") String teamName,@Param("teamSerial") int teamSerial,@Param("status") int status);
-
+    @Options(useGeneratedKeys =true,keyColumn ="id" )
+    public Long insertTeam(Team team);
     /**
-     * 向klass_student表更新小组的关系，小组成员
+     * 更新：klass_student表小组的关系，小组成员
      * @param klassId
      * @param studentId
      * @param teamId
@@ -42,10 +37,8 @@ public interface TeamMapper {
     public Long updateKlassStudent(@Param("klassId") Long klassId,@Param("studentId") Long studentId,@Param("teamId") Long teamId);
 
     /**
-     * 从team表中根据course和leader查询team
-     * @param klassId
-     * @param courseId
-     * @param leaderId
+     * 查询：从team表中根据course和leader查询team
+     * @param team
      * @return
      */
     @Select("select * from team where klass_id=#{klassId} and course_id=#{courseId} and leader_id=#{leaderId}")
@@ -56,10 +49,10 @@ public interface TeamMapper {
             @Result(property = "teamName",column = "team_name"),
             @Result(property = "teamSerial",column = "team_serial")
     })
-    public Team selectTeamByCourseIdAndLeaderId(@Param("klassId") Long klassId,@Param("courseId") Long courseId,@Param("leaderId") Long leaderId);
+    public Team selectTeamByCourseIdAndLeaderId(Team team);
 
     /**
-     * 从team表中查询某课程下所有的team
+     * 查询：从team表中查询某课程下所有的team
      * @param klassId
      * @param courseId
      * @return
@@ -69,7 +62,7 @@ public interface TeamMapper {
     public ArrayList<Team> selectTeamsByCourseIdAndClassId(@Param("klassId") Long klassId,@Param("courseId") Long courseId);
 
     /**
-     * 根据ID查询小组
+     * 查询：根据ID查询小组
      * @param id
      * @return
      */
@@ -90,7 +83,7 @@ public interface TeamMapper {
     public ArrayList<Student> selectStudentsByTeamId(Long teamId);
 
     /**
-     * 根据ID删除TEAM
+     * 删除：根据ID删除TEAM
      * @param teamId
      * @return
      */
@@ -98,7 +91,7 @@ public interface TeamMapper {
     public Long deleteTeamById(@Param("teamId") Long teamId);
 
     /**
-     * 查找课程的组队策略总表
+     * 查询：查找课程的组队策略总表
      * @param courseId
      * @return
      */
@@ -169,4 +162,11 @@ public interface TeamMapper {
     @Select("select * from team_or_strategy where id=#{id}")
     @ResultMap(value = "strategyMap")
     public TeamAndOrStrategy getTeamOrStrategy(@Param("id")Long id);
+
+    @Update("update team set status=#{status} where id=#{teamId}")
+    public Long updateTeamStatus(@Param("teamId") Long teamId,@Param("status") int status);
+
+    @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
+    @Options(useGeneratedKeys = true,keyColumn = "id")
+    public Long aa(Team team);
 }

@@ -19,6 +19,6 @@ public class SeminarService {
     private SeminarDao seminarDao;
 
     public long createSeminar(Seminar seminar){
-        return seminarDao.addSeminar(seminar.getCourseId(),seminar.getRoundId(),seminar.getSeminarName(),seminar.getIntroduction(),seminar.getMaxTeam(),seminar.getIsVisible(),seminar.getSeminarSerial(),seminar.getEnrollStartTime(),seminar.getEnrollEndTime());
+        return seminarDao.addSeminar(seminar);
     }
 }

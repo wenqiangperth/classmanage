@@ -32,4 +32,5 @@ public class SeminarController {
         return seminarService.createSeminar(seminar);
     }
 
+
 }
