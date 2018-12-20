@@ -122,30 +122,32 @@ public class TeamService {
         return false;
     }
     /**
-     * 判断小组中成员是否选择冲突课程
+     * 判断小组中成员是否符合冲突课程规则,true,符合
      * @param strategyId
      * @param team
      * @return
      */
     public boolean isConflictCourseStrategy(Long strategyId,Team team){
-        ArrayList<Long> courseIds=teamDao.getConflictCourseId(strategyId);
+        ConflictCourseStrstegy conflictCourseStrstegy =teamDao.getConflictCourseId(strategyId);
         ArrayList<Student>students=team.getStudents();
+        boolean courseId1=false,courseId2=false;
         for (Student student:students
              ) {
-            int count=0;
             ArrayList<Course> courses=studentDao.getAllCoursesByStundetId(student.getId());
-            for (Long courseId:courseIds
+            for (Course course:courses
                  ) {
-                for (Course course:courses
-                     ) {
-                    if(courseId==course.getId()){
-                        count++;
-                    }
+                if(course.getId()==conflictCourseStrstegy.getCourseId1()){
+                    courseId1=true;
+                }else if(course.getId()==conflictCourseStrstegy.getCourseId2()){
+                    courseId2=true;
                 }
             }
-            return false;
         }
-        return true;
+        if(courseId1&&courseId2) {
+            return false;
+        }else{
+            return true;
+        }
     }
 
     /**

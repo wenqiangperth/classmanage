@@ -114,7 +114,7 @@ public class TeamDao {
      * @param id
      * @return
      */
-    public ArrayList<Long>getConflictCourseId(Long id){
+    public ConflictCourseStrstegy getConflictCourseId(Long id){
         return teamMapper.getConflictCourseId(id);
     }
 

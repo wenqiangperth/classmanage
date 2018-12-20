@@ -115,8 +115,12 @@ public interface TeamMapper {
      * @param id
      * @return
      */
-    @Select("select course_1_id,course_2_id from conflict_course_strategy where id=#{id}")
-    public ArrayList<Long>getConflictCourseId(@Param("id") Long id);
+    @Select("select * from conflict_course_strategy where id=#{id}")
+    @Results({
+            @Result(property = "courseId1",column = "course_1_id"),
+            @Result(property = "courseId2",column = "course_2_id")
+    })
+    public ConflictCourseStrstegy getConflictCourseId(@Param("id") Long id);
 
     /**
      * 获得小组人数限制
