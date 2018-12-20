@@ -1,9 +1,7 @@
 package com.example.common.dao;
 
 import com.example.common.entity.*;
-import com.example.common.mapper.CourseMapper;
-import com.example.common.mapper.StudentMapper;
-import com.example.common.mapper.TeacherMapper;
+import com.example.common.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +25,12 @@ public class CourseDao {
 
     @Autowired
     private TeacherMapper teacherMapper;
+
+    @Autowired
+    private KlassMapper klassMapper;
+
+    @Autowired
+    private TeamMapper teamMapper;
 
     public Course getCourseById(long courseId) {
         return courseMapper.getCourseById(courseId);
@@ -55,7 +59,7 @@ public class CourseDao {
 
     public ArrayList<Klass> getAllClassByCourseId(long courseId)
     {
-        return courseMapper.getAllClassByCourseId(courseId);
+        return klassMapper.getAllClassByCourseId(courseId);
     }
 
     public ArrayList<Student> getAllNoTeamByCourseId(long courseId)
@@ -111,5 +115,20 @@ public class CourseDao {
         }
         return seminarShareVOS;
     }
-    
+
+    public ArrayList<Team> getAllTeamByCourseId(long courseId)
+    {
+           ArrayList<Team> teams = new ArrayList<Team>();
+           ArrayList<Klass> klasses=klassMapper.getAllClassByCourseId(courseId);
+           for(Klass klass:klasses)
+           {
+               ArrayList<Team> temps = teamMapper.selectTeamsByCourseIdAndClassId(klass.getCourseId(),courseId);
+               for(Team temp:temps)
+               {
+                   temp.setStudents(teamMapper.selectStudentsByTeamId(temp.getId()));
+               }
+               teams.addAll(temps);
+           }
+           return teams;
+    }
 }

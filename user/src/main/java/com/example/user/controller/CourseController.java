@@ -1,10 +1,8 @@
 package com.example.user.controller;
 
-import com.example.common.entity.Course;
-import com.example.common.entity.Round;
-import com.example.common.entity.TeamShareVO;
-import com.example.common.entity.SeminarShareVO;
+import com.example.common.entity.*;
 import com.example.user.service.CourseService;
+import com.example.user.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +27,6 @@ public class CourseController {
 
    @Autowired
     private CourseService courseService;
-
     /**
      * 添加课程
      * @param course
@@ -102,7 +99,11 @@ public class CourseController {
          return courseService.getAllSeminarShare(courseId);
      }
 
-
+  @GetMapping(value="course/{courseId}/team")
+  public ArrayList<Team> getAllTeamByCourseId(@PathVariable(value="courseId")long courseId)
+  {
+      return courseService.getAllTeamByCourseId(courseId);
+  }
 
 
 }

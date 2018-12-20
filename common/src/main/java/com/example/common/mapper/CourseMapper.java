@@ -91,20 +91,7 @@ public interface CourseMapper {
     })
     public ArrayList<Round> getAllRoundByCourseId(@Param(value="courseId") long courseId);
 
-    /**
-     * 根据课程id查看班级
-     * @param courseId
-     * @return
-     */
-    @Select("select * from klass where course_id=#{courseId}")
-    @Results(id = "KlassMap",value = {
-            @Result(property = "courseId",column = "course_id"),
-            @Result(property = "grade",column = "grade"),
-            @Result(property = "klassSerial",column = "klass_serial"),
-            @Result(property = "klassTime",column = "klass_time"),
-            @Result(property = "klassLocation",column = "klass_location")
-    })
-    public ArrayList<Klass> getAllClassByCourseId(@Param(value="courseId") long courseId);
+
 
     @Select("select student_id from klass_student where course_id=#{courseId} and team_id is null")
     public ArrayList<Long> getAllNoTeamStudentByCourseId(@Param(value="courseId") long courseId);

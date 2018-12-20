@@ -100,5 +100,10 @@ public class CourseService {
         return courseDao.getAllSeminarShare(courseId);
     }
 
+    public ArrayList<Team> getAllTeamByCourseId(long courseId)
+    {
+        return courseDao.getAllTeamByCourseId(courseId);
+    }
+
 
 }

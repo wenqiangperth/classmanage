@@ -1,10 +1,10 @@
 package com.example.common.mapper;
 
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.example.common.entity.Klass;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 
 /**
  * @ClassName KlassMapper
@@ -16,6 +16,20 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface KlassMapper {
+    /**
+     * 根据课程id查看班级
+     * @param courseId
+     * @return
+     */
+    @Select("select * from klass where course_id=#{courseId}")
+    @Results(id = "KlassMap",value = {
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "grade",column = "grade"),
+            @Result(property = "klassSerial",column = "klass_serial"),
+            @Result(property = "klassTime",column = "klass_time"),
+            @Result(property = "klassLocation",column = "klass_location")
+    })
+    public ArrayList<Klass> getAllClassByCourseId(@Param(value="courseId") long courseId);
     /**
      * 根据课程id删除班级
      * @param courseId

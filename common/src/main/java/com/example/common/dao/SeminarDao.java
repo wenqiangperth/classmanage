@@ -19,7 +19,7 @@ public class SeminarDao {
     @Autowired
     private SeminarMapper seminarMapper;
 
-    public long addSeminar(Long courseId, Long roundId, String seminarName,String introduction,int maxTeam,boolean isVisible,int seminarSerial,Date enrollStartTime,Date enrollEndTime){
+    public long addSeminar(Long courseId, Long roundId, String seminarName,String introduction,int maxTeam,int isVisible,int seminarSerial,Date enrollStartTime,Date enrollEndTime){
         Long i=seminarMapper.insertSeminar(courseId,roundId,seminarName,introduction,maxTeam,isVisible,seminarSerial,enrollStartTime,enrollEndTime);
         if(i<=0){return i;}
         Seminar seminar=seminarMapper.selectSeminarByCoureseIdAndRoundIdAndSeminarName(courseId,roundId,seminarName);
