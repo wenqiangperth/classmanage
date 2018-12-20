@@ -1,5 +1,6 @@
 package com.example.user.controller;
 
+import com.example.common.entity.User;
 import com.example.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,18 @@ public class UserController {
         String role=(String)request.getAttribute("role");
         Long id=(Long)request.getAttribute("id");
         return userService.changeUserPassword(id,role,password);
+    }
+
+    /**
+     * 获得用户个人信息
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/information")
+    public User getUserInformation(HttpServletRequest request){
+        String role=(String)request.getAttribute("role");
+        Long id=(Long)request.getAttribute("id");
+        return userService.getUserById(id,role);
     }
 
 
