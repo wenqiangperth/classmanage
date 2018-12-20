@@ -21,4 +21,26 @@ public class SeminarShareVO {
     private String subCourseName;
     private String subCourseTeacherName;
     private boolean status;
+    private boolean mainCourse;
+
+    public void setStatus(boolean Status)
+    {
+        this.status=Status;
+    }
+
+    public boolean getStatus()
+    {
+        return this.status;
+    }
+
+    public void setMainCourse(boolean MainCourse)
+    {
+        this.mainCourse=MainCourse;
+    }
+
+    public boolean getMainCourse()
+    {
+        return this.mainCourse;
+    }
+
 }
