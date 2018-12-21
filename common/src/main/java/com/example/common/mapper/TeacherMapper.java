@@ -5,6 +5,8 @@ import com.example.common.entity.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 /**
  * @ClassName TeacherMapper
  * @Description
@@ -17,6 +19,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TeacherMapper {
 
+
+    /**
+     * 查询：所有老师
+     * @return
+     */
+    @Select("select id,account,is_active,teacher_name,email from teacher")
+    @ResultMap(value = "teacherMap")
+    public ArrayList<Teacher>selectAllTeacher();
 
     /**
      * 查询：根据账号获取teacher->User
@@ -42,6 +52,15 @@ public interface TeacherMapper {
     })
     public Teacher selectTeacherById(@Param(value="teacherId") long teacherId);
 
+    /***
+     * 查询：name->teacher
+     * @param teacherName
+     * @return
+     */
+    @Select("select * from teacher where teacher_name=#{teacherName}")
+    @ResultMap(value = "teacherMap")
+    public ArrayList<Teacher>selectTeacherByName(@Param("teacherName")String teacherName);
+
     /**
      * 更新：password
      * @param password
@@ -59,4 +78,38 @@ public interface TeacherMapper {
      */
     @Update("update teacher set email=#{email} where id=#{id}")
     public Long updateTeacherEmail(@Param("id")Long id,@Param("email")String email);
+
+    /**
+     * 插入：创建teacher
+     * @param teacher
+     * @return
+     */
+    @Insert("insert teacher set account=#{account},password=#{password},teacher_name=#{teacherName},email=#{email},is_active=#{isActive}")
+    @Options(useGeneratedKeys = true,keyColumn = "id")
+    public Long insertTeacher(Teacher teacher);
+
+    /**
+     * 更新：account,name,email
+     * @param teacher
+     * @return
+     */
+    @Update("update teacher set account=#{account},teacher_name=#{teacherName},email=#{email} where id=#{id}")
+    public Long updateTeacherInformation(Teacher teacher);
+
+    /**
+     * 删除：id->teacher
+     * @param id
+     * @return
+     */
+    @Delete("delete from teacher where id=#{id}")
+    public Long deleteTeacherById(@Param("id")Long id);
+
+    /**
+     * 更新：teacher激活
+     * @param teacher
+     * @return
+     */
+    @Update("update teacher set password=#{password},email=#{email},is_active=#{isActive} where id=#{id}")
+    public Long updateTeacherAcive(Teacher teacher);
+
 }
