@@ -2,10 +2,12 @@ package com.example.admin.controller;
 
 import com.example.admin.service.AdminService;
 import com.example.common.entity.Administrator;
+import com.example.common.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * @ClassName AdminController
@@ -15,17 +17,27 @@ import javax.servlet.http.HttpServletRequest;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping(value = "/admin")
 public class AdminController {
     @Autowired
     private AdminService adminService;
+
+    /**
+     * 分页获取学生
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping(value = "/student")
+    public ArrayList<Student>getAllStudent(@RequestParam(name = "pageNum")int pageNum,@RequestParam(name = "pageSize")int pageSize){
+        return adminService.getAllStudent(pageNum,pageSize);
+    }
 
     /**
      *这是管理员登陆
      * @param administrator
      * @return
      */
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/admin/login")
     public String administratorLogin(@RequestBody Administrator administrator){
         System.out.println("jinru");
         return adminService.adminstratorLogin(administrator);
@@ -37,5 +49,7 @@ public class AdminController {
         System.out.println("拉拉："+request.getAttribute("id"));
         return "perth";
     }
+
+
 
 }

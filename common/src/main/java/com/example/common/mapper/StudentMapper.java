@@ -22,6 +22,14 @@ public interface StudentMapper {
 
 
     /**
+     * 查询：获取所有学生
+     * @return
+     */
+    @Select("select id,account,is_active,student_name,email  from student")
+    @ResultMap(value = "studentMap")
+    public ArrayList<Student>selectAllStudent();
+
+    /**
      * 查询：根据账号获取student
      * @param account
      * @return
@@ -38,7 +46,6 @@ public interface StudentMapper {
     @Select("select * from student where id=#{studentId}")
     @Results(id="studentMap",value = {
             @Result(property = "account",column = "account"),
-            @Result(property = "password",column = "password"),
             @Result(property = "isActive",column = "is_active"),
             @Result(property = "studentName",column ="student_name" ),
             @Result(property = "email",column = "email")

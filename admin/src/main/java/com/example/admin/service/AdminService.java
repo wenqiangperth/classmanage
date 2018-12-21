@@ -1,9 +1,13 @@
 package com.example.admin.service;
 
 import com.example.common.dao.AdministratorDao;
+import com.example.common.dao.StudentDao;
 import com.example.common.entity.Administrator;
+import com.example.common.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 /**
  * @ClassName AdminService
@@ -18,6 +22,13 @@ public class AdminService {
 
     @Autowired
     private AdministratorDao administratorDao;
+    @Autowired
+    private StudentDao studentDao;
+
+
+    public ArrayList<Student>getAllStudent(int pageNum,int pageSize){
+        return studentDao.getAllStudent(pageNum,pageSize);
+    }
 
     public String adminstratorLogin(Administrator administrator){
         Administrator admin=administratorDao.getAdministratorByAccount(administrator.getAccount());

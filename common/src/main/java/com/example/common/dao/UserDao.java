@@ -8,7 +8,6 @@ import com.example.common.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-//飞机奥利弗就死定了房间里
 
 /**
  * @author perth
