@@ -75,4 +75,13 @@ public interface StudentMapper {
      */
     @Update("update student set password=#{password} where id=#{id}")
     public Long updateStundentPassword(@Param("password") String password,@Param("id")Long id);
+
+    /**
+     * 更新：email
+     * @param id
+     * @param email
+     * @return
+     */
+    @Update("update student set emain=#{email} where id=#{id}")
+    public Long updateStudnetEmail(@Param("id")Long id,@Param("email")String email);
 }

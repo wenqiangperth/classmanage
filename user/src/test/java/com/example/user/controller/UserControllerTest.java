@@ -29,4 +29,10 @@ public class UserControllerTest {
         System.out.println(user.toString());
         }
     }
+
+    @Test
+    public void changUserEmailTest() {
+        Long i = userService.changeUserEmail(3L, "teacher", "21516515@163.com");
+        System.out.println(i);
+    }
 }

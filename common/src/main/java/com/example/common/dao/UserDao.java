@@ -60,6 +60,22 @@ public class UserDao {
     }
 
     /**
+     * 更新用户邮箱
+     * @param id
+     * @param role
+     * @param email
+     * @return
+     */
+    public Long updateUserEmail(Long id,String role,String email){
+        if(role.equals("teacher")){
+            return teacherMapper.updateTeacherEmail(id,email);
+        }else if(role.equals("student")){
+            return studentMapper.updateStudnetEmail(id,email);
+        }
+        return 0L;
+    }
+
+    /**
      * 查询：id->user信息
      * @param id
      * @param role

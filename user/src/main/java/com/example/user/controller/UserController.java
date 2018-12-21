@@ -46,6 +46,18 @@ public class UserController {
         return userService.getUserById(id,role);
     }
 
+    /**
+     * 修改用户邮箱
+     * @param request
+     * @param email
+     * @return
+     */
+    @PutMapping(value = "/email")
+    public Long changUserEmail(HttpServletRequest request,@RequestBody String email){
+        String role=(String)request.getAttribute("role");
+        Long id=(Long)request.getAttribute("id");
+        return userService.changeUserEmail(id,role,email);
+    }
 
 
 

@@ -23,6 +23,12 @@ public class RoundController {
     @Autowired
     private RoundService roundService;
 
+
+    /**
+     * 获得一个轮次下所有讨论课
+     * @param roundId
+     * @return
+     */
     @GetMapping(value = "/{roundId}/seminar")
     public ArrayList<Seminar>getAllSeminarByRoundId(@PathVariable("roundId")Long roundId){
         return roundService.getAllSeminarsByRoundId(roundId);

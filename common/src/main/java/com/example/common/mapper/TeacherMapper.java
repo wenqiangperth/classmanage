@@ -50,4 +50,13 @@ public interface TeacherMapper {
      */
     @Update("update teacher set password=#{password} where id=#{id}")
     public Long updateTeahcerPassword(@Param("password")String password,@Param("id") Long id);
+
+    /**
+     * 更新：email
+     * @param id
+     * @param email
+     * @return
+     */
+    @Update("update teacher set email=#{email} where id=#{id}")
+    public Long updateTeacherEmail(@Param("id")Long id,@Param("email")String email);
 }

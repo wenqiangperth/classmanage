@@ -40,4 +40,15 @@ public class UserService {
     public User getUserById(Long id,String role){
         return userDao.getUserById(id,role);
     }
+
+    /**
+     * 更新：id,role->email
+     * @param id
+     * @param role
+     * @param email
+     * @return
+     */
+    public Long changeUserEmail(Long id,String role,String email){
+        return userDao.updateUserEmail(id,role,email);
+    }
 }
