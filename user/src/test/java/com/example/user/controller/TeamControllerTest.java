@@ -23,24 +23,24 @@ public class TeamControllerTest {
     private TeamMapper teamMapper;
     @Test
     public void getTeamById() {
-        Team team=teamService.getTeamById(7L);
-        System.out.println(team.toString());
+        //Team team=teamService.getTeamById(8L);
+       // System.out.println(team.toString());
     }
     @Test
     public void deleteTeamById(){
-        teamService.deleteTeamById(7L);
+       // teamService.deleteTeamById(7L);
     }
     @Test
     public void addTeamMemer(){
-        Team team=new Team();
-        team.setCourseId(2);
-        team.setKlassId(3);
-        team.setLeaderId(20);
-        team.setTeamName("测bu试");
-        team.setTeamSerial(1);
-        team.setStatus(0);
-
-        teamService.addTeam(team);
-        System.out.println(team.getId());
+//        Team team=new Team();
+//        team.setCourseId(2);
+//        team.setKlassId(3);
+//        team.setLeaderId(20);
+//        team.setTeamName("测bu试");
+//        team.setTeamSerial(1);
+//        team.setStatus(0);
+//
+//        teamService.addTeam(team);
+//        System.out.println(team.getId());
     }
 }
