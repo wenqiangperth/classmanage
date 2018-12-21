@@ -64,8 +64,22 @@ public class AdminService {
         return studentDao.updateStudentPassword(id,password);
     }
 
+    /**
+     * 删除：学生
+     * @param id
+     * @return
+     */
     public Long deleteStudentById(Long id){
         return studentDao.deleteStudentById(id);
+    }
+
+    /**
+     * 更新：学生激活
+     * @param student
+     * @return
+     */
+    public Long updateStudentActive(Student student){
+        return studentDao.updateStudentActive(student);
     }
 
     public String adminstratorLogin(Administrator administrator){

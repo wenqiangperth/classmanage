@@ -110,6 +110,14 @@ public interface StudentMapper {
     public Long updateStudentInformation(Student student);
 
     /**
+     * 更新：学生激活
+     * @param student
+     * @return
+     */
+    @Update("update student set password=#{password},email=#{email},is_active=#{isActive} where id=#{id}")
+    public Long updateStudentAcctive(Student student);
+
+    /**
      * 删除:student
      * @param id
      * @return

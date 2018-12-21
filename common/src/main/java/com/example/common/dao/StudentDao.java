@@ -89,5 +89,14 @@ public class StudentDao {
         return studentMapper.deleteStudentById(id);
     }
 
+    /**
+     * 更新：学生激活
+     * @param student
+     * @return
+     */
+    public Long updateStudentActive(Student student){
+        return studentMapper.updateStudentAcctive(student);
+    }
+
 }
 

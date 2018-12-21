@@ -69,6 +69,19 @@ public class AdminController {
     }
 
     /**
+     * 更新：学生激活
+     * @param request
+     * @param student
+     * @return
+     */
+    @PutMapping(value = "/student/active")
+    public Long updateStudentActive(HttpServletRequest request,@RequestBody Student student){
+        student.setId((Long)request.getAttribute("id"));
+        student.setIsActive(1);
+        return adminService.updateStudentActive(student);
+    }
+
+    /**
      * 删除：学生
      * @param studentId
      * @return

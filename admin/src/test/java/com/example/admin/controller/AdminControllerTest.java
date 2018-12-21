@@ -43,14 +43,18 @@ public class AdminControllerTest {
     public void updateStudent(){
         Student student=new Student();
         student.setId(124L);
-        student.setAccount("6666");
+       // student.setAccount("6666");
         student.setEmail("4654165@qq.com");
-        student.setStudentName("");
-        adminService.updateStudentInformation(student);
+        student.setIsActive(0);
+        student.setPassword("pppqqqq");
+        Long i=adminService.updateStudentActive(student);
+        System.out.println(i);
+        //adminService.updateStudentInformation(student);
     }
     @Test
     public void updatePassword(){
-        adminService.updateStudentPassword(126L,"aaaqqq");
+        //adminService.updateStudentPassword(126L,"aaaqqq");
+
     }
     @Test
     public void deleteStudent(){
