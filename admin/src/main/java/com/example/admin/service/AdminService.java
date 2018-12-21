@@ -2,8 +2,10 @@ package com.example.admin.service;
 
 import com.example.common.dao.AdministratorDao;
 import com.example.common.dao.StudentDao;
+import com.example.common.dao.TeacherDao;
 import com.example.common.entity.Administrator;
 import com.example.common.entity.Student;
+import com.example.common.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,8 @@ public class AdminService {
     private AdministratorDao administratorDao;
     @Autowired
     private StudentDao studentDao;
-
+    @Autowired
+    private TeacherDao teacherDao;
 
     /**
      * 查询：分页获取所有学生
@@ -73,14 +76,10 @@ public class AdminService {
         return studentDao.deleteStudentById(id);
     }
 
-    /**
-     * 更新：学生激活
-     * @param student
-     * @return
-     */
-    public Long updateStudentActive(Student student){
-        return studentDao.updateStudentActive(student);
-    }
+
+
+
+
 
     public String adminstratorLogin(Administrator administrator){
         Administrator admin=administratorDao.getAdministratorByAccount(administrator.getAccount());
@@ -93,6 +92,68 @@ public class AdminService {
         }catch (Exception e){
             return "登陆失败";
         }
+    }
+
+
+    /**
+     * 插入：增加teacher
+     * @param teacher
+     * @return
+     */
+    public Teacher addTeacher(Teacher teacher){
+        teacher.setIsActive(0);
+        Long i=teacherDao.insertTeacher(teacher);
+        if(i<=0){
+            return null;
+        }
+        return teacher;
+    }
+
+    /**
+     * 查询:分页获取所有teacher
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public ArrayList<Teacher>getAllTeacher(int pageNum,int pageSize){
+        return teacherDao.selectAllTeacher(pageNum,pageSize);
+    }
+
+    /**
+     * name or account->teacher
+     * @param accountOrName
+     * @return
+     */
+    public ArrayList<Teacher>getTeacherByAccountOrName(String accountOrName){
+        return teacherDao.selectTeacherByAccountOrName(accountOrName);
+    }
+
+    /**
+     * 更新：name,account ,email
+     * @param teacher
+     * @return
+     */
+    public Long updateTeacherInformation(Teacher teacher){
+        return teacherDao.updateTeacherInformation(teacher);
+    }
+
+    /**
+     * 更新：password
+     * @param id
+     * @param password
+     * @return
+     */
+    public Long updateTeacherPassword(Long id,String password){
+        return teacherDao.updateTeacherPassword(id,password);
+    }
+
+    /**
+     * 删除teacher
+     * @param id
+     * @return
+     */
+    public Long deleteTeacherById(Long id){
+        return teacherDao.deleteTeacherById(id);
     }
 
 }
