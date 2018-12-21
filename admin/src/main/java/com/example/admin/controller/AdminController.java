@@ -33,6 +33,52 @@ public class AdminController {
     }
 
     /**
+     * 查询：name or account->student
+     * @param accountOrName
+     * @return
+     */
+    @GetMapping(value = "/student/searchstudent")
+    public ArrayList<Student>getStudentByAccountOrName(@RequestParam(name = "accountOrName")String accountOrName){
+        return adminService.getStudentByAccountOrName(accountOrName);
+    }
+
+    /**
+     * 更新：学生信息
+     * @param studentId
+     * @param student
+     * @return
+     */
+    @PutMapping(value = "/student/{studentId}/information")
+    public Student updateStudentInformation(@PathVariable("studentId")Long studentId, @RequestBody Student student){
+        student.setId(studentId);
+        if(adminService.updateStudentInformation(student)>0){
+            return student;
+        }
+        return null;
+    }
+
+    /**
+     * 更新:学生密码
+     * @param studentId
+     * @param password
+     * @return
+     */
+    @PutMapping(value = "/student/{studentId}/password")
+    public Long updateStudentPassword(@PathVariable("studentId")Long studentId,@RequestParam(name = "password")String password){
+        return adminService.updateStudentPassword(studentId,password);
+    }
+
+    /**
+     * 删除：学生
+     * @param studentId
+     * @return
+     */
+    @DeleteMapping(value = "/student/{studentId}")
+    public Long deleteStudent(@PathVariable("studentId")Long studentId){
+        return adminService.deleteStudentById(studentId);
+    }
+
+    /**
      *这是管理员登陆
      * @param administrator
      * @return

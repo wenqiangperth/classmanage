@@ -6,6 +6,7 @@ import com.example.common.mapper.StudentMapper;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -41,4 +42,52 @@ public class StudentDao {
         ArrayList<Student>stundets=new ArrayList<>(studentMapper.selectAllStudent());
         return stundets;
     }
+
+    /**
+     * 查询：account or name->students
+     * @param accountOrName
+     * @return
+     */
+    public ArrayList<Student>getStudentByAccountOrName(String accountOrName){
+        ArrayList<Student> students=new ArrayList<>();
+        Student student=studentMapper.selectStudentByAccount(accountOrName);
+        if(student!=null){
+            students.add(student);
+            return students;
+        }
+        students=studentMapper.selectStudentByName(accountOrName);
+        return students;
+    }
+
+    /**
+     * 更新：学生信息
+     * @param student
+     * @return
+     */
+    public Long updateStudentInformation(Student student){
+        return studentMapper.updateStudentInformation(student);
+    }
+
+    /**
+     * 更新：学生密码
+     * @param id
+     * @param password
+     * @return
+     */
+    public Long updateStudentPassword(Long id,String password){
+        return studentMapper.updateStundentPassword(password,id);
+    }
+
+    /**
+     * 删除：学生，及klass_student表关系
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Long deleteStudentById(Long id){
+        studentMapper.deleteKlaaStudentByStudent(id);
+        return studentMapper.deleteStudentById(id);
+    }
+
 }
+

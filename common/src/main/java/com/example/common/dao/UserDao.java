@@ -29,13 +29,16 @@ public class UserDao {
      * @return
      */
     public User getUserByAccount(String account){
-        User user=teacherMapper.selectTeahcerByAccount(account);
-        if(user!=null){
+        User user=new User();
+        Teacher teacher=teacherMapper.selectTeahcerByAccount(account);
+        if(teacher!=null){
+            user.setUserByTeacher(teacher);
             user.setRole("teacher");
             return user;
         }
-        user=studentMapper.selectStudentByAccount(account);
-        if(user!=null){
+        Student student=studentMapper.selectStudentByAccount(account);
+        if(student!=null){
+            user.setUserByStudent(student);
             user.setRole("student");
             return user;
         }
@@ -69,7 +72,7 @@ public class UserDao {
         if(role.equals("teacher")){
             return teacherMapper.updateTeacherEmail(id,email);
         }else if(role.equals("student")){
-            return studentMapper.updateStudnetEmail(id,email);
+            return studentMapper.updateStudentEmail(id,email);
         }
         return 0L;
     }

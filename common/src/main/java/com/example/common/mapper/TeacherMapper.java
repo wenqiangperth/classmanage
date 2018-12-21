@@ -25,7 +25,7 @@ public interface TeacherMapper {
      */
     @Select("select * from teacher where account=#{account}")
     @ResultMap(value = "teacherMap")
-    public User selectTeahcerByAccount(String account);
+    public Teacher selectTeahcerByAccount(String account);
 
     /**
      * 查询：ID->teacher

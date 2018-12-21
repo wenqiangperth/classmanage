@@ -36,8 +36,17 @@ public interface StudentMapper {
      */
     @Select("select * from student where account=#{account}")
     @ResultMap(value = "studentMap")
-    public User selectStudentByAccount(@Param("account")String account);
+    public Student selectStudentByAccount(@Param("account")String account);
 
+
+    /**
+     * 查询：name->students
+     * @param studentName
+     * @return
+     */
+    @Select("select * from student where student_name=#{studentName}")
+    @ResultMap(value = "studentMap")
+    public ArrayList<Student> selectStudentByName(@Param("studentName")String studentName);
     /**
      * 查询：根据ID获取学生
      * @param studentId
@@ -90,5 +99,30 @@ public interface StudentMapper {
      * @return
      */
     @Update("update student set emain=#{email} where id=#{id}")
-    public Long updateStudnetEmail(@Param("id")Long id,@Param("email")String email);
+    public Long updateStudentEmail(@Param("id")Long id,@Param("email")String email);
+
+    /**
+     * 更新：account,name,email
+     * @param student
+     * @return
+     */
+    @Update("update student set account=#{account},student_name=#{studentName},email=#{email} where id=#{id}")
+    public Long updateStudentInformation(Student student);
+
+    /**
+     * 删除:student
+     * @param id
+     * @return
+     */
+    @Delete("delete from student where id=#{id}")
+    public Long deleteStudentById(@Param("id")Long id);
+
+    /**
+     * 删除：klass_student表的关系
+     * @param studentId
+     * @return
+     */
+    @Delete("delete from klass_student where student_id=#{studentId}")
+    public Long deleteKlaaStudentByStudent(@Param("studentId")Long studentId);
+
 }

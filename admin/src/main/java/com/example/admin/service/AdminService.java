@@ -26,8 +26,46 @@ public class AdminService {
     private StudentDao studentDao;
 
 
+    /**
+     * 查询：分页获取所有学生
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     public ArrayList<Student>getAllStudent(int pageNum,int pageSize){
         return studentDao.getAllStudent(pageNum,pageSize);
+    }
+
+    /**
+     * 查询：account or name ->student
+     * @param accountOrName
+     * @return
+     */
+    public ArrayList<Student>getStudentByAccountOrName(String accountOrName){
+        return  studentDao.getStudentByAccountOrName(accountOrName);
+    }
+
+    /**
+     * 更新:学生信息
+     * @param student
+     * @return
+     */
+    public Long updateStudentInformation(Student student){
+        return studentDao.updateStudentInformation(student);
+    }
+
+    /**
+     * 更新：学生密码
+     * @param id
+     * @param password
+     * @return
+     */
+    public Long updateStudentPassword(Long id ,String password){
+        return studentDao.updateStudentPassword(id,password);
+    }
+
+    public Long deleteStudentById(Long id){
+        return studentDao.deleteStudentById(id);
     }
 
     public String adminstratorLogin(Administrator administrator){
