@@ -2,7 +2,6 @@ package com.example.user.service;
 
 import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
-import com.sun.deploy.net.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
