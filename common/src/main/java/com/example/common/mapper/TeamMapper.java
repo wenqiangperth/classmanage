@@ -52,7 +52,7 @@ public interface TeamMapper {
     public Team selectTeamByCourseIdAndLeaderId(Team team);
 
     /**
-     * 查询：从team表中查询某课程下所有的team
+     * 查询：从team表中查询某课程某班级下所有的team
      * @param klassId
      * @param courseId
      * @return
@@ -60,6 +60,15 @@ public interface TeamMapper {
     @Select("select * from team where klass_id=#{klassId} and course_id=#{courseId}")
     @ResultMap(value = "teamMap")
     public ArrayList<Team> selectTeamsByCourseIdAndClassId(@Param("klassId") Long klassId,@Param("courseId") Long courseId);
+
+    /**
+     * 查询：从team表中查询某课程下所有的team
+     * @param courseId
+     * @return
+     */
+    @Select("select * from team where course_id=#{courseId}")
+    @ResultMap(value = "teamMap")
+    public ArrayList<Team> selectTeamsByCourseId(@Param("courseId") Long courseId);
 
     /**
      * 查询：根据ID查询小组

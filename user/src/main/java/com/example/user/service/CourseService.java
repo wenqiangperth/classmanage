@@ -1,9 +1,12 @@
 package com.example.user.service;
 
+import com.example.common.dao.TeamDao;
 import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -22,7 +25,8 @@ import java.util.ArrayList;
 public class CourseService {
     @Autowired
     private CourseDao courseDao;
-
+    @Autowired
+    private TeamDao teamDao;
     /**
      * 获取课程信息
      * @param courseId
@@ -121,4 +125,30 @@ public class CourseService {
         return courseDao.getTeamByCourseIdAndStudentId(studentId,courseId);
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public Long deleteTeamShareByTeamShareId(long teamShareId)
+    {
+        Long temp=(long)1;
+        ArrayList<Team> teams=courseDao.deleteTeamShareByTeamShareId(teamShareId);
+        for(Team team:teams)
+        {
+            temp=teamDao.deleteTeamById(team.getId());
+        }
+        return temp;
+    }
+
+    public Long deleteSeminarShareBySeminarShareId(long seminarShareId)
+    {
+        return courseDao.deleteSeminarShareBySeminarShareId(seminarShareId);
+    }
+
+    public Long createTeamShareRequest(Long courseId,Long subCourseId)
+    {
+        return courseDao.createTeamShareRequest(courseId,subCourseId);
+    }
+
+    public Long createSeminarShareRequest(Long courseId,Long subCourseId)
+    {
+        return courseDao.createSeminarShareRequest(courseId,subCourseId);
+    }
 }
