@@ -2,10 +2,12 @@ package com.example.admin.controller;
 
 import com.example.admin.service.AdminService;
 import com.example.common.entity.Administrator;
+import com.example.common.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * @ClassName AdminController
@@ -15,17 +17,86 @@ import javax.servlet.http.HttpServletRequest;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping(value = "/admin")
 public class AdminController {
     @Autowired
     private AdminService adminService;
+
+    /**
+     * 分页获取学生
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping(value = "/student")
+    public ArrayList<Student>getAllStudent(@RequestParam(name = "pageNum")int pageNum,@RequestParam(name = "pageSize")int pageSize){
+        return adminService.getAllStudent(pageNum,pageSize);
+    }
+
+    /**
+     * 查询：name or account->student
+     * @param accountOrName
+     * @return
+     */
+    @GetMapping(value = "/student/searchstudent")
+    public ArrayList<Student>getStudentByAccountOrName(@RequestParam(name = "accountOrName")String accountOrName){
+        return adminService.getStudentByAccountOrName(accountOrName);
+    }
+
+    /**
+     * 更新：学生信息
+     * @param studentId
+     * @param student
+     * @return
+     */
+    @PutMapping(value = "/student/{studentId}/information")
+    public Student updateStudentInformation(@PathVariable("studentId")Long studentId, @RequestBody Student student){
+        student.setId(studentId);
+        if(adminService.updateStudentInformation(student)>0){
+            return student;
+        }
+        return null;
+    }
+
+    /**
+     * 更新:学生密码
+     * @param studentId
+     * @param password
+     * @return
+     */
+    @PutMapping(value = "/student/{studentId}/password")
+    public Long updateStudentPassword(@PathVariable("studentId")Long studentId,@RequestParam(name = "password")String password){
+        return adminService.updateStudentPassword(studentId,password);
+    }
+
+    /**
+     * 更新：学生激活
+     * @param request
+     * @param student
+     * @return
+     */
+    @PutMapping(value = "/student/active")
+    public Long updateStudentActive(HttpServletRequest request,@RequestBody Student student){
+        student.setId((Long)request.getAttribute("id"));
+        student.setIsActive(1);
+        return adminService.updateStudentActive(student);
+    }
+
+    /**
+     * 删除：学生
+     * @param studentId
+     * @return
+     */
+    @DeleteMapping(value = "/student/{studentId}")
+    public Long deleteStudent(@PathVariable("studentId")Long studentId){
+        return adminService.deleteStudentById(studentId);
+    }
 
     /**
      *这是管理员登陆
      * @param administrator
      * @return
      */
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/admin/login")
     public String administratorLogin(@RequestBody Administrator administrator){
         System.out.println("jinru");
         return adminService.adminstratorLogin(administrator);
@@ -37,5 +108,7 @@ public class AdminController {
         System.out.println("拉拉："+request.getAttribute("id"));
         return "perth";
     }
+
+
 
 }

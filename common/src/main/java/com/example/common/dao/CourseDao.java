@@ -148,4 +148,12 @@ public class CourseDao {
            }
            return teams;
     }
+
+    public Team getTeamByCourseIdAndStudentId(long studentId,long courseId)
+    {
+        long teamId=courseMapper.getTeamIdByCourseIdAndStudentId(courseId,studentId);
+        Team team = teamMapper.selectTeamById(teamId);
+        team.setStudents(teamMapper.selectStudentsByTeamId(teamId));
+        return team;
+    }
 }

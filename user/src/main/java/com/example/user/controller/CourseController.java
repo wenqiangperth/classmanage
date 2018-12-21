@@ -131,4 +131,17 @@ public class CourseController {
   public ArrayList<Klass> getAllClassByCourseId(@PathVariable(value="courseId")long courseId){
       return courseService.getAllClassByCourseId(courseId);
   }
+
+    /**
+     * 查看我的组队
+     * @param request
+     * @param courseId
+     * @return
+     */
+  @GetMapping(value="/{courseId}/myteam")
+  public Team getTeamByCourseIdAndStudentId(HttpServletRequest request,@PathVariable(value="courseId")long courseId)
+  {
+      long studentId=(long)request.getAttribute("id");
+      return courseService.getTeamByCourseIdAndStudentId(studentId,courseId);
+  }
 }

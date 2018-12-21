@@ -67,7 +67,8 @@ public interface CourseMapper {
     public long deleteCourseById(@Param(value="id") long courseId);
 
     /**
-     * 学生查看所有课程
+     * 根据学生ID返回我的课程
+     * @param studentId
      * @return
      */
     @Select("select * from klass_student where student_id=#{studentId}")
@@ -140,5 +141,13 @@ public interface CourseMapper {
     })
     public ArrayList<SeminarShareVO> getAllSeminarShare(@Param(value="courseId") long courseId);
 
+    /**
+     * 根据学生id和课程id获得队伍Id
+     * @param studentId
+     * @param courseId
+     * @return
+     */
+    @Select("select team_id from klass_student where student_id=#{studentId} and course_id=#{courseId}")
+    public long getTeamIdByCourseIdAndStudentId(@Param(value="studentId") long studentId,@Param(value="courseId") long courseId);
 }
 

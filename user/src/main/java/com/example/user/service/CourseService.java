@@ -2,7 +2,6 @@ package com.example.user.service;
 
 import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
-import com.sun.deploy.net.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -115,6 +114,11 @@ public class CourseService {
 
     public ArrayList<Klass> getAllClassByCourseId(long courseId){
         return courseDao.getAllClassByCourseId(courseId);
+    }
+
+    public Team getTeamByCourseIdAndStudentId(long studentId,long courseId)
+    {
+        return courseDao.getTeamByCourseIdAndStudentId(studentId,courseId);
     }
 
 }

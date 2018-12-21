@@ -11,8 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version 1.0
  **/
 @SpringBootApplication
-public class DaoApplication {
+public class CommonApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DaoApplication.class, args);
+        SpringApplication.run(CommonApplication.class, args);
     }
 }

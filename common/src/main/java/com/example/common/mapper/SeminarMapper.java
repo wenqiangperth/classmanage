@@ -28,9 +28,26 @@ public interface SeminarMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     public long insertSeminar( Seminar seminar);
 
+    /**
+     * 查询：courseId,seminarName->seminar
+     * @param courseId
+     * @param roundId
+     * @param seminarName
+     * @return
+     */
     @Select("select * from seminar where course_id=#{courseId} and round_id=#{roundId} and seminar_name=#{seminarName}")
     public Seminar selectSeminarByCoureseIdAndRoundIdAndSeminarName(@Param("courseId") Long courseId,@Param("roundId")Long roundId,@Param("seminarName")String seminarName);
 
+
+    /**
+     * 插入:klass_seminar关系
+     * @param klassId
+     * @param seminarId
+     * @param status
+     * @return
+     */
+    @Insert("insert into klass_seminar (klass_id,seminar_id,status) values (#{klassId},#{seminarId},#{status}")
+    public Long insertKlassSeminar(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId,@Param("status")int status);
 
 
 

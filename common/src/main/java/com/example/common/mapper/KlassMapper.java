@@ -63,6 +63,11 @@ public interface KlassMapper {
     @Delete("delete from klass_student where klass_id=#{class_id}")
     public long deleteClassStudentByClassId(@Param(value="classId")long classId);
 
+    /**
+     * 根据classId寻找对应的班级
+     * @param classId
+     * @return
+     */
     @Select("select * from klass where id=#{classId}")
     @ResultMap(value = "KlassMap")
     public Klass getKlassByKlassId(@Param(value="classId")long classId);

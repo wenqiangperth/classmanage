@@ -1,9 +1,13 @@
 package com.example.admin.service;
 
 import com.example.common.dao.AdministratorDao;
+import com.example.common.dao.StudentDao;
 import com.example.common.entity.Administrator;
+import com.example.common.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 /**
  * @ClassName AdminService
@@ -18,6 +22,65 @@ public class AdminService {
 
     @Autowired
     private AdministratorDao administratorDao;
+    @Autowired
+    private StudentDao studentDao;
+
+
+    /**
+     * 查询：分页获取所有学生
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public ArrayList<Student>getAllStudent(int pageNum,int pageSize){
+        return studentDao.getAllStudent(pageNum,pageSize);
+    }
+
+    /**
+     * 查询：account or name ->student
+     * @param accountOrName
+     * @return
+     */
+    public ArrayList<Student>getStudentByAccountOrName(String accountOrName){
+        return  studentDao.getStudentByAccountOrName(accountOrName);
+    }
+
+    /**
+     * 更新:学生信息
+     * @param student
+     * @return
+     */
+    public Long updateStudentInformation(Student student){
+        return studentDao.updateStudentInformation(student);
+    }
+
+    /**
+     * 更新：学生密码
+     * @param id
+     * @param password
+     * @return
+     */
+    public Long updateStudentPassword(Long id ,String password){
+        return studentDao.updateStudentPassword(id,password);
+    }
+
+    /**
+     * 删除：学生
+     * @param id
+     * @return
+     */
+    public Long deleteStudentById(Long id){
+        return studentDao.deleteStudentById(id);
+    }
+
+    /**
+     * 更新：学生激活
+     * @param student
+     * @return
+     */
+    public Long updateStudentActive(Student student){
+        return studentDao.updateStudentActive(student);
+    }
 
     public String adminstratorLogin(Administrator administrator){
         Administrator admin=administratorDao.getAdministratorByAccount(administrator.getAccount());
