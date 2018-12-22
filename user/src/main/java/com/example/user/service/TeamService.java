@@ -187,6 +187,11 @@ public class TeamService {
             if(teamSerial<team1.getTeamSerial()){teamSerial=team1.getTeamSerial();}
         }
         team.setTeamSerial(teamSerial);
+        if(isTeamValid(team.getId())){
+            team.setStatus(1);
+        }else{
+            team.setStatus(0);
+        }
         return teamDao.addTeam(team);
     }
 
@@ -209,23 +214,44 @@ public class TeamService {
     }
 
     /**
-     * 增加组员
+     * 增加组员，设置分组是否合法
      * @param teamId
      * @param studentId
      * @return
      */
     public Long addTeamMemberById(Long teamId,Long studentId){
-        return teamDao.addTeamMemberById(teamId,studentId);
+        Long i=teamDao.addTeamMemberById(teamId,studentId);
+        if(isTeamValid(teamId)){
+            teamDao.updateTeamStatus(teamId,1);
+        }else{
+            teamDao.updateTeamStatus(teamId,0);
+        }
+        return i;
     }
 
     /**
-     * 删除组员
+     * 删除组员,设置分组是否合法
      * @param teamId
      * @param studentId
      * @return
      */
     public Long removeTeamMember(Long teamId,Long studentId){
-        return teamDao.removeTeamMember(teamId,studentId);
+        Long i=teamDao.removeTeamMember(teamId,studentId);
+        if(isTeamValid(teamId)){
+            teamDao.updateTeamStatus(teamId,1);
+        }else{
+            teamDao.updateTeamStatus(teamId,0);
+        }
+        return i;
+    }
+
+    /**
+     * 创建特殊组队申请
+     * @param teamValidApplication
+     * @return
+     */
+    public Long createTeamValisApplication(TeamValidApplication teamValidApplication){
+        return teamDao.createTeamValidApplication(teamValidApplication);
     }
 
     /**

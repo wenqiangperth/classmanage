@@ -191,6 +191,14 @@ public interface TeamMapper {
     public Long updateTeamStatus(@Param("teamId") Long teamId,@Param("status") int status);
 
     /**
+     * 插入:创建特殊组队请求
+     * @param teamValidApplication
+     * @return
+     */
+    @Insert("insert into team_valid_application (team_id,teacher_id,reason) values (#{teamId},#{teacherId},#{reason})")
+    public Long insertTeamValidApplication(TeamValidApplication teamValidApplication);
+
+    /**
      * 通过teamValidId查找到team_id
      * @param teamValidId
      * @return

@@ -1,6 +1,7 @@
 package com.example.common.dao;
 
 import com.example.common.entity.*;
+import com.example.common.mapper.CourseMapper;
 import com.example.common.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -20,6 +21,9 @@ import java.util.ArrayList;
 public class TeamDao {
     @Autowired
     private TeamMapper teamMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
 
     /**
      * 创建小组，同时在klass_student表设置了teamID->team和student之间的关系
@@ -57,7 +61,7 @@ public class TeamDao {
     }
 
     /**
-     * 根据ID获取某个讨论课
+     * 根据ID获取team包括组员
      * @param teamId
      * @return
      */
@@ -99,6 +103,12 @@ public class TeamDao {
             return 0L;
         }
         return teamMapper.updateKlassStudent(team.getKlassId(),studentId,teamId);
+    }
+
+    public Long createTeamValidApplication(TeamValidApplication teamValidApplication){
+        Course course=courseMapper.selectCourseByTeamId(teamValidApplication.getTeamId());
+        teamValidApplication.setTeacherId(course.getTeacherId());
+        return teamMapper.insertTeamValidApplication(teamValidApplication);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.common.entity.Student;
 import com.example.common.entity.Team;
+import com.example.common.entity.TeamValidApplication;
 import com.example.common.mapper.TeamMapper;
 import com.example.user.service.TeamService;
 import org.junit.Test;
@@ -42,5 +43,14 @@ public class TeamControllerTest {
 //
 //        teamService.addTeam(team);
 //        System.out.println(team.getId());
+    }
+
+    @Test
+    public void createTeamValid(){
+        TeamValidApplication t=new TeamValidApplication();
+        t.setReason("hahahha");
+        t.setTeamId(3L);
+        Long i=teamService.createTeamValisApplication(t);
+        System.out.println(i);
     }
 }

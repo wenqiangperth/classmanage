@@ -51,6 +51,15 @@ public interface CourseMapper {
     public Course getCourseById(@Param(value="id")long courseId);
 
     /**
+     * 查询：teamId->course
+     * @param teamId
+     * @return
+     */
+    @Select("select * from course c,team t where c.id=t.course_id and t.id=#{teamId}")
+    @ResultMap(value = "courseMap")
+    public Course selectCourseByTeamId(@Param("teamId")Long teamId);
+
+    /**
      * 根据课程id删除课程
      * @param courseId
      * @return

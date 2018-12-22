@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.example.common.entity.Team;
+import com.example.common.entity.TeamValidApplication;
 import com.example.user.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,7 @@ public class TeamController {
      */
     @PostMapping(value = "")
     public long addTeam(@RequestBody Team team){
-        System.out.println(team.toString());
         return teamService.addTeam(team);
-
     }
 
     /**
@@ -73,6 +72,17 @@ public class TeamController {
         return teamService.removeTeamMember(teamId,studentId);
     }
 
+    /**
+     * 创建组队申请
+     * @param teamId
+     * @param teamValidApplication
+     * @return
+     */
+    @PostMapping(value = "/{teamId}/teamvalidrequest")
+    public Long createTeamValidRequest(@PathVariable(name = "teamId")Long teamId, @RequestBody TeamValidApplication teamValidApplication){
+        teamValidApplication.setTeamId(teamId);
+        return teamService.createTeamValisApplication(teamValidApplication);
+    }
 
     /**
      * 同意学生特殊组队申请，设置team状态
