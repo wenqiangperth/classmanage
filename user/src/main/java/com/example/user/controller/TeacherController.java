@@ -1,5 +1,16 @@
 package com.example.user.controller;
 
+import com.example.common.entity.Teacher;
+import com.example.user.service.TeacherService;
+import org.apache.ibatis.annotations.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author perth
  * @ClassName TeacherController
@@ -7,5 +18,23 @@ package com.example.user.controller;
  * @Date 2018/12/17 19:03
  * @Version 1.0
  **/
+@RestController
+@RequestMapping(value = "/teacher")
 public class TeacherController {
+    @Autowired
+    private TeacherService teacherService;
+
+    /**
+     * 更新:teacher激活
+     * @param request
+     * @param teacher
+     * @return
+     */
+    @PutMapping(value = "/active")
+    public Long activeTeacher(HttpServletRequest request, @RequestBody Teacher teacher){
+        teacher.setId((Long)request.getAttribute("id"));
+        teacher.setIsActive(1);
+        return teacherService.activeTeacher(teacher);
+    }
+
 }

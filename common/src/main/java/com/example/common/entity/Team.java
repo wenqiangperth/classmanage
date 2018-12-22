@@ -22,4 +22,5 @@ public class Team {
     private int teamSerial;
     private int status;
     private ArrayList<Student> students;
+    private Score score;
 }

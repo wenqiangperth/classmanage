@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.xml.crypto.Data;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * @ClassName SeminarMapper
@@ -50,7 +51,6 @@ public interface SeminarMapper {
     public Long insertKlassSeminar(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId,@Param("status")int status);
 
 
-
     /**
      * 根据课程id删除讨论课
      * @param courseId
@@ -58,4 +58,32 @@ public interface SeminarMapper {
      */
     @Delete("delete from seminar where course_id=#{courseId}")
     public long deleteSeminarByCourseId(@Param(value="courseId")long courseId);
+
+    /**
+     * 根据courseId查找所有讨论课
+     * @param courseId
+     * @return
+     */
+    @Select("select * from seminar where course_id=#{courseId}")
+    @Results(id = "seminarMap",value = {
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "roundId",column = "round_id"),
+            @Result(property = "seminarName",column = "seminar_name"),
+            @Result(property = "introduction",column = "introduction"),
+            @Result(property = "maxTeam",column = "max_team"),
+            @Result(property = "isVisible",column = "is_visible"),
+            @Result(property = "seminarSerial",column = "seminar_serial"),
+            @Result(property = "enrollStartTime",column = "enroll_start_time"),
+            @Result(property = "enrollEndTime",column = "enroll_end_time")
+    })
+    public ArrayList<Seminar> findAllSeminarByCourseId(@Param(value="courseId") long courseId);
+
+    /**
+     * 查询：roundID->seminars
+     * @param roundId
+     * @return
+     */
+    @Select("select * from seminar where round_id=#{roundId}")
+    @ResultMap(value = "seminarMap")
+    public ArrayList<Seminar> selectAllSeminarsByRoundId(Long roundId);
 }

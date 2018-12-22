@@ -1,12 +1,10 @@
 package com.example.common.mapper;
 
-import org.apache.ibatis.annotations.Delete;
+import com.example.common.entity.KlassRound;
+import com.example.common.entity.Round;
+import com.sun.org.apache.bcel.internal.generic.LLOAD;
+import org.apache.ibatis.annotations.*;
 import com.example.common.entity.Seminar;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -23,23 +21,36 @@ import java.util.ArrayList;
 @Repository
 public interface RoundMapper {
 
+
     /**
-     * 查询：一轮下所有讨论课
+     * 查询：id->round
+     * @param id
+     * @return
+     */
+    @Select("select * from round where id=#{id}")
+    @Results({
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "roundSerial",column = "round_serial"),
+            @Result(property = "presentationScoreMethod",column = "presentation_score_method"),
+            @Result(property = "reportScoreMethod",column = "report_score_method"),
+            @Result(property = "questionScoreMethod",column = "question_score_method")
+    })
+    public Round selectRoundById(@Param("id")Long id);
+
+    /**
+     * 查询：roundId->klassRound
      * @param roundId
      * @return
      */
-    @Select("select * from seminar where round_id=#{roundId}")
+    @Select("select kr.klass_id,kr.round_id,kr.enroll_number,k.klass_serial from klass_round kr,klass k where kr.klass_id=k.id and round_id=#{roundId}")
     @Results({
-            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "klassId",column = "klass_id"),
             @Result(property = "roundId",column = "round_id"),
-            @Result(property = "seminarName",column = "seminar_name"),
-            @Result(property = "maxTeam",column = "max_team"),
-            @Result(property = "isVisible",column = "is_visible"),
-            @Result(property = "seminarSerial",column = "seminar_serial"),
-            @Result(property = "enrollStartTime",column = "enroll_start_time"),
-            @Result(property = "enrollEndTime",column = "enroll_end_time")
+            @Result(property = "enrollNumber",column = "enroll_number"),
+            @Result(property = "klassSerial",column = "klass_serial")
     })
-    public ArrayList<Seminar> selectAllSeminarsByRoundId(Long roundId);
+    public ArrayList<KlassRound>selectKlassRoundByRoundId(@Param("roundId")Long roundId);
+
     /**
      * 根据课程id删除轮次
      * @param courseId
@@ -47,4 +58,23 @@ public interface RoundMapper {
      */
     @Delete("delete from round where course_id=#{courseId}")
     public long deleteRoundByCourseId(@Param(value="courseId")long courseId);
+
+    /**
+     * 更新：round的计分规则
+     * @param round
+     * @return
+     */
+    @Update("update round set presentation_score_method=#{presentationScoreMethod},report_score_method=#{reportScoreMethod},question_score_method=#{questionScoreMethod} where id=#{id}")
+    public  Long updateRoundById(Round round);
+
+    /**
+     * 更新：klass_round的报名次数
+     * @param klassRound
+     * @return
+     */
+    @Update("update klass_round set enroll_number=#{enrollNumber} where klass_id=#{klassId} and round_id=#{roundId}")
+    public Long updateKlassRound(KlassRound klassRound);
+
+
+
 }

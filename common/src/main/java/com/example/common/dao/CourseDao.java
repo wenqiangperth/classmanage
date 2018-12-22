@@ -32,6 +32,9 @@ public class CourseDao {
     @Autowired
     private TeamMapper teamMapper;
 
+    @Autowired
+    private SeminarMapper seminarMapper;
+
     public Course getCourseById(long courseId) {
         return courseMapper.getCourseById(courseId);
     }
@@ -113,6 +116,14 @@ public class CourseDao {
         return teamShareVOS;
     }
 
+    public ArrayList<Team> deleteTeamShareByTeamShareId(long teamShareId)
+    {
+        Long subCourseId=courseMapper.getSubCourseIdByTeamShareId(teamShareId);
+        courseMapper.deleteTeamShareByteamShareId(teamShareId);
+        ArrayList<Team> teams = teamMapper.selectTeamsByCourseId(subCourseId);
+        return teams;
+    }
+
     public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
     {
         ArrayList<SeminarShareVO> seminarShareVOS=courseMapper.getAllSeminarShare(courseId);
@@ -155,5 +166,33 @@ public class CourseDao {
         Team team = teamMapper.selectTeamById(teamId);
         team.setStudents(teamMapper.selectStudentsByTeamId(teamId));
         return team;
+    }
+
+    public Long deleteSeminarShareBySeminarShareId(long seminarShareId)
+    {
+        Long subCourseId = courseMapper.getSubCourseIdBySeminarShareId(seminarShareId);
+        ArrayList<Klass> klasses=klassMapper.getAllClassByCourseId(subCourseId);
+        ArrayList<Seminar> seminars=seminarMapper.findAllSeminarByCourseId(subCourseId);
+        for(Klass klass:klasses)
+        {
+            for(Seminar seminar:seminars)
+            {
+                courseMapper.deleteKlassSeminarByCourseId(klass.getId(),seminar.getId());
+            }
+
+        }
+        return courseMapper.deleteSeminarShareBySeminarShareId(seminarShareId);
+    }
+
+    public Long createTeamShareRequest(Long courseId,Long subCourseId)
+    {
+        Course course=courseMapper.getCourseById(subCourseId);
+        return courseMapper.createTeamShareRequest(courseId,subCourseId,course.getTeacherId());
+    }
+
+    public Long createSeminarShareRequest(Long courseId,Long subCourseId)
+    {
+        Course course=courseMapper.getCourseById(subCourseId);
+        return courseMapper.createSeminarShareRequest(courseId,subCourseId,course.getTeacherId());
     }
 }

@@ -144,4 +144,49 @@ public class CourseController {
       long studentId=(long)request.getAttribute("id");
       return courseService.getTeamByCourseIdAndStudentId(studentId,courseId);
   }
+
+    /**
+     * 根据teamShareId取消共享
+     * @param teamShareId
+     * @return
+     */
+  @DeleteMapping(value="teamshare/{teamshareId}")
+   public Long deleteTeamShareByTeamShareId(@PathVariable(value = "teamshareId") long teamShareId)
+  {
+      return courseService.deleteTeamShareByTeamShareId(teamShareId);
+  }
+    /**
+     * 根据seminarShareId取消共享
+     * @param seminarShareId
+     * @return
+     */
+    @DeleteMapping(value="seminarshare/{seminarshareId}")
+    public Long deleteSeminarShareBySeminarShareId(@PathVariable(value = "seminarshareId") long seminarShareId)
+    {
+        return courseService.deleteSeminarShareBySeminarShareId(seminarShareId);
+    }
+
+    /**
+     * 发起一个组队共享请求
+     * @param courseId
+     * @param subCourseId
+     * @return
+     */
+    @PostMapping(value="/{courseId}/teamsharerequest")
+    public Long createTeamShareRequest(@PathVariable(value="courseId") Long courseId,@RequestParam Long subCourseId)
+    {
+        return courseService.createSeminarShareRequest(courseId,subCourseId);
+    }
+
+    /**
+     * 发起一个讨论课共享请求
+     * @param courseId
+     * @param subCourseId
+     * @return
+     */
+    @PostMapping(value="/{courseId}/seminarsharerequest")
+    public Long createSeminarShareRequest(@PathVariable(value="courseId") Long courseId,@RequestParam Long subCourseId)
+    {
+        return courseService.createSeminarShareRequest(courseId,subCourseId);
+    }
 }

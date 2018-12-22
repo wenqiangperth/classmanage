@@ -149,5 +149,66 @@ public interface CourseMapper {
      */
     @Select("select team_id from klass_student where student_id=#{studentId} and course_id=#{courseId}")
     public long getTeamIdByCourseIdAndStudentId(@Param(value="studentId") long studentId,@Param(value="courseId") long courseId);
+
+    /**
+     * 根据teamShareId查看subCourseId
+     * @param teamShareId
+     * @return
+     */
+    @Select("select sub_course_id from share_team_application where id=#{teamShareId}")
+    public Long getSubCourseIdByTeamShareId(@Param(value="teamShareId")Long teamShareId);
+
+    /**
+     * 根据teamShareId删除该条共享分组的记录
+     * @param teamShareId
+     * @return
+     */
+    @Delete("delete from share_team_application where id=#{teamShareId}")
+    public Long deleteTeamShareByteamShareId(@Param(value="teamShareId") Long teamShareId);
+
+    /**
+     * 根据seminarShareId查看subCourseId
+     * @param seminarShareId
+     * @return
+     */
+    @Select("select sub_course_id from share_seminar_application where id=#{seminarShareId}")
+    public Long getSubCourseIdBySeminarShareId(@Param(value="seminarShareId")Long seminarShareId);
+
+    /**
+     * 根据seminarShareId删除该条共享讨论课的记录
+     * @param seminarShareId
+     * @return
+     */
+    @Delete("delete from share_seminar_application where id=#{seminarShareId}")
+    public Long deleteSeminarShareBySeminarShareId(@Param(value="seminarShareId") Long seminarShareId);
+
+    /**
+     * 根据班级Id和讨论课id删除对应的klass_seminar表中的记录
+     * @param classId
+     * @param seminarId
+     * @return
+     */
+    @Delete("delete from klass_seminar where klass_id=#{classId} and seminar_id=#{seminar_id}")
+    public Long deleteKlassSeminarByCourseId(@Param(value="classId")Long classId,@Param(value="seminarId")Long seminarId);
+
+    /**
+     * 在share_team_application表中插入数据
+     * @param courseId
+     * @param subCourseId
+     * @param subCourseTeacherId
+     * @return
+     */
+    @Insert("insert into share_team_application(main_course_id,sub_course_id,subcourse_teacher_id) values (#{courseId},#{subCourseId},#{subCourseTeacherId}")
+    public Long createTeamShareRequest(@Param(value="courseId") Long courseId,@Param(value="subCourseId")Long subCourseId,@Param(value="subCourseTeacherId")Long subCourseTeacherId);
+
+    /**
+     * 在share_seminar_application表中插入数据
+     * @param courseId
+     * @param subCourseId
+     * @param subCourseTeacherId
+     * @return
+     */
+    @Insert("insert into share_seminar_application(main_course_id,sub_course_id,subcourse_teacher_id) values (#{courseId},#{subCourseId},#{subCourseTeacherId}")
+    public Long createSeminarShareRequest(@Param(value="courseId") Long courseId,@Param(value="subCourseId")Long subCourseId,@Param(value="subCourseTeacherId")Long subCourseTeacherId);
 }
 
