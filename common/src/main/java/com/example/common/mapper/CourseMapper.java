@@ -5,6 +5,7 @@ import com.example.common.entity.*;
 import java.util.Date;
 import java.util.ArrayList;
 
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -36,7 +37,7 @@ public interface CourseMapper {
      * @return
      */
     @Insert("insert into course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id)values (#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime},#{teamMainCourseId},#{seminarMainCourseId})")
-    public long addCourse(@Param(value = "teacherId") long teacherId,@Param(value = "courseName")String courseName,@Param(value = "introduction")String introduction,@Param(value = "presentationPercentage")int presentationPercentage,@Param(value = "questionPercentage")int questionPercentage,@Param(value = "reportPercentage")int reportPercentage,@Param(value = "teamStartTime")Date teamStartTime,@Param(value = "teamEndTime")Date teamEndTime,@Param(value = "teamMainCourseId")long teamMainCourseId,@Param(value = "seminarMainCourseId")long seminarMainCourseId);
+    public long addCourse(@Param(value = "teacherId") long teacherId, @Param(value = "courseName")String courseName, @Param(value = "introduction")String introduction, @Param(value = "presentationPercentage")int presentationPercentage, @Param(value = "questionPercentage")int questionPercentage, @Param(value = "reportPercentage")int reportPercentage, @Param(value = "teamStartTime")DateTimeLiteralExpression.DateTime teamStartTime, @Param(value = "teamEndTime") DateTimeLiteralExpression.DateTime teamEndTime, @Param(value = "teamMainCourseId")long teamMainCourseId, @Param(value = "seminarMainCourseId")long seminarMainCourseId);
 
     /**
      * 查看课程信息
@@ -210,5 +211,24 @@ public interface CourseMapper {
      */
     @Insert("insert into share_seminar_application(main_course_id,sub_course_id,subcourse_teacher_id) values (#{courseId},#{subCourseId},#{subCourseTeacherId}")
     public Long createSeminarShareRequest(@Param(value="courseId") Long courseId,@Param(value="subCourseId")Long subCourseId,@Param(value="subCourseTeacherId")Long subCourseTeacherId);
+
+    /**
+     * 根据id查共享分组请求消息
+     * @param teamShareId
+     * @return
+     */
+    @Select("select * from share_team_application where id=#{teamShareId}")
+    @ResultMap(value="TeamShareMap")
+    public TeamShareVO getTeamShareByTeamShareId(@Param(value="teamShareId") Long teamShareId);
+
+    /**
+     * 根据id查共享讨论课请求消息
+     * @param seminarShareId
+     * @return
+     */
+    @Select("select * from share_seminar_application where id=#{seminarShareId}")
+    @ResultMap(value="SeminarShareMap")
+    public SeminarShareVO getSeminarShareBySeminarShareId(@Param(value="seminarShareId") Long seminarShareId);
+
 }
 

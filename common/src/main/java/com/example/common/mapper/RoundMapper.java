@@ -2,7 +2,6 @@ package com.example.common.mapper;
 
 import com.example.common.entity.KlassRound;
 import com.example.common.entity.Round;
-import com.sun.org.apache.bcel.internal.generic.LLOAD;
 import org.apache.ibatis.annotations.*;
 import com.example.common.entity.Seminar;
 import org.springframework.stereotype.Repository;
