@@ -37,6 +37,21 @@ public interface RoundMapper {
     public Round selectRoundById(@Param("id")Long id);
 
     /**
+     * 查询：根据课程id查询所有轮次
+     * @param courseId
+     * @return
+     */
+    @Select("select * from round where course_id=#{courseId}")
+    @Results(id = "roundMap",value = {
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "roundSerial",column = "round_serial"),
+            @Result(property = "presentationScoreMethod",column = "presentation_score_method"),
+            @Result(property = "reportScoreMethod",column = "report_score_method"),
+            @Result(property = "questionScoreMethod",column = "question_score_method")
+    })
+    public ArrayList<Round> getAllRoundByCourseId(@Param(value="courseId") long courseId);
+
+    /**
      * 查询：roundId->klassRound
      * @param roundId
      * @return
@@ -74,6 +89,14 @@ public interface RoundMapper {
     @Update("update klass_round set enroll_number=#{enrollNumber} where klass_id=#{klassId} and round_id=#{roundId}")
     public Long updateKlassRound(KlassRound klassRound);
 
+    /**
+     * 插入：新建round
+     * @param round
+     * @return
+     */
+    @Insert("insert into round (course_id,round_serial,presentation_score_method,report_score_method,question_score_method) values (#{courseId},#{roundSerial},#{presentationScoreMethod},#{reportScoreMethod},#{questionScoreMethod})")
+    @Options(useGeneratedKeys = true,keyProperty = "id")
+    public Long insertRound(Round round);
 
 
 }

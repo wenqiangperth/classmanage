@@ -36,6 +36,9 @@ public class CourseDao {
     @Autowired
     private SeminarMapper seminarMapper;
 
+    @Autowired
+    private RoundMapper roundMapper;
+
     public Course getCourseById(long courseId) {
         return courseMapper.getCourseById(courseId);
     }
@@ -78,7 +81,7 @@ public class CourseDao {
 
     public ArrayList<Round> getAllRoundByCourseId(long courseId)
     {
-        return courseMapper.getAllRoundByCourseId(courseId);
+        return roundMapper.getAllRoundByCourseId(courseId);
     }
 
     public ArrayList<Klass> getAllClassByCourseId(long courseId)
