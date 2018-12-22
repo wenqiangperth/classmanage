@@ -31,6 +31,17 @@ public interface KlassMapper {
             @Result(property = "klassLocation",column = "klass_location")
     })
     public ArrayList<Klass> getAllClassByCourseId(@Param(value="courseId") long courseId);
+
+    /**
+     * 查询：seminarId->klasses
+     * @param seminarId
+     * @return
+     */
+    @Select("select * from klass k,klass_seminar ks where k.id=ks.klass_id and ks.seminar_id=#{seminarId}")
+    @ResultMap(value = "klassMap")
+    public ArrayList<Klass>getAllKlassBySeminarId(@Param("seminarId")Long seminarId);
+
+
     /**
      * 根据课程id删除班级
      * @param courseId

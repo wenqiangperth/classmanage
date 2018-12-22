@@ -18,12 +18,12 @@ public class SeminarDaoTest {
     @Test
     public void addSeminar() {
         Seminar seminar=new Seminar();
-        seminar.setCourseId(3);
-        seminar.setRoundId(2);
-        seminar.setSeminarName("测试里");
-        seminar.setIntroduction("dafsfad");
+        seminar.setCourseId(5L);
+        seminar.setSeminarName("加油");
+        seminar.setIntroduction("best");
         seminar.setMaxTeam(5);
         seminar.setIsVisible(1);
-        seminarDao.addSeminar(seminar);
+        Long i=seminarDao.addSeminar(seminar);
+        System.out.println(i);
     }
 }

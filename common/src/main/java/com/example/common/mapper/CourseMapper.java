@@ -89,20 +89,7 @@ public interface CourseMapper {
     @ResultMap(value="courseMap")
     public ArrayList<Course> getAllCourseByTeacherId(@Param(value="teacherId") long teacherId);
 
-    /**
-     * 根据课程id查询所有轮次
-     * @param courseId
-     * @return
-     */
-    @Select("select * from round where course_id=#{courseId}")
-    @Results(id = "roundMap",value = {
-            @Result(property = "courseId",column = "course_id"),
-            @Result(property = "roundSerial",column = "round_serial"),
-            @Result(property = "presentationScoreMethod",column = "presentation_score_method"),
-            @Result(property = "reportScoreMethod",column = "report_score_method"),
-            @Result(property = "questionScoreMethod",column = "question_score_method")
-    })
-    public ArrayList<Round> getAllRoundByCourseId(@Param(value="courseId") long courseId);
+
 
 
     /**
