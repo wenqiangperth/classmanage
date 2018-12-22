@@ -63,7 +63,7 @@ public class SeminarDao {
         int status=0;
         ArrayList<Klass>klasses=klassMapper.getAllClassByCourseId(seminar.getCourseId());
         for (Klass klass:klasses
-             ) {
+        ) {
             seminarMapper.insertKlassSeminar(klass.getId(),seminar.getId(),status);
         }
 
@@ -79,7 +79,7 @@ public class SeminarDao {
         ArrayList<Klass>klasses=klassMapper.getAllKlassBySeminarId(seminarId);
         if(klasses!=null){
             for (Klass klass:klasses
-                 ) {
+            ) {
                 KlassSeminar klassSeminar=klassMapper.getKlassSeminarByKlassAndSeminar(klass.getId(),seminarId);
                 klass.setKlassSeminar(klassSeminar);
             }
@@ -87,8 +87,89 @@ public class SeminarDao {
         return klasses;
     }
 
+    /**
+     * 查询：id->seminar
+     * @param id
+     * @return
+     */
+    public Seminar selectSeminarById(Long id){
+        return seminarMapper.selectSeminarById(id);
+    }
+
+    /**
+     * 更新：修改seminar
+     * @param seminar
+     * @return
+     */
+    public Long updateSeminar(Seminar seminar){
+        return seminarMapper.updateSeminarById(seminar);
+    }
+
+    /**
+     * 删除：讨论课，以及klass_seminar关系
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Long deleteSeminarById(Long id){
+        Long i=seminarMapper.deleteSeminarById(id);
+        if(i<=0){
+            return i;
+        }
+        seminarMapper.deleteKlassSeminarBySeimarId(id);
+        return i;
+    }
+
+    /**
+     * 更新：修改klass_seminar
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateKlassSeminar(KlassSeminar klassSeminar){
+        return seminarMapper.updateKlassSeminarByKlassIdAndSeminarId(klassSeminar);
+    }
+
+    /**
+     * 更新：设置讨论课轮次
+     * @param roundId
+     * @param id
+     * @return
+     */
+    public Long updateSeminarRoundId(Long roundId,Long id){
+        return seminarMapper.updateSeminarRoundId(roundId,id);
+    }
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateSeminarStatus(KlassSeminar klassSeminar){
+        return seminarMapper.updateSeminarStatus(klassSeminar);
+    }
+    /**
+     * 查询：klassId,seminarid->klass_seminar关系
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    public KlassSeminar selectKlassSeminarByKlassIdAndSeminarId(Long klassId,Long seminarId){
+        return klassMapper.getKlassSeminarByKlassAndSeminar(klassId,seminarId);
+    }
+
     public ArrayList<Seminar> findAllSeminarByCourseId(Long courseId)
     {
         return seminarMapper.findAllSeminarByCourseId(courseId);
     }
+
+    public Long deleteAllSeminarByCourseId(Long courseId)
+    {
+        return seminarMapper.deleteSeminarByCourseId(courseId);
+    }
+
+    public Long deleteAllClassSeminarByClassId(Long classId)
+    {
+        return seminarMapper.deleteSeminarByCourseId(classId);
+    }
+
 }

@@ -81,22 +81,45 @@ public class RequestController {
         return requestService.getAllTeamValidByTeacherId(teacherId);
     }
 
+    /**
+     * 根据teamValidId查看组队合法请求
+     * @param teamValidId
+     * @return
+     */
     @GetMapping("/teamvalid/{teamvalidId}")
     public TeamValidVO getTeamValidByTeamValidId(@PathVariable(value="teamvalidId")Long teamValidId)
     {
         return requestService.getTeamValidByTeamValidId(teamValidId);
     }
 
+    /**
+     * 处理组队共享请求
+     * @param teamShareId
+     * @param status
+     * @return
+     */
     @PutMapping("/teamshare/{teamshareId}")
     public Long updateTeamShareRequestById(@PathVariable(value="teamshareId")Long teamShareId,@RequestParam(value="status") int status)
     {
         return requestService.updateTeamShareRequestById(teamShareId,status);
     }
 
+    /**
+     * 处理讨论课共享请求
+     * @param seminarShareId
+     * @param status
+     * @return
+     */
     @PutMapping("/seminarshare/{seminarshareId}")
     public Long updateSeminarShareRequestById(@PathVariable(value="seminarShareId")Long seminarShareId,@RequestParam(value="status") int status)
     {
         return requestService.updateSeminarShareRequestById(seminarShareId,status);
+    }
+
+    @PutMapping("request/teamvalid/{teamvalidId}")
+    public Long updateTeamValidRequestById(@PathVariable(value="teamvalidId")Long teamValidId,@RequestParam(value="status") int status)
+    {
+        return requestService.updateTeamValidRequestById(teamValidId,status);
     }
 
 }

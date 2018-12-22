@@ -109,13 +109,24 @@ public class RequestService {
 
     public Long updateSeminarShareRequestById(Long seminarShareId,int status)
     {
-        Long subCourseId=courseDao.getSeminarShareBySeminarShareId(seminarShareId).getSubCourseId();
-        ArrayList<Klass> klasses=courseDao.getAllClassByCourseId(subCourseId);
-        ArrayList<Seminar> seminars=seminarDao.findAllSeminarByCourseId(subCourseId);
-        for(Klass klass:klasses)
-        {
-            courseDao.
+        if(status==1) {
+            Long subCourseId = courseDao.getSeminarShareBySeminarShareId(seminarShareId).getSubCourseId();
+            Long mainCourseId = courseDao.getSeminarShareBySeminarShareId(seminarShareId).getMainCourseId();
+            ArrayList<Klass> klasses = courseDao.getAllClassByCourseId(subCourseId);
+            seminarDao.deleteAllSeminarByCourseId(subCourseId);
+            for (Klass klass : klasses) {
+                seminarDao.deleteAllClassSeminarByClassId(klass.getId());
+            }
+            ArrayList<Seminar> seminars = seminarDao.findAllSeminarByCourseId(mainCourseId);
+            for (Seminar seminar : seminars) {
+                seminarDao.addSeminar(seminar);
+            }
         }
         return requestDao.updateSeminarShareRequestById(seminarShareId,status);
+    }
+
+    public Long updateTeamValidRequestById(Long teamValidId,int status)
+    {
+        return requestDao.updateTeamValidRequestById(teamValidId,status);
     }
 }

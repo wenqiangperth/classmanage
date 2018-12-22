@@ -5,6 +5,7 @@ import com.example.common.entity.Team;
 import com.example.common.entity.TeamShareVO;
 import com.example.common.entity.TeamValidVO;
 import com.example.common.mapper.CourseMapper;
+import com.example.common.mapper.TeamMapper;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,7 +28,7 @@ public class RequestDao {
     private RequestMapper requestMapper;
 
     @Autowired
-    private CourseMapper courseMapper;
+    private TeamMapper teamMapper;
 
     public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(Long teacherId)
     {
@@ -49,5 +50,11 @@ public class RequestDao {
         return requestMapper.updateSeminarShareRequestById(seminarShareId,status);
     }
 
+    public Long updateTeamValidRequestById(Long teamValidId,int status)
+    {
+        Long teamId=teamMapper.findTeamIdByTeamValidId(teamValidId);
+        teamMapper.updateTeamStatus(teamId,status);
+        return requestMapper.updateTeamValidRequestById(teamValidId,status);
+    }
 
 }

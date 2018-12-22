@@ -190,6 +190,14 @@ public interface TeamMapper {
     @Update("update team set status=#{status} where id=#{teamId}")
     public Long updateTeamStatus(@Param("teamId") Long teamId,@Param("status") int status);
 
+    /**
+     * 通过teamValidId查找到team_id
+     * @param teamValidId
+     * @return
+     */
+    @Select("select team_id from team_valid_application where id=#{teamValideId}")
+    public Long findTeamIdByTeamValidId(@Param(value="teamValidId")Long teamValidId);
+
 //    @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
 //    @Options(useGeneratedKeys = true,keyColumn = "id")
 //    public Long aa(Team team);
