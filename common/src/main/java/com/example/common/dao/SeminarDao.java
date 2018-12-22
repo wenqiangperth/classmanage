@@ -129,4 +129,32 @@ public class SeminarDao {
         return seminarMapper.updateKlassSeminarByKlassIdAndSeminarId(klassSeminar);
     }
 
+    /**
+     * 更新：设置讨论课轮次
+     * @param roundId
+     * @param id
+     * @return
+     */
+    public Long updateSeminarRoundId(Long roundId,Long id){
+        return seminarMapper.updateSeminarRoundId(roundId,id);
+    }
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateSeminarStatus(KlassSeminar klassSeminar){
+        return seminarMapper.updateSeminarStatus(klassSeminar);
+    }
+    /**
+     * 查询：klassId,seminarid->klass_seminar关系
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    public KlassSeminar selectKlassSeminarByKlassIdAndSeminarId(Long klassId,Long seminarId){
+        return klassMapper.getKlassSeminarByKlassAndSeminar(klassId,seminarId);
+    }
+
 }

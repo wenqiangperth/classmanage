@@ -1,5 +1,6 @@
 package com.example.user.controller;
 
+import com.example.common.entity.KlassSeminar;
 import com.example.common.entity.Seminar;
 import com.example.user.service.SeminarService;
 import org.junit.Test;
@@ -35,5 +36,17 @@ public class SeminarControllerTest {
     public void getSeminar(){
         Seminar seminar=seminarService.getSeminarById(5L);
         System.out.println(seminar);
+    }
+
+    @Test
+    public void updateSeminar(){
+        KlassSeminar klassSeminar=new KlassSeminar();
+        klassSeminar.setSeminarId(5L);
+        klassSeminar.setKlassId(2L);
+        klassSeminar.setStatus(1);
+        Long j=seminarService.updateSeminarStatus(klassSeminar);
+        System.out.println(j);
+//        Long i=seminarService.updateSeminarRoundId(2L,8L);
+//        System.out.println(i);
     }
 }

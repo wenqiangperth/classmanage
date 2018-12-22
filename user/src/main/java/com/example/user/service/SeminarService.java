@@ -68,12 +68,41 @@ public class SeminarService {
     }
 
     /**
+     * 更新：设置讨论课轮次
+     * @param roundId
+     * @param id
+     * @return
+     */
+    public Long updateSeminarRoundId(Long roundId,Long id){
+        return seminarDao.updateSeminarRoundId(roundId,id);
+    }
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateSeminarStatus(KlassSeminar klassSeminar){
+        return seminarDao.updateSeminarStatus(klassSeminar);
+    }
+
+    /**
      * 删除：seminar
      * @param id
      * @return
      */
     public Long deleteSeminarById(Long id){
         return seminarDao.deleteSeminarById(id);
+    }
+
+    /**
+     * 查询：班级讨论课
+     * @param klassId
+     * @param seminarid
+     * @return
+     */
+    public KlassSeminar getKlassSeminarByKlassIdAndSeminarId(Long klassId,Long seminarid){
+        return seminarDao.selectKlassSeminarByKlassIdAndSeminarId(klassId,seminarid);
     }
 
 }

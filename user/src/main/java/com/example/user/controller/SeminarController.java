@@ -88,4 +88,39 @@ public class SeminarController {
     public Long deleteSeminarById(@PathVariable(name = "seminarId")Long seminarId){
         return seminarService.deleteSeminarById(seminarId);
     }
+
+    /**
+     * 查询：班级讨论课
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}/class/{classId}")
+    public KlassSeminar getKlassSeminarByKlassIdAndSeminarId(@PathVariable(name = "classId")Long klassId,@PathVariable(name = "seminarid")Long seminarId){
+        return seminarService.getKlassSeminarByKlassIdAndSeminarId(klassId,seminarId);
+    }
+
+    /**
+     * 更新：设置讨论课轮次
+     * @param seminarId
+     * @param roundId
+     * @return
+     */
+    @PutMapping(value = "/{seminarId}/round")
+    public Long updateSeminarRoundId(@PathVariable(name = "seminarId")Long seminarId,@RequestBody Long roundId){
+        return seminarService.updateSeminarRoundId(roundId,seminarId);
+    }
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param seminarId
+     * @param klassSeminar
+     * @return
+     */
+    @PutMapping(value = "/{seminarId}/status")
+    public Long updateSeminarStatus(@PathVariable(name = "seminarId")Long seminarId,@RequestBody KlassSeminar klassSeminar){
+        klassSeminar.setSeminarId(seminarId);
+        return seminarService.updateSeminarStatus(klassSeminar);
+    }
+
 }
