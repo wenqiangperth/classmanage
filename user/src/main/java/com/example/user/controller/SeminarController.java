@@ -1,9 +1,9 @@
 package com.example.user.controller;
 
-import com.example.common.entity.Klass;
-import com.example.common.entity.KlassSeminar;
-import com.example.common.entity.Seminar;
+import com.example.common.entity.*;
 import com.example.user.service.SeminarService;
+import javafx.scene.chart.ValueAxis;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -121,6 +121,41 @@ public class SeminarController {
     public Long updateSeminarStatus(@PathVariable(name = "seminarId")Long seminarId,@RequestBody KlassSeminar klassSeminar){
         klassSeminar.setSeminarId(seminarId);
         return seminarService.updateSeminarStatus(klassSeminar);
+    }
+
+    /**
+     * 查询：小组讨论课成绩
+     * @param teamId
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}/team/{teamId}/seminarscore")
+    public Team getTeamSeminarScore(@PathVariable(name = "teamId")Long teamId,@PathVariable(name = "seminarId")Long seminarId){
+        return seminarService.getTeamSeminarSocre(teamId,seminarId);
+    }
+
+    /**
+     * 更新：团队讨论课成绩
+     * @param teamId
+     * @param seminarId
+     * @param score
+     * @return
+     */
+    @PutMapping(value = "/{seminarId}/team/{teamId}/seminarscore")
+    public Long updateTeamSeminarScore(@PathVariable(name = "teamId")Long teamId,@PathVariable(name = "seminarId")Long seminarId,@RequestBody Score score){
+        score.setTeamId(teamId);
+        return seminarService.updateTeamSeminarScore(score,seminarId);
+    }
+
+    /**
+     * 查询：一个班级的一次讨论课成绩
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}/class/{classId}/seminarscore")
+    public ArrayList<Team>getSeminarScore(@PathVariable(name = "classId")Long klassId, @PathVariable(name = "seminarId")Long seminarId){
+        return seminarService.getSeminarScore(klassId,seminarId);
     }
 
 }

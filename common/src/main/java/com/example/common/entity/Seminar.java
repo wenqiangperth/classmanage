@@ -22,13 +22,13 @@ public class Seminar {
     private int maxTeam;
     private int isVisible;
     private int seminarSerial;
-    private DateTimeLiteralExpression.DateTime enrollStartTime;
-    private DateTimeLiteralExpression.DateTime enrollEndTime;
+    private Date enrollStartTime;
+    private Date enrollEndTime;
 
-    public DateTimeLiteralExpression.DateTime getEnrollStartTime(){
+    public Date getEnrollStartTime(){
         return enrollStartTime;
     }
-    public DateTimeLiteralExpression.DateTime getEnrollEndTime(){
+    public Date getEnrollEndTime(){
         return enrollEndTime;
     }
 

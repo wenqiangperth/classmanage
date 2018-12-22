@@ -22,8 +22,8 @@ public class Course {
     private int presentationPercentage;
     private int questionPercentage;
     private int reportPercentage;
-    private DateTimeLiteralExpression.DateTime teamStartTime;
-    private DateTimeLiteralExpression.DateTime teamEndTime;
+    private Date teamStartTime;
+    private Date teamEndTime;
     private long teamMainCourseId;
     private long seminarMainCourseId;
     private ArrayList<Team> teams;

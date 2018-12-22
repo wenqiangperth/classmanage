@@ -24,23 +24,14 @@ public interface CourseMapper {
 
     /**
      * 添加课程
-     * @param teacherId
-     * @param courseName
-     * @param introduction
-     * @param presentationPercentage
-     * @param questionPercentage
-     * @param reportPercentage
-     * @param teamStartTime
-     * @param teamEndTime
-     * @param teamMainCourseId
-     * @param seminarMainCourseId
+     * @param course
      * @return
      */
     @Insert("insert into course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id)values (#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime},#{teamMainCourseId},#{seminarMainCourseId})")
-    public long addCourse(@Param(value = "teacherId") long teacherId, @Param(value = "courseName")String courseName, @Param(value = "introduction")String introduction, @Param(value = "presentationPercentage")int presentationPercentage, @Param(value = "questionPercentage")int questionPercentage, @Param(value = "reportPercentage")int reportPercentage, @Param(value = "teamStartTime")DateTimeLiteralExpression.DateTime teamStartTime, @Param(value = "teamEndTime") DateTimeLiteralExpression.DateTime teamEndTime, @Param(value = "teamMainCourseId")long teamMainCourseId, @Param(value = "seminarMainCourseId")long seminarMainCourseId);
+    public long addCourse(Course course);
 
     /**
-     * 查看课程信息
+     * 查询：id->查看课程信息
      * @param courseId
      * @return
      */

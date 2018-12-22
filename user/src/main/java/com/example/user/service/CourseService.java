@@ -40,21 +40,12 @@ public class CourseService {
 
     /**
      * 添加课程
-     * @param teacherId
-     * @param courseName
-     * @param introduction
-     * @param presentationPercentage
-     * @param questionPercentage
-     * @param reportPercentage
-     * @param teamStartTime
-     * @param teamEndTime
-     * @param teamMainCourseId
-     * @param seminarMainCourseId
+     * @param course
      * @return
      */
-    public long addCourse(long teacherId, String courseName, String introduction, int presentationPercentage, int questionPercentage, int reportPercentage, DateTimeLiteralExpression.DateTime teamStartTime, DateTimeLiteralExpression.DateTime teamEndTime, long teamMainCourseId, long seminarMainCourseId)
+    public long addCourse(Course course)
     {
-        return courseDao.addCourse(teacherId,courseName,introduction,presentationPercentage,questionPercentage,reportPercentage,teamStartTime,teamEndTime,teamMainCourseId,seminarMainCourseId);
+        return courseDao.addCourse(course);
     }
 
     /**

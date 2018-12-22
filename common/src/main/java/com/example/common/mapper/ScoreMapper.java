@@ -4,6 +4,8 @@ import com.example.common.entity.Score;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 /**
  * @author perth
  * @ClassName ScoreMapper
@@ -30,4 +32,38 @@ public interface ScoreMapper {
             @Result(property = "reportScore",column = "report_score")
     })
     public Score selectRoundScore(@Param("roundId")Long roundId,@Param("teamId")Long teamId);
+
+    /**
+     * 查询：一个team的一次讨论课成绩
+     * @param teamId
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    @Select("select ss.* from seminar_score ss,klass_seminar ks where ks.id=ss.klass_seminar_id and ss.team_id=#{teamId} and ks.klass_id=#{klassId} and ks.seminar_id=#{seminarId}")
+    @ResultMap(value = "scoreMap")
+    public Score selectTeamSeminarScore(@Param("teamId")Long teamId,@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
+
+    /**
+     * 更新：团队讨论课的成绩
+     * @param score
+     * @return
+     */
+    @Update("update seminar_score set total_score=#{totalScore},presentation_score=#{presentationScore}," +
+            "question_score=#{questionScore},report_score=#{reportScore} where team_id=#{teamId} and klass_seminar_id=#{seminarOrRoundId}")
+    public Long updateTeamSeminarScore(Score score);
+
+    /**
+     * 查询：一个班的一次讨论课成绩
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    @Select("select ss.* from klass_seminar ks,seminar_score ss where ks.id=ss.klass_seminar_id and ks.klass_id=#{klassId} and ks.seminar_id=#{seminarId}")
+    @ResultMap(value = "scoreMap")
+    public ArrayList<Score>selectSeminarScore(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
+
+
+
+
 }
