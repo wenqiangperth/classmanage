@@ -1,6 +1,7 @@
 package com.example.common.entity;
 
 import lombok.Data;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
 import java.sql.Date;
 
@@ -21,13 +22,13 @@ public class Seminar {
     private int maxTeam;
     private int isVisible;
     private int seminarSerial;
-    private Date enrollStartTime;
-    private Date enrollEndTime;
+    private DateTimeLiteralExpression.DateTime enrollStartTime;
+    private DateTimeLiteralExpression.DateTime enrollEndTime;
 
-    public Date getEnrollStartTime(){
+    public DateTimeLiteralExpression.DateTime getEnrollStartTime(){
         return enrollStartTime;
     }
-    public Date getEnrollEndTime(){
+    public DateTimeLiteralExpression.DateTime getEnrollEndTime(){
         return enrollEndTime;
     }
 

@@ -1,6 +1,7 @@
 package com.example.common.mapper;
 
 import com.example.common.entity.Klass;
+import com.example.common.entity.KlassSeminar;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,8 +39,22 @@ public interface KlassMapper {
      * @return
      */
     @Select("select * from klass k,klass_seminar ks where k.id=ks.klass_id and ks.seminar_id=#{seminarId}")
-    @ResultMap(value = "KlassMap")
+    @ResultMap(value = "klassMap")
     public ArrayList<Klass>getAllKlassBySeminarId(@Param("seminarId")Long seminarId);
+
+    /**
+     * 查询：seminarId,klassID->KLASS_SEMINAR
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    @Select("select * from klass_seminar where klass_id=#{klassId} and semianr_id=#{seminarId}")
+    @Results({
+            @Result(property = "klassId",column = "klass_id"),
+            @Result(property = "seminarId",column = "seminar_id"),
+            @Result(property = "reportDDL",column = "report_ddl")
+    })
+    public KlassSeminar getKlassSeminarByKlassAndSeminar(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
 
 
     /**
@@ -82,4 +97,6 @@ public interface KlassMapper {
     @Select("select * from klass where id=#{classId}")
     @ResultMap(value = "KlassMap")
     public Klass getKlassByKlassId(@Param(value="classId")long classId);
+
+
 }

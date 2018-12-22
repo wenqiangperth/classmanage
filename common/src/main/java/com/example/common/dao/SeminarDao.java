@@ -1,6 +1,7 @@
 package com.example.common.dao;
 
 import com.example.common.entity.Klass;
+import com.example.common.entity.KlassSeminar;
 import com.example.common.entity.Round;
 import com.example.common.entity.Seminar;
 import com.example.common.mapper.KlassMapper;
@@ -67,5 +68,22 @@ public class SeminarDao {
         }
 
         return seminar.getId();
+    }
+
+    /**
+     * 查询：seminarId->klass 内含klass_seminar
+     * @param seminarId
+     * @return
+     */
+    public ArrayList<Klass> getKlassBySeminarId(Long seminarId){
+        ArrayList<Klass>klasses=klassMapper.getAllKlassBySeminarId(seminarId);
+        if(klasses!=null){
+            for (Klass klass:klasses
+                 ) {
+                KlassSeminar klassSeminar=klassMapper.getKlassSeminarByKlassAndSeminar(klass.getId(),seminarId);
+                klass.setKlassSeminar(klassSeminar);
+            }
+        }
+        return klasses;
     }
 }

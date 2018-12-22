@@ -1,12 +1,12 @@
 package com.example.user.controller;
 
+import com.example.common.entity.Klass;
 import com.example.common.entity.Seminar;
 import com.example.user.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 
 /**
  * @author perth
@@ -32,5 +32,14 @@ public class SeminarController {
         return seminarService.createSeminar(seminar);
     }
 
+    /**
+     * 查询：seminarID->klass
+     * @param semianrId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}/class")
+    public ArrayList<Klass>getKlassBySeminarId(@PathVariable(name = "seminarId")Long semianrId){
+        return seminarService.getKlassBySeminarId(semianrId);
+    }
 
 }

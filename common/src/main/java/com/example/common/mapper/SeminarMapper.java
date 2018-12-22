@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public interface SeminarMapper {
 
     /**
-     * 插入seminar数据
+     * 插入:seminar
      * @param seminar
      * @return
      */
@@ -52,7 +52,7 @@ public interface SeminarMapper {
 
 
     /**
-     * 根据课程id删除讨论课
+     * 删除：根据课程id删除讨论课
      * @param courseId
      * @return
      */
@@ -60,7 +60,7 @@ public interface SeminarMapper {
     public long deleteSeminarByCourseId(@Param(value="courseId")long courseId);
 
     /**
-     * 根据courseId查找所有讨论课
+     * 查找：根据courseId查找所有讨论课
      * @param courseId
      * @return
      */
@@ -86,4 +86,13 @@ public interface SeminarMapper {
     @Select("select * from seminar where round_id=#{roundId}")
     @ResultMap(value = "seminarMap")
     public ArrayList<Seminar> selectAllSeminarsByRoundId(Long roundId);
+
+    /**
+     * 查询：id->seminar
+     * @param id
+     * @return
+     */
+    @Select("select * from seminar where id=#{id}")
+    @ResultMap(value = "seminarMap")
+    public Seminar selectSeminarById(@Param("id")Long id);
 }
