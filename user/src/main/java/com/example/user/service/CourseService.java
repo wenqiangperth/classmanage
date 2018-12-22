@@ -3,6 +3,7 @@ package com.example.user.service;
 import com.example.common.dao.TeamDao;
 import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +52,7 @@ public class CourseService {
      * @param seminarMainCourseId
      * @return
      */
-    public long addCourse(long teacherId, String courseName, String introduction, int presentationPercentage, int questionPercentage, int reportPercentage, Date teamStartTime, Date teamEndTime, long teamMainCourseId, long seminarMainCourseId)
+    public long addCourse(long teacherId, String courseName, String introduction, int presentationPercentage, int questionPercentage, int reportPercentage, DateTimeLiteralExpression.DateTime teamStartTime, DateTimeLiteralExpression.DateTime teamEndTime, long teamMainCourseId, long seminarMainCourseId)
     {
         return courseDao.addCourse(teacherId,courseName,introduction,presentationPercentage,questionPercentage,reportPercentage,teamStartTime,teamEndTime,teamMainCourseId,seminarMainCourseId);
     }

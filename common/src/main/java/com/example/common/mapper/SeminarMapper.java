@@ -1,5 +1,6 @@
 package com.example.common.mapper;
 
+import com.example.common.entity.KlassSeminar;
 import com.example.common.entity.Seminar;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 public interface SeminarMapper {
 
     /**
-     * 插入seminar数据
+     * 插入:seminar
      * @param seminar
      * @return
      */
@@ -52,7 +53,7 @@ public interface SeminarMapper {
 
 
     /**
-     * 根据课程id删除讨论课
+     * 删除：根据课程id删除讨论课
      * @param courseId
      * @return
      */
@@ -60,7 +61,23 @@ public interface SeminarMapper {
     public long deleteSeminarByCourseId(@Param(value="courseId")long courseId);
 
     /**
-     * 根据courseId查找所有讨论课
+     * 删除：id->seminar
+     * @param id
+     * @return
+     */
+    @Delete("delete from seminar where id=#{id}")
+    public Long deleteSeminarById(@Param("id")Long id);
+
+    /**
+     * 删除：klass_seminar关系
+     * @param seminarId
+     * @return
+     */
+    @Delete("delete from klass_seminar where seminar_id=#{seminarId}")
+    public Long deleteKlassSeminarBySeimarId(@Param("seminarId")Long seminarId);
+
+    /**
+     * 查找：根据courseId查找所有讨论课
      * @param courseId
      * @return
      */
@@ -86,4 +103,32 @@ public interface SeminarMapper {
     @Select("select * from seminar where round_id=#{roundId}")
     @ResultMap(value = "seminarMap")
     public ArrayList<Seminar> selectAllSeminarsByRoundId(Long roundId);
+
+    /**
+     * 查询：id->seminar
+     * @param id
+     * @return
+     */
+    @Select("select * from seminar where id=#{id}")
+    @ResultMap(value = "seminarMap")
+    public Seminar selectSeminarById(@Param("id")Long id);
+
+    /**
+     * 更新：修改讨论课
+     * @param seminar
+     * @return
+     */
+    @Update("update seminar set round_id=#{roundId},seminar_name=#{seminarName}," +
+            "introduction=#{introduction},max_team=#{maxTeam},is_visible=#{isVisible}," +
+            "seminar_serial=#{seminarSerial},enroll_start_time=#{enrollStartTime}," +
+            "enroll_end_time=#{enrollEndTime} where id=#{id}")
+    public Long updateSeminarById(Seminar seminar);
+
+    /**
+     * 更新：修改klass_seminar
+     * @param klassSeminar
+     * @return
+     */
+    @Update("update klass_seminar set report_ddl=#{reportDDL} where seminar_id={seminarId} and klass_id=#{klassId}")
+    public Long updateKlassSeminarByKlassIdAndSeminarId(KlassSeminar klassSeminar);
 }

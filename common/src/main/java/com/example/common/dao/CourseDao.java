@@ -2,6 +2,7 @@ package com.example.common.dao;
 
 import com.example.common.entity.*;
 import com.example.common.mapper.*;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -42,7 +43,7 @@ public class CourseDao {
         return courseMapper.getCourseById(courseId);
     }
 
-    public long addCourse(long teacherId, String courseName, String introduction, int presentationPercentage, int questionPercentage, int reportPercentage, Date teamStartTime, Date teamEndTime, long teamMainCourseId, long seminarMainCourseId)
+    public long addCourse(long teacherId, String courseName, String introduction, int presentationPercentage, int questionPercentage, int reportPercentage, DateTimeLiteralExpression.DateTime teamStartTime, DateTimeLiteralExpression.DateTime teamEndTime, long teamMainCourseId, long seminarMainCourseId)
     {
         return courseMapper.addCourse(teacherId,courseName,introduction,presentationPercentage,questionPercentage,reportPercentage,teamStartTime,teamEndTime,teamMainCourseId,seminarMainCourseId);
     }
@@ -198,4 +199,38 @@ public class CourseDao {
         Course course=courseMapper.getCourseById(subCourseId);
         return courseMapper.createSeminarShareRequest(courseId,subCourseId,course.getTeacherId());
     }
+
+    public TeamShareVO getTeamShareByTeamShareId(long teamShareId)
+    {
+        TeamShareVO teamShareVO=courseMapper.getTeamShareByTeamShareId(teamShareId);
+        Course mainCourse = courseMapper.getCourseById(teamShareVO.getMainCourseId());
+        teamShareVO.setMainCourseName(mainCourse.getCourseName());
+        teamShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
+        teamShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
+        teamShareVO.setMainCourse(0);    //未用字段
+        Course subCourse = courseMapper.getCourseById(teamShareVO.getSubCourseId());
+        teamShareVO.setSubCourseName(subCourse.getCourseName());
+        teamShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
+        teamShareVO.setSubCourseTeacherName(teacherMapper.selectTeacherById(subCourse.getTeacherId()).getTeacherName());
+
+        return teamShareVO;
+    }
+
+    public SeminarShareVO getSeminarShareBySeminarShareId(long seminarShareId)
+    {
+        SeminarShareVO seminarShareVO=courseMapper.getSeminarShareBySeminarShareId(seminarShareId);
+        Course mainCourse = courseMapper.getCourseById(seminarShareVO.getMainCourseId());
+        seminarShareVO.setMainCourseName(mainCourse.getCourseName());
+        seminarShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
+        seminarShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
+        seminarShareVO.setMainCourse(0);
+        Course subCourse = courseMapper.getCourseById(seminarShareVO.getSubCourseId());
+        seminarShareVO.setSubCourseName(subCourse.getCourseName());
+        seminarShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
+        seminarShareVO.setSubCourseTeacherName(teacherMapper.selectTeacherById(subCourse.getTeacherId()).getTeacherName());
+
+        return seminarShareVO;
+    }
+
+
 }

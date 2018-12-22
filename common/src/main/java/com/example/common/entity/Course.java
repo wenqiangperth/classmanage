@@ -1,6 +1,7 @@
 package com.example.common.entity;
 
 import lombok.Data;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,8 +22,8 @@ public class Course {
     private int presentationPercentage;
     private int questionPercentage;
     private int reportPercentage;
-    private Date teamStartTime;
-    private Date teamEndTime;
+    private DateTimeLiteralExpression.DateTime teamStartTime;
+    private DateTimeLiteralExpression.DateTime teamEndTime;
     private long teamMainCourseId;
     private long seminarMainCourseId;
     private ArrayList<Team> teams;

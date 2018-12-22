@@ -18,4 +18,5 @@ public class Klass {
     private int klassSerial;
     private String klassTime;
     private String klassLocation;
+    private KlassSeminar klassSeminar;
 }

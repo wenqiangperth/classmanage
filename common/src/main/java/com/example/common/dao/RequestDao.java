@@ -2,6 +2,7 @@ package com.example.common.dao;
 
 import com.example.common.entity.Course;
 import com.example.common.entity.TeamShareVO;
+import com.example.common.entity.TeamValidVO;
 import com.example.common.mapper.CourseMapper;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,15 @@ public class RequestDao {
     @Autowired
     private RequestMapper requestMapper;
 
+    public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(Long teacherId)
+    {
+        return requestMapper.getAllTeamValidByTeacherId(teacherId);
+    }
 
+    public TeamValidVO getTeamValidByTeamValidId(Long teamValidId)
+    {
+        return requestMapper.getTeamValidByTeamValidId(teamValidId);
+    }
 
 
 }
