@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -24,12 +26,14 @@ public class TeamMapperTest {
         team.setTeamName("aaa测试");
         team.setTeamSerial(3);
         team.setStatus(0);
-        Long i=teamMapper.aa(team);
+        //Long i=teamMapper.aa(team);
         System.out.println(team.getId());
-         System.out.println(i);
+       //  System.out.println(i);
     }
     @Test
     public void selectTeam(){
-        //teamMapper.selectTeamsByCourseIdAndClassId();
+        ArrayList<Team>t  =teamMapper.selectTeamByRoundId(1L);
+        System.out.println(t);
     }
+
 }

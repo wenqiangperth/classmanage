@@ -77,4 +77,13 @@ public interface SeminarMapper {
             @Result(property = "enrollEndTime",column = "enroll_end_time")
     })
     public ArrayList<Seminar> findAllSeminarByCourseId(@Param(value="courseId") long courseId);
+
+    /**
+     * 查询：roundID->seminars
+     * @param roundId
+     * @return
+     */
+    @Select("select * from seminar where round_id=#{roundId}")
+    @ResultMap(value = "seminarMap")
+    public ArrayList<Seminar> selectAllSeminarsByRoundId(Long roundId);
 }

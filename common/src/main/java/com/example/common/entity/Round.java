@@ -2,6 +2,8 @@ package com.example.common.entity;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+
 /**
  * @ClassName Round
  * @Description
@@ -18,4 +20,5 @@ public class Round {
     private int presentationScoreMethod;
     private int reportScoreMethod;
     private int questionScoreMethod;
+    private ArrayList<KlassRound>klassRounds;
 }

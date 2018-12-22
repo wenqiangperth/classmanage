@@ -62,6 +62,15 @@ public interface TeamMapper {
     public ArrayList<Team> selectTeamsByCourseIdAndClassId(@Param("klassId") Long klassId,@Param("courseId") Long courseId);
 
     /**
+     * 查询：roundId->teams
+     * @param roundId
+     * @return
+     */
+    @Select("select t.* from team t,round r where t.course_id=r.course_id and r.id=#{roundId}")
+    @ResultMap(value = "teamMap")
+    public ArrayList<Team>selectTeamByRoundId(@Param("roundId")Long roundId);
+
+    /**
      * 查询：从team表中查询某课程下所有的team
      * @param courseId
      * @return
@@ -172,10 +181,16 @@ public interface TeamMapper {
     @ResultMap(value = "strategyMap")
     public TeamAndOrStrategy getTeamOrStrategy(@Param("id")Long id);
 
+    /**
+     * 更新：team的status
+     * @param teamId
+     * @param status
+     * @return
+     */
     @Update("update team set status=#{status} where id=#{teamId}")
     public Long updateTeamStatus(@Param("teamId") Long teamId,@Param("status") int status);
 
-    @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
-    @Options(useGeneratedKeys = true,keyColumn = "id")
-    public Long aa(Team team);
+//    @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
+//    @Options(useGeneratedKeys = true,keyColumn = "id")
+//    public Long aa(Team team);
 }
