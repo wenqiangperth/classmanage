@@ -13,9 +13,9 @@ import java.sql.Date;
  **/
 @Data
 public class Seminar {
-    private long id;
-    private long courseId;
-    private long roundId;
+    private Long id;
+    private Long courseId;
+    private Long roundId;
     private String seminarName;
     private String introduction;
     private int maxTeam;
