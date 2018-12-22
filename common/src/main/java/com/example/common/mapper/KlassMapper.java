@@ -39,7 +39,7 @@ public interface KlassMapper {
      * @return
      */
     @Select("select * from klass k,klass_seminar ks where k.id=ks.klass_id and ks.seminar_id=#{seminarId}")
-    @ResultMap(value = "klassMap")
+    @ResultMap(value = "KlassMap")
     public ArrayList<Klass>getAllKlassBySeminarId(@Param("seminarId")Long seminarId);
 
     /**

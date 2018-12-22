@@ -3,6 +3,7 @@ package com.example.user.controller;
 import com.example.common.entity.SeminarShareVO;
 import com.example.common.entity.TeamShareVO;
 import com.example.common.entity.TeamValidVO;
+import com.example.user.service.CourseService;
 import com.example.user.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,9 @@ import java.util.ArrayList;
 public class RequestController {
     @Autowired
     private RequestService requestService;
+
+    @Autowired
+    private CourseService courseService;
 
     /**
      * 根据课程id获得所有请求
@@ -71,16 +75,28 @@ public class RequestController {
      * @param teacherId
      * @return
      */
-    @GetMapping("/request/teamvalid")
+    @GetMapping("/teamvalid")
     public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(@RequestParam(value="teacherId") Long teacherId)
     {
         return requestService.getAllTeamValidByTeacherId(teacherId);
     }
 
-    @GetMapping("/request/teamvalid/{teamvalidId}")
+    @GetMapping("/teamvalid/{teamvalidId}")
     public TeamValidVO getTeamValidByTeamValidId(@PathVariable(value="teamvalidId")Long teamValidId)
     {
         return requestService.getTeamValidByTeamValidId(teamValidId);
+    }
+
+    @PutMapping("/teamshare/{teamshareId}")
+    public Long updateTeamShareRequestById(@PathVariable(value="teamshareId")Long teamShareId,@RequestParam(value="status") int status)
+    {
+        return requestService.updateTeamShareRequestById(teamShareId,status);
+    }
+
+    @PutMapping("/seminarshare/{seminarshareId}")
+    public Long updateSeminarShareRequestById(@PathVariable(value="seminarShareId")Long seminarShareId,@RequestParam(value="status") int status)
+    {
+        return requestService.updateSeminarShareRequestById(seminarShareId,status);
     }
 
 }

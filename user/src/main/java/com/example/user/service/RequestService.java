@@ -1,12 +1,10 @@
 package com.example.user.service;
 
-import com.example.common.dao.CourseDao;
-import com.example.common.dao.KlassDao;
-import com.example.common.dao.TeamDao;
+import com.example.common.dao.*;
 import com.example.common.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.common.dao.RequestDao;
+
 import java.util.ArrayList;
 
 /**
@@ -30,6 +28,9 @@ public class RequestService {
 
     @Autowired
     private KlassDao klassDao;
+
+    @Autowired
+    private SeminarDao seminarDao;
 
     public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(long courseId)
     {
@@ -90,4 +91,31 @@ public class RequestService {
         return teamValidVO;
     }
 
+    public Long updateTeamShareRequestById(Long teamShareId,int status)
+    {
+        if(status==1) {
+            Long subCourseId = courseDao.getTeamShareByTeamShareId(teamShareId).getSubCourseId();
+            ArrayList<Klass> klasses = courseDao.getAllClassByCourseId(subCourseId);
+            ArrayList<Team> teams = new ArrayList<Team>();
+            for (Klass klass : klasses) {
+                teams.addAll(teamDao.getAllTeamsByCourseId(klass.getId(), subCourseId));
+            }
+            for (Team team : teams) {
+                teamDao.deleteTeamById(team.getId());
+            }
+        }
+        return requestDao.updateTeamShareRequestById(teamShareId,status);
+    }
+
+    public Long updateSeminarShareRequestById(Long seminarShareId,int status)
+    {
+        Long subCourseId=courseDao.getSeminarShareBySeminarShareId(seminarShareId).getSubCourseId();
+        ArrayList<Klass> klasses=courseDao.getAllClassByCourseId(subCourseId);
+        ArrayList<Seminar> seminars=seminarDao.findAllSeminarByCourseId(subCourseId);
+        for(Klass klass:klasses)
+        {
+            courseDao.
+        }
+        return requestDao.updateSeminarShareRequestById(seminarShareId,status);
+    }
 }

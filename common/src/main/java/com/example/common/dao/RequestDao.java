@@ -1,6 +1,7 @@
 package com.example.common.dao;
 
 import com.example.common.entity.Course;
+import com.example.common.entity.Team;
 import com.example.common.entity.TeamShareVO;
 import com.example.common.entity.TeamValidVO;
 import com.example.common.mapper.CourseMapper;
@@ -25,6 +26,9 @@ public class RequestDao {
     @Autowired
     private RequestMapper requestMapper;
 
+    @Autowired
+    private CourseMapper courseMapper;
+
     public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(Long teacherId)
     {
         return requestMapper.getAllTeamValidByTeacherId(teacherId);
@@ -33,6 +37,16 @@ public class RequestDao {
     public TeamValidVO getTeamValidByTeamValidId(Long teamValidId)
     {
         return requestMapper.getTeamValidByTeamValidId(teamValidId);
+    }
+
+    public Long updateTeamShareRequestById(Long teamShareId,int status)
+    {
+        return requestMapper.updateTeamShareRequestById(teamShareId,status);
+    }
+
+    public Long updateSeminarShareRequestById(Long seminarShareId,int status)
+    {
+        return requestMapper.updateSeminarShareRequestById(seminarShareId,status);
     }
 
 
