@@ -24,7 +24,7 @@ public interface KlassMapper {
      * @return
      */
     @Select("select * from klass where course_id=#{courseId}")
-    @Results(id = "KlassMap",value = {
+    @Results(id = "klassMap",value = {
             @Result(property = "courseId",column = "course_id"),
             @Result(property = "grade",column = "grade"),
             @Result(property = "klassSerial",column = "klass_serial"),
@@ -95,7 +95,7 @@ public interface KlassMapper {
      * @return
      */
     @Select("select * from klass where id=#{classId}")
-    @ResultMap(value = "KlassMap")
+    @ResultMap(value = "klassMap")
     public Klass getKlassByKlassId(@Param(value="classId")long classId);
 
 

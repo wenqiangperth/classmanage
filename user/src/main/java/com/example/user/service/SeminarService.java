@@ -2,6 +2,7 @@ package com.example.user.service;
 
 import com.example.common.dao.SeminarDao;
 import com.example.common.entity.Klass;
+import com.example.common.entity.KlassSeminar;
 import com.example.common.entity.Seminar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,42 @@ public class SeminarService {
      */
     public ArrayList<Klass>getKlassBySeminarId(Long seminarId){
         return seminarDao.getKlassBySeminarId(seminarId);
+    }
+
+    /**
+     * 查询：id->seminar
+     * @param id
+     * @return
+     */
+    public Seminar getSeminarById(Long id){
+        return seminarDao.selectSeminarById(id);
+    }
+
+    /**
+     * 更新：修改讨论课
+     * @param seminar
+     * @return
+     */
+    public Long updateSeminar(Seminar seminar){
+        return seminarDao.updateSeminar(seminar);
+    }
+
+    /**
+     * 更新：修改讨论课
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateKlassSeminar(KlassSeminar klassSeminar){
+        return seminarDao.updateKlassSeminar(klassSeminar);
+    }
+
+    /**
+     * 删除：seminar
+     * @param id
+     * @return
+     */
+    public Long deleteSeminarById(Long id){
+        return seminarDao.deleteSeminarById(id);
     }
 
 }

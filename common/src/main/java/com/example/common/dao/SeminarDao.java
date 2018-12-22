@@ -86,4 +86,47 @@ public class SeminarDao {
         }
         return klasses;
     }
+
+    /**
+     * 查询：id->seminar
+     * @param id
+     * @return
+     */
+    public Seminar selectSeminarById(Long id){
+        return seminarMapper.selectSeminarById(id);
+    }
+
+    /**
+     * 更新：修改seminar
+     * @param seminar
+     * @return
+     */
+    public Long updateSeminar(Seminar seminar){
+        return seminarMapper.updateSeminarById(seminar);
+    }
+
+    /**
+     * 删除：讨论课，以及klass_seminar关系
+     * @param id
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Long deleteSeminarById(Long id){
+        Long i=seminarMapper.deleteSeminarById(id);
+        if(i<=0){
+            return i;
+        }
+        seminarMapper.deleteKlassSeminarBySeimarId(id);
+        return i;
+    }
+
+    /**
+     * 更新：修改klass_seminar
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateKlassSeminar(KlassSeminar klassSeminar){
+        return seminarMapper.updateKlassSeminarByKlassIdAndSeminarId(klassSeminar);
+    }
+
 }

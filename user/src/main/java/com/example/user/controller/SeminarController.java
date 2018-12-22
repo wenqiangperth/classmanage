@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.example.common.entity.Klass;
+import com.example.common.entity.KlassSeminar;
 import com.example.common.entity.Seminar;
 import com.example.user.service.SeminarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,49 @@ public class SeminarController {
         return seminarService.getKlassBySeminarId(semianrId);
     }
 
+    /**
+     * 查询:id->seminar
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}")
+    public Seminar getSeminarById(@PathVariable(name = "seminarId")Long seminarId){
+        return seminarService.getSeminarById(seminarId);
+    }
+
+    /**
+     * 更新：修改讨论课
+     * @param seminarId
+     * @param seminar
+     * @return
+     */
+    @PutMapping(value = "/{seminarId}")
+    public Long updateSeminarById(@PathVariable(name = "seminarId")Long seminarId,@RequestBody Seminar seminar){
+        seminar.setId(seminarId);
+        return seminarService.updateSeminar(seminar);
+    }
+
+    /**
+     * 更新：修改班级讨论课
+     * @param seminarId
+     * @param klassId
+     * @param klassSeminar
+     * @return
+     */
+    @PutMapping(value = "{seminarId}/class/{classId}")
+    public Long updateKlassSeminar(@PathVariable(name = "seminarId") Long seminarId, @PathVariable(name = "classId")Long klassId, @RequestBody KlassSeminar klassSeminar){
+        klassSeminar.setKlassId(klassId);
+        klassSeminar.setSeminarId(seminarId);
+        return seminarService.updateKlassSeminar(klassSeminar);
+    }
+
+    /**
+     * 删除：seminar
+     * @param seminarId
+     * @return
+     */
+    @DeleteMapping(value = "/{seminarId}")
+    public Long deleteSeminarById(@PathVariable(name = "seminarId")Long seminarId){
+        return seminarService.deleteSeminarById(seminarId);
+    }
 }
