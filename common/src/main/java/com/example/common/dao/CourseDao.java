@@ -150,7 +150,7 @@ public class CourseDao {
            ArrayList<Klass> klasses=klassMapper.getAllClassByCourseId(courseId);
            for(Klass klass:klasses)
            {
-               ArrayList<Team> temps = teamMapper.selectTeamsByCourseIdAndClassId(klass.getCourseId(),courseId);
+               ArrayList<Team> temps = teamMapper.selectTeamsByCourseIdAndClassId(klass.getId(),courseId);
                for(Team temp:temps)
                {
                    temp.setStudents(teamMapper.selectStudentsByTeamId(temp.getId()));

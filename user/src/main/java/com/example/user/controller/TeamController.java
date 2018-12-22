@@ -21,11 +21,12 @@ public class TeamController {
 
     /**
      * 创建小组
+     *
      * @param team
      * @return小组ID
      */
     @PostMapping(value = "")
-    public long addTeam(@RequestBody Team team){
+    public long addTeam(@RequestBody Team team) {
         System.out.println(team.toString());
         return teamService.addTeam(team);
 
@@ -33,44 +34,48 @@ public class TeamController {
 
     /**
      * 根据teamID查询小组
+     *
      * @param teamId
      * @return小组
      */
     @GetMapping(value = "/{teamId}")
-    public Team getTeamById(@PathVariable("teamId")Long teamId){
+    public Team getTeamById(@PathVariable("teamId") Long teamId) {
         return teamService.getTeamById(teamId);
     }
 
     /**
      * 根据ID删除小组
+     *
      * @param teamId
      * @return
      */
     @DeleteMapping(value = "/{teamId}")
-    public Long deleteTeamById(@PathVariable("teamId")Long teamId){
+    public Long deleteTeamById(@PathVariable("teamId") Long teamId) {
         return teamService.deleteTeamById(teamId);
     }
 
     /**
      * 增加组员
+     *
      * @param teamId
      * @param studentId
      * @return
      */
     @PutMapping(value = "/{teamId}/add")
-    public Long addTeamMemberById(@PathVariable("teamId")Long teamId ,@RequestBody Long studentId){
-        return teamService.addTeamMemberById(teamId,studentId);
+    public Long addTeamMemberById(@PathVariable("teamId") Long teamId, @RequestBody Long studentId) {
+        return teamService.addTeamMemberById(teamId, studentId);
     }
 
     /**
      * 移除组员
+     *
      * @param teamId
      * @param studentId
      * @return
      */
     @PutMapping(value = "/{teamId}/remove")
-    public Long removeTeamMember(@PathVariable("teamId")Long teamId,@RequestBody Long studentId){
-        return teamService.removeTeamMember(teamId,studentId);
+    public Long removeTeamMember(@PathVariable("teamId") Long teamId, @RequestBody Long studentId) {
+        return teamService.removeTeamMember(teamId, studentId);
     }
 
 
@@ -79,8 +84,8 @@ public class TeamController {
      * @param teamId
      * @return
      */
-    @PutMapping(value = "/{teamId}/approve")
-    public Long approveTeam(@PathVariable("teamId") Long teamId){
-        return teamService.approveTeam(teamId);
-    }
+    //@PutMapping(value = "/{teamId}/approve")
+    //public Long approveTeam(@PathVariable("teamId") Long teamId){
+    //   return teamService.approveTeam(teamId);
+    //}
 }
