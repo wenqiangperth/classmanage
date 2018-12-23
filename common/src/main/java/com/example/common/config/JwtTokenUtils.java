@@ -19,7 +19,7 @@ import java.util.Map;
 @Component
 public class JwtTokenUtils {
     private static final String mysecret="wenqiangwang";
-    private static final int expiration=60;
+    private static final int expiration=600;
 
 
     public String generateToken(JwtUser user){

@@ -28,9 +28,9 @@ import java.util.Map;
  **/
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     private static final String mysecret="wenqiangwang";
-    private static final int expiration=60;
-    @Autowired
-    private JwtTokenUtils jwtTokenUtils;
+    private static final int expiration=600;
+//    @Autowired
+//    private JwtTokenUtils jwtTokenUtils;
 
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -40,6 +40,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
+
+        System.out.println("进入过滤器");
 
         if (header == null || !header.startsWith("Bearer ")) {
             chain.doFilter(request, response);
@@ -57,7 +59,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                         .getBody();
                 ArrayList<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
                 Map<String, Object> objectMap = (Map<String, Object>) claims.get("role");
-                System.out.println(objectMap);
                 SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(objectMap.get("authority").toString());
                 simpleGrantedAuthorities.add(simpleGrantedAuthority);
 
@@ -72,15 +73,18 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
        // UsernamePasswordAuthenticationToken authentication = getAuthentication(request);
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         String refreshedToken = Jwts.builder()
                 .setClaims(claims)
                 .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
                 .signWith(SignatureAlgorithm.HS512, mysecret)
                 .compact();
-        //response.setHeader("Access-Control-Expose-Headers","Authorization" );
+        response.setHeader("Access-Control-Expose-Headers","Authorization" );
         response.setHeader("Authorization", "Bearer " + refreshedToken);
         request.setAttribute("id",claims.get("id"));
-        request.setAttribute("role",claims.get("role"));
+        Map<String, Object> objectMap = (Map<String, Object>) claims.get("role");
+        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(objectMap.get("authority").toString());
+        request.setAttribute("role",simpleGrantedAuthority.toString());
         chain.doFilter(request, response);
 
     }

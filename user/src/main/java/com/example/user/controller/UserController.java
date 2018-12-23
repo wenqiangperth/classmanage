@@ -56,7 +56,8 @@ public class UserController {
     @GetMapping(value = "/information")
     public User getUserInformation(HttpServletRequest request){
         String role=(String)request.getAttribute("role");
-        Long id=(Long)request.getAttribute("id");
+        Long id=Long.parseLong(request.getAttribute("id").toString());
+        System.out.println(id);
         return userService.getUserById(id,role);
     }
 
