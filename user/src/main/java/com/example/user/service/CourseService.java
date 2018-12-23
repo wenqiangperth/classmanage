@@ -3,14 +3,10 @@ package com.example.user.service;
 import com.example.common.dao.TeamDao;
 import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.ArrayList;
 
 
@@ -62,15 +58,15 @@ public class CourseService {
      * 查询所有课程
      * @return
      */
-    public ArrayList<StudentCourseVO> getAllCourseById(HttpServletRequest request)
+    public ArrayList<CourseVO> getAllCourseById(String role, Long id)
     {
-        String role = (String)request.getAttribute("role");
-        if(role=="student"){
-            return courseDao.getAllCourseByStudentId((long)request.getAttribute("id"));
+        if(role.equals("ROLE_STUDENT")){
+            return courseDao.getAllCourseByStudentId(id);
         }
-        else{
-            return courseDao.getAllCourseByTeacherId((long)request.getAttribute("id"));
+        else if(role.equals("ROLE_TEACHER")){
+            return courseDao.getAllCourseByTeacherId(id);
         }
+        return null;
     }
 
     /**

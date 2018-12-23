@@ -2,7 +2,6 @@ package com.example.common.dao;
 
 import com.example.common.entity.*;
 import com.example.common.mapper.*;
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -53,27 +52,25 @@ public class CourseDao {
         return courseMapper.deleteCourseById(courseId);
     }
 
-    public ArrayList<StudentCourseVO> getAllCourseByStudentId(long studentId)
+    public ArrayList<CourseVO> getAllCourseByStudentId(long studentId)
     {
-        ArrayList<StudentCourseVO> studentCourseVOS= courseMapper.getAllCourseByStudentId(studentId);
-        for(StudentCourseVO studentCourseVO:studentCourseVOS)
+        ArrayList<CourseVO> courseVOS = courseMapper.getAllCourseByStudentId(studentId);
+        for(CourseVO courseVO : courseVOS)
         {
-            studentCourseVO.setKlass(klassMapper.getKlassByKlassId(studentCourseVO.getKlassId()));
-            studentCourseVO.setCourseName(courseMapper.getCourseById(studentCourseVO.getCourseId()).getCourseName());
+            courseVO.setKlass(klassMapper.getKlassByKlassId(courseVO.getKlassId()));
+            courseVO.setCourseName(courseMapper.getCourseById(courseVO.getCourseId()).getCourseName());
         }
-        return studentCourseVOS;
+        return courseVOS;
     }
 
-    public ArrayList<StudentCourseVO> getAllCourseByTeacherId(long teacherId)
+    public ArrayList<CourseVO> getAllCourseByTeacherId(long teacherId)
     {
         ArrayList<Course> courses = courseMapper.getAllCourseByTeacherId(teacherId);
-        ArrayList<StudentCourseVO> teacherCourseVOS = new ArrayList<>();
+        ArrayList<CourseVO> teacherCourseVOS = new ArrayList<>();
         for(Course course:courses)
         {
-            StudentCourseVO temp= new StudentCourseVO();
-            temp.setCourseId(course.getId());
-            temp.setCourseName(course.getCourseName());
-            temp.setStudentId(course.getTeacherId());
+            CourseVO temp= new CourseVO();
+            temp.setCourseVOByCourse(course);
             teacherCourseVOS.add(temp);
         }
         return teacherCourseVOS;

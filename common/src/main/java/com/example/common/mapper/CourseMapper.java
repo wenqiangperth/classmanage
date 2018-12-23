@@ -2,10 +2,8 @@ package com.example.common.mapper;
 
 import com.example.common.entity.*;
 
-import java.util.Date;
 import java.util.ArrayList;
 
-import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -72,14 +70,14 @@ public interface CourseMapper {
      * @param studentId
      * @return
      */
-    @Select("select * from klass_student where student_id=#{studentId}")
+    @Select("select * from klass_student where student_id=#{studentOrTeacherId}")
     @Results(id = "studentCourseMap",value = {
             @Result(property = "klassId",column = "klass_id"),
-            @Result(property = "studentId",column = "student_id"),
+            @Result(property = "studentOrTeacherId",column = "student_id"),
             @Result(property = "courseId",column = "course_id"),
             @Result(property = "teamId",column = "team_id")
     })
-    public ArrayList<StudentCourseVO> getAllCourseByStudentId(@Param(value="studentId") long studentId);
+    public ArrayList<CourseVO> getAllCourseByStudentId(@Param(value="studentOrTeacherId") long studentId);
 
     /**
      * 老师查看课程
@@ -135,8 +133,8 @@ public interface CourseMapper {
      * @param courseId
      * @return
      */
-    @Select("select team_id from klass_student where student_id=#{studentId} and course_id=#{courseId}")
-    public long getTeamIdByCourseIdAndStudentId(@Param(value="studentId") long studentId,@Param(value="courseId") long courseId);
+    @Select("select team_id from klass_student where student_id=#{studentOrTeacherId} and course_id=#{courseId}")
+    public long getTeamIdByCourseIdAndStudentId(@Param(value="studentOrTeacherId") long studentId,@Param(value="courseId") long courseId);
 
     /**
      * 根据teamShareId查看subCourseId

@@ -54,16 +54,15 @@ public class UserDao {
 
     /**
      * 更新用户的密码
-     * @param id
+     * @param user
      * @param role
-     * @param password
      * @return
      */
-    public Long updateUserPassword(Long id,String role,String password){
-        if(role.equals("teacher")){
-            return teacherMapper.updateTeahcerPassword(password,id);
-        }else if(role.equals("student")){
-            return studentMapper.updateStundentPassword(password,id);
+    public Long updateUserPassword(User user,String role){
+        if(role.equals("ROLE_TEACHER")){
+            return teacherMapper.updateTeacherPassword(user.getPassword(),user.getOldPassword(),user.getId());
+        }else if(role.equals("ROLE_STUDENT")){
+            return studentMapper.updateStundentPassword(user.getPassword(),user.getOldPassword(),user.getId());
         }
         return 0L;
     }
@@ -76,9 +75,9 @@ public class UserDao {
      * @return
      */
     public Long updateUserEmail(Long id,String role,String email){
-        if(role.equals("teacher")){
+        if(role.equals("ROLE_TEACHER")){
             return teacherMapper.updateTeacherEmail(id,email);
-        }else if(role.equals("student")){
+        }else if(role.equals("ROLE_STUDENT")){
             return studentMapper.updateStudentEmail(id,email);
         }
         return 0L;

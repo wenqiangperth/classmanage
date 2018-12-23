@@ -33,8 +33,8 @@ public interface TeamMapper {
      * @param teamId
      * @return
      */
-    @Update("update klass_student set team_id=#{teamId} where klass_id=#{klassId} and student_id=#{studentId}")
-    public Long updateKlassStudent(@Param("klassId") Long klassId,@Param("studentId") Long studentId,@Param("teamId") Long teamId);
+    @Update("update klass_student set team_id=#{teamId} where klass_id=#{klassId} and student_id=#{studentOrTeacherId}")
+    public Long updateKlassStudent(@Param("klassId") Long klassId,@Param("studentOrTeacherId") Long studentId,@Param("teamId") Long teamId);
 
     /**
      * 查询：从team表中根据course和leader查询team

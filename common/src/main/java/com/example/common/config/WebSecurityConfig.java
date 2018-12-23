@@ -48,7 +48,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                // .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/user/login").permitAll()
-                .antMatchers("/user/*").permitAll()
+               // .antMatchers("/user/*").permitAll()
+                .antMatchers("/user/information").hasRole("TEACHER")
+                .antMatchers("/user/email").hasRole("TEACHER")
+                .antMatchers("/user/password").hasRole("TEACHER")
+
+
+
 
                 //.antMatchers(HttpMethod.OPTIONS)
                // .permitAll()

@@ -20,8 +20,8 @@ public class UserControllerTest {
 
     @Test
     public void changeUserPassword() {
-        Long i=userService.changeUserPassword(3L,"teacher","perth");
-        System.out.println(i);
+//        Long i=userService.changeUserPassword(3L,"teacher","perth");
+//        System.out.println(i);
     }
 
     @Test

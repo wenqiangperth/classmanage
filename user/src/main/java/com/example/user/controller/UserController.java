@@ -25,14 +25,17 @@ public class UserController {
     /**
      * 修改用户密码
      * @param request
-     * @param password
+     * @param user
      * @return
      */
     @PutMapping(value = "/password")
-    public Long changeUserPassword(HttpServletRequest request,@RequestBody String password){
+    public Long changeUserPassword(HttpServletRequest request,@RequestBody User user){
         String role=(String)request.getAttribute("role");
-        Long id=(Long)request.getAttribute("id");
-        return userService.changeUserPassword(id,role,password);
+        Long id=Long.parseLong(request.getAttribute("id").toString());
+        user.setId(id);
+        System.out.println(user);
+        System.out.println(role);
+        return userService.changeUserPassword(user,role);
     }
 
     /**
@@ -57,21 +60,22 @@ public class UserController {
     public User getUserInformation(HttpServletRequest request){
         String role=(String)request.getAttribute("role");
         Long id=Long.parseLong(request.getAttribute("id").toString());
-        System.out.println(id);
         return userService.getUserById(id,role);
     }
 
     /**
      * 修改用户邮箱
      * @param request
-     * @param email
+     * @param user
      * @return
      */
     @PutMapping(value = "/email")
-    public Long changUserEmail(HttpServletRequest request,@RequestBody String email){
+    public Long changUserEmail(HttpServletRequest request,@RequestBody User user){
         String role=(String)request.getAttribute("role");
-        Long id=(Long)request.getAttribute("id");
-        return userService.changeUserEmail(id,role,email);
+        Long id=Long.parseLong(request.getAttribute("id").toString());
+        System.out.println(user);
+        System.out.println(id+"   "+role);
+        return userService.changeUserEmail(id,role,user.getEmail());
     }
 
 
