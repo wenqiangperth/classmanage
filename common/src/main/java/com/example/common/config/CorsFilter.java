@@ -1,5 +1,7 @@
 package com.example.common.config;
 
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -14,6 +16,7 @@ import java.io.IOException;
  * @Version 1.0
  **/
 @Component
+@Order(Ordered.HIGHEST_PRECEDENCE)//控制过滤器的级别
 public class CorsFilter implements Filter {
 
     final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
@@ -25,14 +28,24 @@ public class CorsFilter implements Filter {
 
         HttpServletRequest reqs = (HttpServletRequest) req;
 
+        System.out.println("进入跨域设置");
+
         response.setHeader("Access-Control-Allow-Origin",reqs.getHeader("Origin"));
-        response.setHeader("Access-Control-Allow-Credentials", "true");
+      //  response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT,PATCH");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type,XFILENAME,XFILECATEGORY,XFILESIZE");
         response.setHeader("Access-Control-Allow-Credentials","true");
         //是否允许请求带有验证信息
-        chain.doFilter(req, res);
+
+        System.out.println("跨域设置结束");
+
+        if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, res);
+        }
+        //chain.doFilter(req, res);
     }
     @Override
     public void init(FilterConfig filterConfig) {}

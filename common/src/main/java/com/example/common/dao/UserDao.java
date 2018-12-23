@@ -1,8 +1,10 @@
 package com.example.common.dao;
 
+import com.example.common.entity.Administrator;
 import com.example.common.entity.Student;
 import com.example.common.entity.Teacher;
 import com.example.common.entity.User;
+import com.example.common.mapper.AdministratorMapper;
 import com.example.common.mapper.StudentMapper;
 import com.example.common.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class UserDao {
     private StudentMapper studentMapper;
     @Autowired
     private TeacherMapper teacherMapper;
+    @Autowired
+    private AdministratorMapper administratorMapper;
 
     /**
      * 通过账号获得用户
@@ -30,16 +34,19 @@ public class UserDao {
      */
     public User getUserByAccount(String account){
         User user=new User();
+        Administrator administrator=administratorMapper.selectAdministratorByAccount(account);
+        if(administrator!=null){
+            user.setUserByAdministrator(administrator);
+            return user;
+        }
         Teacher teacher=teacherMapper.selectTeahcerByAccount(account);
         if(teacher!=null){
             user.setUserByTeacher(teacher);
-            user.setRole("teacher");
             return user;
         }
         Student student=studentMapper.selectStudentByAccount(account);
         if(student!=null){
             user.setUserByStudent(student);
-            user.setRole("student");
             return user;
         }
         return null;
