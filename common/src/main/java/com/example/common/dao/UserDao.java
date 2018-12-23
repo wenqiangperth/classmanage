@@ -84,15 +84,28 @@ public class UserDao {
         return 0L;
     }
 
-    public User getUserPassWord(Long id,String role){
-        if(role.equals("teacher")){
-            return teacherMapper.getTeacherInfo(id);
-        }else if(role.equals("student")){
-            return studentMapper.getStudentInfo(id);
+    public User getUserPassWord(String account){
+        User user=new User();
+        Teacher teacher=teacherMapper.selectTeahcerByAccount(account);
+        if(teacher!=null)
+        {
+            user.setId(teacher.getId());
+            user.setAccount(teacher.getAccount());
+            user.setPassword(teacher.getPassword());
+            user.setEmail(teacher.getEmail());
+
         }
-        else {
-            return null;
+        else
+        {
+            Student student=studentMapper.selectStudentByAccount(account);
+            user.setId(student.getId());
+            user.setAccount(student.getAccount());
+            user.setPassword(student.getPassword());
+            user.setEmail(student.getEmail());
         }
+        return user;
+
+
     }
 
     /**

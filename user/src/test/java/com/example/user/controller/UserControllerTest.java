@@ -32,13 +32,13 @@ public class UserControllerTest {
         }
     }
 
-    @Test
+    /*@Test
     public void getUserPassWord() throws MessagingException
     {
         Long i = userService.getUserPassword(8L,"student");
         System.out.print(i);
     }
-
+*/
     @Test
     public void changUserEmailTest() {
         Long i = userService.changeUserEmail(3L, "teacher", "21516515@163.com");
