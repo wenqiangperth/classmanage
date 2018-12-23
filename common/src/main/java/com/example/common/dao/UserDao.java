@@ -77,6 +77,17 @@ public class UserDao {
         return 0L;
     }
 
+    public User getUserPassWord(Long id,String role){
+        if(role.equals("teacher")){
+            return teacherMapper.getTeacherInfo(id);
+        }else if(role.equals("student")){
+            return studentMapper.getStudentInfo(id);
+        }
+        else {
+            return null;
+        }
+    }
+
     /**
      * 查询：id->user信息
      * @param id

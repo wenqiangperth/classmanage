@@ -133,4 +133,19 @@ public interface StudentMapper {
     @Delete("delete from klass_student where student_id=#{studentId}")
     public Long deleteKlaaStudentByStudent(@Param("studentId")Long studentId);
 
+    /**
+     * 获得用户信息
+     * @param id
+     * @return
+     */
+    @Select("select * from student where id=#{id}")
+    @Results(id="UserMap",value = {
+            @Result(property = "account",column = "account"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "isActived",column = "is_active"),
+            @Result(property = "name",column ="student_name" ),
+            @Result(property = "email",column = "email")
+    })
+    public User getStudentInfo(@Param("id") Long id);
+
 }

@@ -5,6 +5,7 @@ import com.example.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -32,6 +33,18 @@ public class UserController {
         String role=(String)request.getAttribute("role");
         Long id=(Long)request.getAttribute("id");
         return userService.changeUserPassword(id,role,password);
+    }
+
+    /**
+     * 获得用户密码
+     * @param request
+     * @return
+     */
+    @GetMapping(value = "/password")
+    public Long getUserPassword(HttpServletRequest request) throws MessagingException {
+        String role=(String)request.getAttribute("role");
+        Long id=(Long)request.getAttribute("id");
+        return userService.getUserPassword(id,role);
     }
 
     /**

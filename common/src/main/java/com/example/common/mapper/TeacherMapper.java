@@ -71,6 +71,21 @@ public interface TeacherMapper {
     public Long updateTeahcerPassword(@Param("password")String password,@Param("id") Long id);
 
     /**
+     * 获得用户信息
+     * @param id
+     * @return
+     */
+    @Select("select * from student where id=#{id}")
+    @Results(id="UserTeacherMap",value = {
+            @Result(property = "account",column = "account"),
+            @Result(property = "password",column = "password"),
+            @Result(property = "isActived",column = "is_active"),
+            @Result(property = "name",column ="teacher_name" ),
+            @Result(property = "email",column = "email")
+    })
+    public User getTeacherInfo(@Param("id") Long id);
+
+    /**
      * 更新：email
      * @param id
      * @param email
