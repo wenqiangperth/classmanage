@@ -32,30 +32,41 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
-             //   .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-               // .antMatchers("/admin/*").hasRole("ADMIN")
-                .antMatchers("/user/login").permitAll()
-              //  .antMatchers("/*").permitAll()
-
-               // .antMatchers(HttpMethod.OPTIONS)
-              //  .permitAll()
-
-                .anyRequest().authenticated()
-                .and()
                 .formLogin()
-               // .loginPage("/user/login")
+                // .loginPage("/user/login")
                 .loginProcessingUrl("/user/login")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(failureHandler)
-                .permitAll()
+                //.permitAll()
                 .and()
-                .logout()
-                .permitAll()
+                .rememberMe()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()));
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+
+                .authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+               // .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/user/login").permitAll()
+                .antMatchers("/user/*").permitAll()
+
+                //.antMatchers(HttpMethod.OPTIONS)
+               // .permitAll()
+
+                .anyRequest().authenticated()
+//                .and()
+//                .formLogin()
+//               // .loginPage("/user/login")
+//                .loginProcessingUrl("/user/login")
+//                .successHandler(myAuthenticationSuccessHandler)
+//                .failureHandler(failureHandler)
+//                .permitAll()
+//                .and()
+//                .logout()
+//                .permitAll()
+                .and()
+                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .csrf().disable();
 
     }
 

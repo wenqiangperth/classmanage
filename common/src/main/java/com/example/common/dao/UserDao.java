@@ -116,10 +116,10 @@ public class UserDao {
      */
     public User getUserById(Long id,String role){
         User user=new User();
-        if(role.equals("student")){
+        if(role.equals("ROLE_STUDENT")){
             Student student=studentMapper.selectStudentById(id);
             user.setUserByStudent(student);
-        }else if(role.equals("student")){
+        }else if(role.equals("ROLE_TEACHER")){
             Teacher teacher=teacherMapper.selectTeacherById(id);
             user.setUserByTeacher(teacher);
         }
