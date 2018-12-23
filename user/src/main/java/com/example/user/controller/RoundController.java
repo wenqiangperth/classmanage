@@ -57,15 +57,15 @@ public class RoundController {
         return roundService.updateRound(round);
     }
 
-    /**
-     * 查询:roundID->轮次成绩
-     * @param roundId
-     * @return
-     */
-    @GetMapping(value = "/{roundId}/roundscore")
-    public ArrayList<Team>getRoundScore(@PathVariable(name = "roundId")Long roundId){
-        return roundService.getRoundScore(roundId);
-    }
+//    /**
+//     * 查询:roundID->轮次成绩
+//     * @param roundId
+//     * @return
+//     */
+//    @GetMapping(value = "/{roundId}/roundscore")
+//    public ArrayList<Team>getRoundScore(@PathVariable(name = "roundId")Long roundId){
+//        return roundService.getRoundScore(roundId);
+//    }
 
     /**
      * 查询：roundId,teamID->score

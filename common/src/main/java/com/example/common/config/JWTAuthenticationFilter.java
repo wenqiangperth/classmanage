@@ -81,7 +81,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 .compact();
         response.setHeader("Access-Control-Expose-Headers","Authorization" );
         response.setHeader("Authorization", "Bearer " + refreshedToken);
-        request.setAttribute("id",claims.get("id"));
+        request.setAttribute("id",claims.get("id").toString());
         Map<String, Object> objectMap = (Map<String, Object>) claims.get("role");
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(objectMap.get("authority").toString());
         request.setAttribute("role",simpleGrantedAuthority.toString());

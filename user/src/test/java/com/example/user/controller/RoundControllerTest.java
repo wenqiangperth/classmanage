@@ -25,11 +25,11 @@ public class RoundControllerTest {
     public void getAllSeminarByRoundId() {
     }
 
-    @Test
-    public void getRoundScore() {
-        ArrayList<Team>teams=roundService.getRoundScore(1L);
-        System.out.println(teams);
-    }
+//    @Test
+//    public void getRoundScore() {
+//        ArrayList<Team>teams=roundService.getRoundScore(1L);
+//        System.out.println(teams);
+//    }
 
     @Test
     public void getTeamScore(){

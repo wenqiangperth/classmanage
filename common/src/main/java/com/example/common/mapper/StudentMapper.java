@@ -102,7 +102,7 @@ public interface StudentMapper {
      * @param email
      * @return
      */
-    @Update("update student set emain=#{email} where id=#{id}")
+    @Update("update student set email=#{email} where id=#{id}")
     public Long updateStudentEmail(@Param("id")Long id,@Param("email")String email);
 
     /**
