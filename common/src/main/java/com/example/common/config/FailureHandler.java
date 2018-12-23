@@ -16,15 +16,13 @@ import java.io.IOException;
 public class FailureHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        System.out.println("失败");
         if(e instanceof BadCredentialsException){
-            System.out.println("bad what");
             httpServletResponse.setStatus(400);
-            httpServletResponse.sendRedirect("http://localhost:8083/#/");
+           // httpServletResponse.sendRedirect("http://localhost:8083/#/");
         }
         else if(e instanceof UsernameNotFoundException) {
             httpServletResponse.setStatus(400);
-            httpServletResponse.sendRedirect("http://localhost:8083/#/");
+           // httpServletResponse.sendRedirect("http://localhost:8083/#/");
         }
     }
 }
