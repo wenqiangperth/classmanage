@@ -149,4 +149,7 @@ public interface SeminarMapper {
     @Update("update klass_seminar set status=#{status} where seminar_id=#{seminarId} and klass_id=#{klassId}")
     public Long updateSeminarStatus(KlassSeminar klassSeminar);
 
+    @Select("select id from klass_seminar where klass_id=#{classId} and seminarId=#{seminarId}")
+    public Long getClassSeminarIdBySeminarIdAndClassId(@Param(value="classId") Long classId,@Param(value="seminarId") Long seminarId);
+
 }

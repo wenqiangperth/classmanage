@@ -2,7 +2,6 @@ package com.example.user.controller;
 
 import com.example.common.entity.*;
 import com.example.user.service.SeminarService;
-import javafx.scene.chart.ValueAxis;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
