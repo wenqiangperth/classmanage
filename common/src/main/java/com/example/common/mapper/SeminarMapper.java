@@ -149,6 +149,12 @@ public interface SeminarMapper {
     @Update("update klass_seminar set status=#{status} where seminar_id=#{seminarId} and klass_id=#{klassId}")
     public Long updateSeminarStatus(KlassSeminar klassSeminar);
 
+    /**
+     * 根据classId和seminarId获得klass_seminar_id
+     * @param classId
+     * @param seminarId
+     * @return
+     */
     @Select("select id from klass_seminar where klass_id=#{classId} and seminarId=#{seminarId}")
     public Long getClassSeminarIdBySeminarIdAndClassId(@Param(value="classId") Long classId,@Param(value="seminarId") Long seminarId);
 

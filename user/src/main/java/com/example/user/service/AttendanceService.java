@@ -35,4 +35,14 @@ public class AttendanceService {
     {
         return  attendanceDao.getPptNameById(attendanceId);
     }
+
+    public Long updateAttendanceInfo(int teamOrder,Long attendanceId)
+    {
+        return attendanceDao.updateAttendanceInfo(teamOrder,attendanceId);
+    }
+
+    public Long deleteAttendanceByAttendanceId(Long attendanceId)
+    {
+        return attendanceDao.deleteAttendanceByAttendanceId(attendanceId);
+    }
 }

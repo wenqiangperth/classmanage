@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.common.config.FileUploudConfig;
 import com.example.user.service.AttendanceService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class AttendanceController {
      * @param file
      * @return
      */
-    @PostMapping(value="{attendanceId}/report")
+    @PostMapping(value="/{attendanceId}/report")
     public String setAttendanceReport(@PathVariable(value="attendanceId")Long attendanceId,MultipartFile file)
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
@@ -51,7 +52,7 @@ public class AttendanceController {
      * @return
      * @throws IOException
      */
-    @GetMapping(value="{attendanceId}/report")
+    @GetMapping(value="/{attendanceId}/report")
     public String getAttendanceReport(@PathVariable(value="attendanceId")Long attendanceId, HttpServletRequest request, HttpServletResponse response)throws IOException
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
@@ -66,7 +67,7 @@ public class AttendanceController {
      * @param file
      * @return
      */
-    @PostMapping(value="{attendanceId}/powerpoint")
+    @PostMapping(value="/{attendanceId}/powerpoint")
     public String setAttendancePpt(@PathVariable(value="attendanceId")Long attendanceId,MultipartFile file)
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
@@ -86,13 +87,25 @@ public class AttendanceController {
      * @return
      * @throws IOException
      */
-    @GetMapping(value="{attendanceId}/powerpoint")
+    @GetMapping(value="/{attendanceId}/powerpoint")
     public String getAttendancePpt(@PathVariable(value="attendanceId")Long attendanceId, HttpServletRequest request, HttpServletResponse response)throws IOException
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         String fileName=attendanceService.getPptNameById(attendanceId);
         fileUploudConfig.downloadFile(request,response,fileName);
         return fileName;
+    }
+
+    @PutMapping(value="/{attendanceId}")
+    public Long updateAttendanceInfo(@RequestParam(value="teamOrder")int teamOrder,@PathVariable(value="attendanceId")Long attendanceId)
+    {
+        return attendanceService.updateAttendanceInfo(teamOrder,attendanceId);
+    }
+
+    @DeleteMapping(value="/{attendanceId}")
+    public Long deleteAttendanceByAttendanceId(@PathVariable(value="attendanceId")Long attendanceId)
+    {
+        return attendanceService.deleteAttendanceByAttendanceId(attendanceId);
     }
 
 }

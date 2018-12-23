@@ -33,6 +33,9 @@ public class SeminarDao {
     @Autowired
     private ScoreMapper scoreMapper;
 
+    @Autowired
+    private AttendanceMapper attendanceMapper;
+
     /**
      * 创建:讨论课，klass_seminar关系
      * @param seminar
@@ -214,6 +217,38 @@ public class SeminarDao {
     public Long deleteAllClassSeminarByClassId(Long classId)
     {
         return seminarMapper.deleteSeminarByCourseId(classId);
+    }
+
+    public Long getClassSeminarIdBySeminarIdAndClassId(Long classId,Long seminarId)
+    {
+        return seminarMapper.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+    }
+
+    public ArrayList<String> getAllSeminarReportByClassSeminarId(Long classSeminarId)
+    {
+        return attendanceMapper.getAllSeminarReportByClassSeminarId(classSeminarId);
+    }
+
+    public ArrayList<String> getAllSeminarPptByClassSeminarId(Long classSeminarId)
+    {
+        return attendanceMapper.getAllSeminarPptByClassSeminarId(classSeminarId);
+    }
+
+    public ArrayList<Attendance> getAllAttendance(Long seminarId,Long classId)
+    {
+        Long classSeminarId=seminarMapper.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+        ArrayList<Attendance> attendances= attendanceMapper.getAllAttendanceByKlassSeminarId(classSeminarId);
+        for(Attendance attendance:attendances)
+        {
+            attendance.setTeam(teamMapper.selectTeamById(attendance.getTeamId()));
+        }
+        return attendances;
+    }
+
+    public Long updateAttendanceByClassSeminarId(Long seminarId,Long classId,Long teamId,int teamOrder)
+    {
+        Long classSeminarId=seminarMapper.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+        return attendanceMapper.insertAttendanceByClassSeminarId(teamId,teamOrder,classSeminarId);
     }
 
 }
