@@ -56,13 +56,15 @@ public class UserService {
         return userDao.updateUserEmail(id,role,email);
     }
 
-    public long getUserPassword(Long id,String role) throws MessagingException
+    public long getUserPassword(String account) throws MessagingException
     {
         MailConfig mailConfig=new MailConfig();
-        User user=userDao.getUserPassWord(id, role);
-        String title="用户密码";
-        String text="您当前使用的"+user.getAccount()+"用户密码为:"+user.getPassword()+"。请及时修改密码！";
-        mailConfig.sendEmail(user.getEmail(),title,text);
+        User user=userDao.getUserPassWord(account);
+        if(user!=null) {
+            String title = "用户密码";
+            String text = "您当前使用的" + user.getAccount() + "用户密码为:" + user.getPassword() + "。请及时修改密码！";
+            mailConfig.sendEmail(user.getEmail(), title, text);
+        }
         return user.getId();
     }
 }

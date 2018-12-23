@@ -37,14 +37,15 @@ public class UserController {
 
     /**
      * 获得用户密码
-     * @param request
+     * @param account
      * @return
+     * @throws MessagingException
      */
     @GetMapping(value = "/password")
-    public Long getUserPassword(HttpServletRequest request) throws MessagingException {
-        String role=(String)request.getAttribute("role");
-        Long id=(Long)request.getAttribute("id");
-        return userService.getUserPassword(id,role);
+    public Long getUserPassword(@RequestParam(value="account")String account) throws MessagingException {
+        //String role=(String)request.getAttribute("role");
+        //Long id=(Long)request.getAttribute("id");
+        return userService.getUserPassword(account);
     }
 
     /**
