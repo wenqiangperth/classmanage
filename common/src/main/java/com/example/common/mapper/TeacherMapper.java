@@ -64,11 +64,15 @@ public interface TeacherMapper {
     /**
      * 更新：password
      * @param password
+     * @param oldPassword
      * @param id
      * @return
      */
+    @Update("update teacher set password=#{password} where id=#{id} and password=#{oldPassword}")
+    public Long updateTeacherPassword(@Param("password")String password,@Param("oldPassword")String oldPassword,@Param("id") Long id);
+
     @Update("update teacher set password=#{password} where id=#{id}")
-    public Long updateTeahcerPassword(@Param("password")String password,@Param("id") Long id);
+    public Long updateTeacherPasswordByAdmin(@Param("password")String password,@Param("id")Long id);
 
     /**
      * 获得用户信息

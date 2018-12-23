@@ -52,14 +52,14 @@ public interface StudentMapper {
      * @param studentId
      * @return
      */
-    @Select("select * from student where id=#{studentId}")
+    @Select("select * from student where id=#{studentOrTeacherId}")
     @Results(id="studentMap",value = {
             @Result(property = "account",column = "account"),
             @Result(property = "isActive",column = "is_active"),
             @Result(property = "studentName",column ="student_name" ),
             @Result(property = "email",column = "email")
     })
-    public Student selectStudentById(@Param(value="studentId") long studentId);
+    public Student selectStudentById(@Param(value="studentOrTeacherId") long studentId);
 
 
     /**
@@ -68,7 +68,7 @@ public interface StudentMapper {
      * @return
      */
     @Select("select c.id,c.teacher_id,c.course_name,c.introduction,c.presentation_percentage," +
-            "c.question_percentage,c.report_percentage,c.team_start_time,c.team_end_time,c.team_main_course_id,c.seminar_main_course_id from course c,klass_student ks where c.id=ks.course_id and ks.student_id=#{studentId}")
+            "c.question_percentage,c.report_percentage,c.team_start_time,c.team_end_time,c.team_main_course_id,c.seminar_main_course_id from course c,klass_student ks where c.id=ks.course_id and ks.student_id=#{studentOrTeacherId}")
     @Results(id="courseMap",value = {
             @Result(property = "teacherId",column = "teacher_id"),
             @Result(property = "courseName",column = "course_name"),
@@ -80,7 +80,7 @@ public interface StudentMapper {
             @Result(property = "teamMainCourseId",column = "team_main_course_id"),
             @Result(property = "seminarMainCourseId",column = "seminar_main_course_id")
     })
-    public ArrayList<Course> getAllCoursesByStundetId(@Param("studentId")Long stundetId);
+    public ArrayList<Course> getAllCoursesByStundetId(@Param("studentOrTeacherId")Long stundetId);
 
 
     /**
@@ -89,8 +89,12 @@ public interface StudentMapper {
      * @param id
      * @return
      */
+    @Update("update student set password=#{password} where id=#{id} and password=#{oldPassword}")
+    public Long updateStundentPassword(@Param("password") String password,@Param("oldPassword")String oldPassword,@Param("id")Long id);
+
     @Update("update student set password=#{password} where id=#{id}")
-    public Long updateStundentPassword(@Param("password") String password,@Param("id")Long id);
+    public Long updateStundentPasswordByAdmin(@Param("password") String password,@Param("id")Long id);
+
 
     /**
      * 更新：email
@@ -130,8 +134,8 @@ public interface StudentMapper {
      * @param studentId
      * @return
      */
-    @Delete("delete from klass_student where student_id=#{studentId}")
-    public Long deleteKlaaStudentByStudent(@Param("studentId")Long studentId);
+    @Delete("delete from klass_student where student_id=#{studentOrTeacherId}")
+    public Long deleteKlaaStudentByStudent(@Param("studentOrTeacherId")Long studentId);
 
     /**
      * 获得用户信息

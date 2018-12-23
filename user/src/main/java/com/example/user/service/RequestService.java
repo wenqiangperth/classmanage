@@ -55,12 +55,12 @@ public class RequestService {
     public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(Long teacherId)
     {
         ArrayList<TeamValidVO> teamValidVOS=requestDao.getAllTeamValidByTeacherId(teacherId);
-        ArrayList<StudentCourseVO> courses = courseDao.getAllCourseByTeacherId(teacherId);
+        ArrayList<CourseVO> courses = courseDao.getAllCourseByTeacherId(teacherId);
         for(TeamValidVO teamValidVO:teamValidVOS)
         {
             teamValidVO.setTeam(teamDao.getTeamById(teamValidVO.getTeamId()));
             teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
-            for(StudentCourseVO course:courses)
+            for(CourseVO course:courses)
             {
                 if(teamValidVO.getTeamId()==course.getTeamId())
                 {
@@ -76,10 +76,10 @@ public class RequestService {
     public TeamValidVO getTeamValidByTeamValidId(Long teamValidId)
     {
         TeamValidVO teamValidVO=requestDao.getTeamValidByTeamValidId(teamValidId);
-        ArrayList<StudentCourseVO> courses = courseDao.getAllCourseByTeacherId(teamValidVO.getTeacherId());
+        ArrayList<CourseVO> courses = courseDao.getAllCourseByTeacherId(teamValidVO.getTeacherId());
         teamValidVO.setTeam(teamDao.getTeamById(teamValidVO.getTeamId()));
         teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
-        for(StudentCourseVO course:courses)
+        for(CourseVO course:courses)
         {
             if(teamValidVO.getTeamId()==course.getTeamId())
             {

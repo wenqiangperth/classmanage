@@ -22,6 +22,7 @@ public class User {
     private String name;
     private int isActived;
     private String email;
+    private String oldPassword;
 
     public void setUserByAdministrator(Administrator administrator){
         setId(administrator.getId());

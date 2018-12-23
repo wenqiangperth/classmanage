@@ -74,7 +74,7 @@ public class TeacherDao {
      * @return
      */
     public Long updateTeacherPassword(Long id,String password){
-        return teacherMapper.updateTeahcerPassword(password,id);
+        return teacherMapper.updateTeacherPasswordByAdmin(password,id);
     }
 
     /**

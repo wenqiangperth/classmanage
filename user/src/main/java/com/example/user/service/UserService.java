@@ -26,13 +26,12 @@ public class UserService {
 
     /**
      * 更新：id,role->密码修改
-     * @param id
+     * @param user
      * @param role
-     * @param password
      * @return
      */
-    public Long changeUserPassword(Long id,String role,String password){
-        return userDao.updateUserPassword(id,role,password);
+    public Long changeUserPassword(User user,String role){
+        return userDao.updateUserPassword(user,role);
     }
 
     /**
