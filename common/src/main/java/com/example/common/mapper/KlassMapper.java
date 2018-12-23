@@ -90,6 +90,14 @@ public interface KlassMapper {
     public long deleteClassStudentByClassId(@Param(value="classId")long classId);
 
     /**
+     * 删除：id->klass
+     * @param id
+     * @return
+     */
+    @Delete("delete from klass where id=#{klass_id}")
+    public Long deleteKlassById(@Param("id")Long id);
+
+    /**
      * 根据classId寻找对应的班级
      * @param classId
      * @return

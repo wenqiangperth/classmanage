@@ -41,6 +41,18 @@ public class TeamController {
     }
 
     /**
+     * 修改team的name
+     * @param teamId
+     * @param team
+     * @return
+     */
+    @PutMapping(value = "/{teamId}")
+    public Long updateTeamName(@PathVariable(name = "teamId")long teamId,@RequestBody Team team){
+        team.setId(teamId);
+        return teamService.updateTeamName(team);
+    }
+
+    /**
      * 根据ID删除小组
      * @param teamId
      * @return

@@ -109,6 +109,14 @@ public interface TeamMapper {
     public Long deleteTeamById(@Param("teamId") Long teamId);
 
     /**
+     * 删除：klassID->teams
+     * @param klassId
+     * @return
+     */
+    @Delete("delete from team where klass_id=#{klassId}")
+    public Long deleteTeamByKlassId(@Param("klassId")Long klassId);
+
+    /**
      * 查询：查找课程的组队策略总表
      * @param courseId
      * @return
@@ -189,6 +197,14 @@ public interface TeamMapper {
      */
     @Update("update team set status=#{status} where id=#{teamId}")
     public Long updateTeamStatus(@Param("teamId") Long teamId,@Param("status") int status);
+
+    /**
+     * 更新：team的name
+     * @param team
+     * @return
+     */
+    @Update("update team set team_name=#{teamName} where id=#{id}")
+    public Long updateTeamName(Team team);
 
     /**
      * 插入:创建特殊组队请求
