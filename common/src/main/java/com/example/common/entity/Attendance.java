@@ -21,4 +21,5 @@ public class Attendance {
     private String reportUrl;
     private String pptName;
     private String pptUrl;
+    private Team team;
 }

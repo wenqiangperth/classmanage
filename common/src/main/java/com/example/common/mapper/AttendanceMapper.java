@@ -1,10 +1,9 @@
 package com.example.common.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.example.common.entity.Attendance;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 
@@ -68,4 +67,43 @@ public interface AttendanceMapper {
      */
     @Select("select ppt_name from attendance where klass_seminar_id=#{classSeminarId}")
     public ArrayList<String> getAllSeminarReportByClassSeminarId(@Param(value="classSeminarId") Long classSeminarId);
+
+    /**
+     * 更新讨论课次序
+     * @param teamOrder
+     * @param attendanceId
+     * @return
+     */
+    @Update("update attendance set team_order=#{teamOrder} where id=#{attendanceId}")
+    public Long updateAttendanceInfo(@Param(value="teamOrder")int teamOrder,@Param(value="attendanceId")Long attendanceId);
+
+    /**
+     * 根据id删除attendance表的记录
+     * @param attendanceId
+     * @return
+     */
+    @Delete("delete from attendance where id=#{attendanceId}")
+    public Long deleteAttendanceByAttendanceId(@Param(value="attendanceId")Long attendanceId);
+
+    @Select("select * from attendance where klass_seminar_id=#{klassSeminarId}")
+    @Results({
+            @Result(property = "klassSeminarId",column = "klass_seminar_id"),
+            @Result(property = "teamId",column = "team_id"),
+            @Result(property = "isPresent",column = "is_present"),
+            @Result(property = "reportName",column = "report_name"),
+            @Result(property = "reportUrl",column = "report_url"),
+            @Result(property = "pptName",column = "ppt_name"),
+            @Result(property = "pptUrl",column = "ppt_url")
+    })
+    public ArrayList<Attendance> getAllAttendanceByKlassSeminarId(@Param(value="klassSeminarId")Long klassSeminarId);
+
+    /**
+     * 在attendance插入数据
+     * @param teamId
+     * @param teamOrder
+     * @param classSeminarId
+     * @return
+     */
+    @Insert("insert into attendance(team_id,team_order) values(#{teamId},#{teamOrder}) where klass_seminar_id=#{classSeminarId}")
+    public Long insertAttendanceByClassSeminarId(@Param(value="teamId")Long teamId,@Param(value="teamOrder")int teamOrder,@Param(value="classSeminarId")Long classSeminarId);
 }

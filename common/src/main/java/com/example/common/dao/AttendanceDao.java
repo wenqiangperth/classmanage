@@ -37,4 +37,14 @@ public class AttendanceDao {
     {
         return attendanceMapper.getPptNameById(attendanceId);
     }
+
+    public Long updateAttendanceInfo(int teamOrder,Long attendanceId)
+    {
+        return attendanceMapper.updateAttendanceInfo(teamOrder,attendanceId);
+    }
+
+    public Long deleteAttendanceByAttendanceId(Long attendanceId)
+    {
+        return attendanceMapper.deleteAttendanceByAttendanceId(attendanceId);
+    }
 }

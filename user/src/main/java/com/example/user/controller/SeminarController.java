@@ -1,11 +1,15 @@
 package com.example.user.controller;
 
+import com.example.common.config.FileUploudConfig;
 import com.example.common.entity.*;
 import com.example.user.service.SeminarService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 public class SeminarController {
     @Autowired
     private SeminarService seminarService;
+
 
     /**
      * 创建讨论课
@@ -157,4 +162,75 @@ public class SeminarController {
         return seminarService.getSeminarScore(klassId,seminarId);
     }
 
+    /**
+     * 批量下载讨论课ppt
+     * @param request
+     * @param response
+     * @param seminarId
+     * @param classId
+     * @return
+     * @throws IOException
+     */
+    @GetMapping(value="/{seminarId}/class/{classId}/ppt")
+    public String getAllAttendancePpt(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="seminarId")Long seminarId, @PathVariable(value="classId")Long classId)throws IOException
+    {
+        Long klassSeminarId=seminarService.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+        ArrayList<String> ppts=seminarService.getAllSeminarPptByClassSeminarId(klassSeminarId);
+        for(String ppt:ppts)
+        {
+            FileUploudConfig fileUploudConfig=new FileUploudConfig();
+            String fileName=ppt;
+            fileUploudConfig.downloadFile(request,response,fileName);
+        }
+        return "success";
+    }
+
+    /**
+     * 批量下载讨论课报告
+     * @param request
+     * @param response
+     * @param seminarId
+     * @param classId
+     * @return
+     * @throws IOException
+     */
+    @GetMapping(value="/{seminarId}/class/{classId}/report")
+    public String getAllAttendanceReport(HttpServletRequest request, HttpServletResponse response, @PathVariable(value="seminarId")Long seminarId, @PathVariable(value="classId")Long classId)throws IOException
+    {
+        Long klassSeminarId=seminarService.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+        ArrayList<String> reports=seminarService.getAllSeminarReportByClassSeminarId(klassSeminarId);
+        for(String report:reports)
+        {
+            FileUploudConfig fileUploudConfig=new FileUploudConfig();
+            String fileName=report;
+            fileUploudConfig.downloadFile(request,response,fileName);
+        }
+        return "success";
+    }
+
+    /**
+     * 获得讨论课报名信息
+     * @param seminarId
+     * @param classId
+     * @return
+     */
+    @GetMapping(value="/{seminarId}/class/{classId}/attendance")
+    public ArrayList<Attendance> getAllAttendance(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId)
+    {
+        return seminarService.getAllAttendance(seminarId,classId);
+    }
+
+    /**
+     * 报名讨论课
+     * @param seminarId
+     * @param classId
+     * @param teamId
+     * @param teamOrder
+     * @return
+     */
+    @PostMapping(value="/{seminarId}/class/{classId}/attendance")
+    public Long updateAttendanceByClassSeminarId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestParam(value="teamId") Long teamId,@RequestParam(value="teamOrder")int teamOrder)
+    {
+        return seminarService.updateAttendanceByClassSeminarId(seminarId,classId,teamId,teamOrder);
+    }
 }

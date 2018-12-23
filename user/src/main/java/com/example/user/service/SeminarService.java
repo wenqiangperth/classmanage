@@ -157,5 +157,30 @@ public class SeminarService {
         return totalScore;
     }
 
+    public Long getClassSeminarIdBySeminarIdAndClassId(Long classId,Long seminarId)
+    {
+        return seminarDao.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+    }
+
+    public ArrayList<String> getAllSeminarReportByClassSeminarId(Long classSeminarId)
+    {
+        return seminarDao.getAllSeminarReportByClassSeminarId(classSeminarId);
+    }
+
+    public ArrayList<String> getAllSeminarPptByClassSeminarId(Long classSeminarId)
+    {
+        return seminarDao.getAllSeminarPptByClassSeminarId(classSeminarId);
+    }
+
+    public ArrayList<Attendance> getAllAttendance(Long seminarId,Long classId)
+    {
+        return seminarDao.getAllAttendance(seminarId,classId);
+    }
+
+    public Long updateAttendanceByClassSeminarId(Long seminarId,Long classId,Long teamId,int teamOrder)
+    {
+        return seminarDao.updateAttendanceByClassSeminarId(seminarId,classId,teamId,teamOrder);
+    }
+
 
 }
