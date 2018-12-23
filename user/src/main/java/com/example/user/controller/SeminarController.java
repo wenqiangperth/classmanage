@@ -1,9 +1,8 @@
 package com.example.user.controller;
 
-import com.example.common.entity.Klass;
-import com.example.common.entity.KlassSeminar;
-import com.example.common.entity.Seminar;
+import com.example.common.entity.*;
 import com.example.user.service.SeminarService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -88,4 +87,74 @@ public class SeminarController {
     public Long deleteSeminarById(@PathVariable(name = "seminarId")Long seminarId){
         return seminarService.deleteSeminarById(seminarId);
     }
+
+    /**
+     * 查询：班级讨论课
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}/class/{classId}")
+    public KlassSeminar getKlassSeminarByKlassIdAndSeminarId(@PathVariable(name = "classId")Long klassId,@PathVariable(name = "seminarid")Long seminarId){
+        return seminarService.getKlassSeminarByKlassIdAndSeminarId(klassId,seminarId);
+    }
+
+    /**
+     * 更新：设置讨论课轮次
+     * @param seminarId
+     * @param roundId
+     * @return
+     */
+    @PutMapping(value = "/{seminarId}/round")
+    public Long updateSeminarRoundId(@PathVariable(name = "seminarId")Long seminarId,@RequestBody Long roundId){
+        return seminarService.updateSeminarRoundId(roundId,seminarId);
+    }
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param seminarId
+     * @param klassSeminar
+     * @return
+     */
+    @PutMapping(value = "/{seminarId}/status")
+    public Long updateSeminarStatus(@PathVariable(name = "seminarId")Long seminarId,@RequestBody KlassSeminar klassSeminar){
+        klassSeminar.setSeminarId(seminarId);
+        return seminarService.updateSeminarStatus(klassSeminar);
+    }
+
+    /**
+     * 查询：小组讨论课成绩
+     * @param teamId
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}/team/{teamId}/seminarscore")
+    public Team getTeamSeminarScore(@PathVariable(name = "teamId")Long teamId,@PathVariable(name = "seminarId")Long seminarId){
+        return seminarService.getTeamSeminarSocre(teamId,seminarId);
+    }
+
+    /**
+     * 更新：团队讨论课成绩
+     * @param teamId
+     * @param seminarId
+     * @param score
+     * @return
+     */
+    @PutMapping(value = "/{seminarId}/team/{teamId}/seminarscore")
+    public Long updateTeamSeminarScore(@PathVariable(name = "teamId")Long teamId,@PathVariable(name = "seminarId")Long seminarId,@RequestBody Score score){
+        score.setTeamId(teamId);
+        return seminarService.updateTeamSeminarScore(score,seminarId);
+    }
+
+    /**
+     * 查询：一个班级的一次讨论课成绩
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    @GetMapping(value = "/{seminarId}/class/{classId}/seminarscore")
+    public ArrayList<Team>getSeminarScore(@PathVariable(name = "classId")Long klassId, @PathVariable(name = "seminarId")Long seminarId){
+        return seminarService.getSeminarScore(klassId,seminarId);
+    }
+
 }

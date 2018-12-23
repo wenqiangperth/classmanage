@@ -125,10 +125,31 @@ public interface SeminarMapper {
     public Long updateSeminarById(Seminar seminar);
 
     /**
-     * 更新：修改klass_seminar
+     * 更新：
      * @param klassSeminar
      * @return
      */
     @Update("update klass_seminar set report_ddl=#{reportDDL} where seminar_id={seminarId} and klass_id=#{klassId}")
     public Long updateKlassSeminarByKlassIdAndSeminarId(KlassSeminar klassSeminar);
+
+    /**
+     * 更新：设置讨论课轮次
+     * @param roundId
+     * @param id
+     * @return
+     */
+    @Update("update seminar set round_id=#{roundId} where id=#{id}")
+    public Long updateSeminarRoundId(@Param("roundId")Long roundId,@Param("id")Long id);
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param klassSeminar
+     * @return
+     */
+    @Update("update klass_seminar set status=#{status} where seminar_id=#{seminarId} and klass_id=#{klassId}")
+    public Long updateSeminarStatus(KlassSeminar klassSeminar);
+
+    @Select("select id from klass_seminar where klass_id=#{classId} and seminarId=#{seminarId}")
+    public Long getClassSeminarIdBySeminarIdAndClassId(@Param(value="classId") Long classId,@Param(value="seminarId") Long seminarId);
+
 }

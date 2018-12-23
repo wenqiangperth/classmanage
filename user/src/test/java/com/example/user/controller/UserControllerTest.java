@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.mail.MessagingException;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -28,6 +30,13 @@ public class UserControllerTest {
         if(user!=null){
         System.out.println(user.toString());
         }
+    }
+
+    @Test
+    public void getUserPassWord() throws MessagingException
+    {
+        Long i = userService.getUserPassword(8L,"student");
+        System.out.print(i);
     }
 
     @Test

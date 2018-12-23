@@ -1,17 +1,12 @@
 package com.example.common.dao;
 
-import com.example.common.entity.Klass;
-import com.example.common.entity.KlassSeminar;
-import com.example.common.entity.Round;
-import com.example.common.entity.Seminar;
-import com.example.common.mapper.KlassMapper;
-import com.example.common.mapper.RoundMapper;
-import com.example.common.mapper.SeminarMapper;
+import com.example.common.entity.*;
+import com.example.common.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
+
 import java.util.ArrayList;
 
 /**
@@ -31,6 +26,12 @@ public class SeminarDao {
 
     @Autowired
     private RoundMapper roundMapper;
+
+    @Autowired
+    private TeamMapper teamMapper;
+
+    @Autowired
+    private ScoreMapper scoreMapper;
 
     /**
      * 创建:讨论课，klass_seminar关系
@@ -127,6 +128,92 @@ public class SeminarDao {
      */
     public Long updateKlassSeminar(KlassSeminar klassSeminar){
         return seminarMapper.updateKlassSeminarByKlassIdAndSeminarId(klassSeminar);
+    }
+
+    /**
+     * 更新：设置讨论课轮次
+     * @param roundId
+     * @param id
+     * @return
+     */
+    public Long updateSeminarRoundId(Long roundId,Long id){
+        return seminarMapper.updateSeminarRoundId(roundId,id);
+    }
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateSeminarStatus(KlassSeminar klassSeminar){
+        return seminarMapper.updateSeminarStatus(klassSeminar);
+    }
+    /**
+     * 查询：klassId,seminarid->klass_seminar关系
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    public KlassSeminar selectKlassSeminarByKlassIdAndSeminarId(Long klassId,Long seminarId){
+        return klassMapper.getKlassSeminarByKlassAndSeminar(klassId,seminarId);
+    }
+
+    /**
+     * 查询：team在一次讨论课的成绩
+     * @param teamId
+     * @param seminarId
+     * @return
+     */
+    public Team selectTeamSeminarScore(Long teamId,Long seminarId){
+        Team team=teamMapper.selectTeamById(teamId);
+        Score score=scoreMapper.selectTeamSeminarScore(teamId,team.getKlassId(),seminarId);
+        team.setScore(score);
+        return team;
+    }
+
+    /**
+     * 更新：团队讨论课成绩
+     * @param score
+     * @param seminarId
+     * @return
+     */
+    public Long updateTeamSeminarScore(Score score,Long seminarId){
+        Team team=teamMapper.selectTeamById(score.getTeamId());
+        KlassSeminar klassSeminar=klassMapper.getKlassSeminarByKlassAndSeminar(team.getKlassId(),seminarId);
+        score.setSeminarOrRoundId(klassSeminar.getId());
+        return scoreMapper.updateTeamSeminarScore(score);
+    }
+
+    /**
+     * 查询：一个班级的一次讨论课成绩
+     * @param seminarId
+     * @param klassId
+     * @return
+     */
+    public ArrayList<Team>getSeminarScore(Long seminarId,Long klassId){
+        ArrayList<Score>scores=scoreMapper.selectSeminarScore(klassId,seminarId);
+        ArrayList<Team>teams=new ArrayList<>();
+        for (Score score:scores
+             ) {
+            Team team=teamMapper.selectTeamById(score.getTeamId());
+            team.setScore(score);
+            teams.add(team);
+        }
+        return teams;
+    }
+    public ArrayList<Seminar> findAllSeminarByCourseId(Long courseId)
+    {
+        return seminarMapper.findAllSeminarByCourseId(courseId);
+    }
+
+    public Long deleteAllSeminarByCourseId(Long courseId)
+    {
+        return seminarMapper.deleteSeminarByCourseId(courseId);
+    }
+
+    public Long deleteAllClassSeminarByClassId(Long classId)
+    {
+        return seminarMapper.deleteSeminarByCourseId(classId);
     }
 
 }

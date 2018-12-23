@@ -3,6 +3,7 @@ package com.example.common.mapper;
 import com.example.common.entity.TeamValidVO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.ArrayList;
 
@@ -39,4 +40,34 @@ public interface RequestMapper {
     @Select("select * from team_valid_application where id=#{teamValidId}")
     @ResultMap(value="TeamValidMap")
     public TeamValidVO getTeamValidByTeamValidId(@Param(value="teamValidId")Long teamValidId);
+
+    /**
+     * 根据Id修改组队共享申请请求
+     * @param teamShareId
+     * @param status
+     * @return
+     */
+    @Update("update share_team_application set status=#{status} where id=#{teamShareId}")
+    public Long updateTeamShareRequestById(@Param(value="teamShareId") Long teamShareId,@Param(value="status") int status);
+
+    /**
+     * 根据Id修改讨论课共享申请请求
+     * @param seminarShareId
+     * @param status
+     * @return
+     */
+    @Update("update share_seminar_application set status=#{status} where id=#{seminarShareId}")
+    public Long updateSeminarShareRequestById(@Param(value="seminarShareId") Long seminarShareId,@Param(value="status") int status);
+
+    /**
+     * 根据Id修改组队合理性申请请求
+     * @param teamValidId
+     * @param status
+     * @return
+     */
+    @Update("update team_valid_application set status=#{status} where id=#{teamValidId}")
+    public Long updateTeamValidRequestById(@Param(value="teamValidId")Long teamValidId,@Param(value="status")int status);
+
+
+
 }

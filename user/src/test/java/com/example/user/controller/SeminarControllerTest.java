@@ -1,12 +1,17 @@
 package com.example.user.controller;
 
+import com.example.common.entity.KlassSeminar;
+import com.example.common.entity.Score;
 import com.example.common.entity.Seminar;
+import com.example.common.entity.Team;
 import com.example.user.service.SeminarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -35,5 +40,36 @@ public class SeminarControllerTest {
     public void getSeminar(){
         Seminar seminar=seminarService.getSeminarById(5L);
         System.out.println(seminar);
+    }
+
+    @Test
+    public void updateSeminar(){
+        KlassSeminar klassSeminar=new KlassSeminar();
+        klassSeminar.setSeminarId(5L);
+        klassSeminar.setKlassId(2L);
+        klassSeminar.setStatus(1);
+        Long j=seminarService.updateSeminarStatus(klassSeminar);
+        System.out.println(j);
+//        Long i=seminarService.updateSeminarRoundId(2L,8L);
+//        System.out.println(i);
+    }
+
+    @Test
+    public void score(){
+        //Team team =seminarService.getTeamSeminarSocre(3L,5L);
+        Score score=new Score();
+        score.setPresentationScore(4.5);
+       score.setQuestionScore(5);
+        score.setReportScore(3);
+        score.setTeamId(3L);
+        Long i=seminarService.updateTeamSeminarScore(score,5L);
+       // System.out.println(team);
+        System.out.println(i);
+
+    }
+    @Test
+    public void getSeminarScore(){
+        ArrayList<Team>teams=seminarService.getSeminarScore(2l,5L);
+        System.out.println(teams);
     }
 }

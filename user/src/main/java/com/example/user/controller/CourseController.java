@@ -36,7 +36,7 @@ public class CourseController {
     @PostMapping
     public long addCourse(@RequestBody Course course)
     {
-        return courseService.addCourse(course.getTeacherId(),course.getCourseName(),course.getIntroduction(),course.getPresentationPercentage(),course.getQuestionPercentage(),course.getReportPercentage(),course.getTeamStartTime(),course.getTeamEndTime(),course.getTeamMainCourseId(),course.getSeminarMainCourseId());
+        return courseService.addCourse(course);
     }
 
     /**

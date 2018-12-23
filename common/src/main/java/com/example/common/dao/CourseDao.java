@@ -43,9 +43,9 @@ public class CourseDao {
         return courseMapper.getCourseById(courseId);
     }
 
-    public long addCourse(long teacherId, String courseName, String introduction, int presentationPercentage, int questionPercentage, int reportPercentage, DateTimeLiteralExpression.DateTime teamStartTime, DateTimeLiteralExpression.DateTime teamEndTime, long teamMainCourseId, long seminarMainCourseId)
+    public long addCourse(Course course)
     {
-        return courseMapper.addCourse(teacherId,courseName,introduction,presentationPercentage,questionPercentage,reportPercentage,teamStartTime,teamEndTime,teamMainCourseId,seminarMainCourseId);
+        return courseMapper.addCourse(course);
     }
 
     public long deleteCourseById(long courseId)

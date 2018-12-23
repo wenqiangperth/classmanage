@@ -3,6 +3,8 @@ package com.example.common.entity;
 import lombok.Data;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
+import java.sql.Date;
+
 /**
  * @author perth
  * @ClassName KlassSeminar
@@ -15,6 +17,6 @@ public class KlassSeminar {
     private Long id;
     private Long klassId;
     private Long seminarId;
-    private DateTimeLiteralExpression.DateTime reportDDL;
+    private Date reportDDL;
     private int status;
 }

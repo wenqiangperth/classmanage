@@ -48,7 +48,7 @@ public interface KlassMapper {
      * @param seminarId
      * @return
      */
-    @Select("select * from klass_seminar where klass_id=#{klassId} and semianr_id=#{seminarId}")
+    @Select("select * from klass_seminar where klass_id=#{klassId} and seminar_id=#{seminarId}")
     @Results({
             @Result(property = "klassId",column = "klass_id"),
             @Result(property = "seminarId",column = "seminar_id"),

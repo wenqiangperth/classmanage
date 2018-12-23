@@ -1,9 +1,9 @@
 package com.example.user.service;
 
+import com.example.common.dao.CourseDao;
 import com.example.common.dao.SeminarDao;
-import com.example.common.entity.Klass;
-import com.example.common.entity.KlassSeminar;
-import com.example.common.entity.Seminar;
+import com.example.common.entity.*;
+import com.example.common.mapper.CourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,9 @@ import java.util.ArrayList;
 public class SeminarService {
     @Autowired
     private SeminarDao seminarDao;
+
+    @Autowired
+    private CourseDao courseDao;
 
     /**
      * 创建讨论课
@@ -68,6 +71,25 @@ public class SeminarService {
     }
 
     /**
+     * 更新：设置讨论课轮次
+     * @param roundId
+     * @param id
+     * @return
+     */
+    public Long updateSeminarRoundId(Long roundId,Long id){
+        return seminarDao.updateSeminarRoundId(roundId,id);
+    }
+
+    /**
+     * 更新：设置班级讨论课状态
+     * @param klassSeminar
+     * @return
+     */
+    public Long updateSeminarStatus(KlassSeminar klassSeminar){
+        return seminarDao.updateSeminarStatus(klassSeminar);
+    }
+
+    /**
      * 删除：seminar
      * @param id
      * @return
@@ -75,5 +97,65 @@ public class SeminarService {
     public Long deleteSeminarById(Long id){
         return seminarDao.deleteSeminarById(id);
     }
+
+    /**
+     * 查询：班级讨论课
+     * @param klassId
+     * @param seminarid
+     * @return
+     */
+    public KlassSeminar getKlassSeminarByKlassIdAndSeminarId(Long klassId,Long seminarid){
+        return seminarDao.selectKlassSeminarByKlassIdAndSeminarId(klassId,seminarid);
+    }
+
+    /**
+     * 查询：小组的讨论课成绩
+     * @param teamId
+     * @param seminaId
+     * @return
+     */
+    public Team getTeamSeminarSocre(Long teamId,Long seminaId){
+        return seminarDao.selectTeamSeminarScore(teamId,seminaId);
+    }
+
+    /**
+     * 更新：团队讨论课成绩
+     * @param score
+     * @param seminarId
+     * @return
+     */
+    public Long updateTeamSeminarScore(Score score,Long seminarId){
+        Seminar seminar=seminarDao.selectSeminarById(seminarId);
+        double totalScore=calculateTeamSeminarScore(score,seminar.getCourseId());
+        score.setTotalScore(totalScore);
+        return seminarDao.updateTeamSeminarScore(score,seminarId);
+    }
+
+    /**
+     * 查询：一个班级一次讨论课的成绩
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
+    public ArrayList<Team>getSeminarScore(Long klassId,Long seminarId){
+        return seminarDao.getSeminarScore(seminarId,klassId);
+    }
+
+
+    /**
+     * 计算团队讨论课的totalScore
+     * @param score
+     * @param courseId
+     * @return
+     */
+    public double calculateTeamSeminarScore(Score score,Long courseId){
+        Course course=courseDao.getCourseById(courseId);
+        double totalScore=0;
+        totalScore+=score.getPresentationScore()*course.getPresentationPercentage();
+        totalScore+=score.getQuestionScore()*course.getQuestionPercentage();
+        totalScore+=score.getReportScore()*course.getReportPercentage();
+        return totalScore;
+    }
+
 
 }
