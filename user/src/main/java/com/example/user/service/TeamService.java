@@ -262,4 +262,13 @@ public class TeamService {
     public Long approveTeam(Long teamId){
         return teamDao.updateTeamStatus(teamId,1);
     }
+
+    /**
+     * 修改设置队伍name
+     * @param team
+     * @return
+     */
+    public Long updateTeamName(Team team){
+        return teamDao.updateTeamName(team);
+    }
 }

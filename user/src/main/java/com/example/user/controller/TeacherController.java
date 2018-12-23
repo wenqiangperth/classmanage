@@ -4,10 +4,7 @@ import com.example.common.entity.Teacher;
 import com.example.user.service.TeacherService;
 import org.apache.ibatis.annotations.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Version 1.0
  **/
 @RestController
-@RequestMapping(value = "/teacher")
+
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
@@ -30,11 +27,21 @@ public class TeacherController {
      * @param teacher
      * @return
      */
-    @PutMapping(value = "/active")
+    @PutMapping(value = "/teacher/active")
     public Long activeTeacher(HttpServletRequest request, @RequestBody Teacher teacher){
         teacher.setId((Long)request.getAttribute("id"));
         teacher.setIsActive(1);
         return teacherService.activeTeacher(teacher);
+    }
+
+    /**
+     * 删除班级以及关系
+     * @param klassId
+     * @return
+     */
+    @DeleteMapping(value = "/class/{classId}")
+    public Long deleteKlass(@PathVariable(name = "classId")Long klassId){
+        return teacherService.deleteKlassById(klassId);
     }
 
 }

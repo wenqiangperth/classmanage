@@ -188,5 +188,13 @@ public class TeamDao {
         return teamMapper.updateTeamStatus(teamId,status);
     }
 
+    /**
+     * 更新：team的name
+     * @param team
+     * @return
+     */
+    public Long updateTeamName(Team team){
+        return teamMapper.updateTeamName(team);
+    }
 
 }
