@@ -117,13 +117,13 @@ public class CourseDao {
         return teamShareVOS;
     }
 
-//    public ArrayList<Team> deleteTeamShareByTeamShareId(long teamShareId)
-//    {
-//        Long subCourseId=courseMapper.getSubCourseIdByTeamShareId(teamShareId);
-//        courseMapper.deleteTeamShareByteamShareId(teamShareId);
-//        ArrayList<Team> teams = teamMapper.selectTeamsByCourseId(subCourseId);
-//        return teams;
-//    }
+    public ArrayList<Team> deleteTeamShareByTeamShareId(long teamShareId)
+    {
+        Long subCourseId=courseMapper.getSubCourseIdByTeamShareId(teamShareId);
+        courseMapper.deleteTeamShareByteamShareId(teamShareId);
+        ArrayList<Team> teams = teamMapper.selectTeamsByCourseId(subCourseId);
+        return teams;
+    }
 
     public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
     {

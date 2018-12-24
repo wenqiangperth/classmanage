@@ -54,14 +54,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
               //  .antMatchers("/user/*").permitAll()
 
 
-                .antMatchers("/user/information").hasRole("STUDENT")
+                .antMatchers("/user/information").permitAll()
                 .antMatchers("/user/password").hasRole("STUDENT")
                 .antMatchers("/student/active").hasRole("STUDENT")
                 .antMatchers("/user/email").hasRole("STUDENT")
-                .antMatchers("/course").hasRole("STUDENT")
+                .antMatchers("/course").permitAll()
                 .antMatchers("/course/{courseId}").hasRole("STUDENT")
                // .antMatchers("/user/*").permitAll()
-                .antMatchers("/user/information").hasRole("TEACHER")
+               // .antMatchers("/user/information").hasRole("TEACHER")
                 .antMatchers("/user/email").hasRole("TEACHER")
                 .antMatchers("/user/password").hasRole("TEACHER")
 

@@ -32,9 +32,11 @@ public class CourseController {
      * @param course
      * @return
      */
-    @PostMapping
-    public long addCourse(@RequestBody Course course)
+    @PostMapping(value = "")
+    public long addCourse(HttpServletRequest request, @RequestBody Course course)
     {
+        Long id=Long.parseLong(request.getAttribute("id").toString());
+        course.setTeacherId(id);
         return courseService.addCourse(course);
     }
 
