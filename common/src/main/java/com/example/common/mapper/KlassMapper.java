@@ -106,5 +106,32 @@ public interface KlassMapper {
     @ResultMap(value = "klassMap")
     public Klass getKlassByKlassId(@Param(value="classId")long classId);
 
+    /**
+     * 在klass_student表中插入数据
+     * @param klassId
+     * @param studentId
+     * @param courseId
+     * @return
+     */
+    @Insert("insert into klass_student(klass_id,student_id,course_id) values(#{klassId},#{studentId},#{courseId})")
+    public Long insertKlassStudent(Long klassId,Long studentId,Long courseId);
+
+    /**
+     * 根据classId删除class信息
+     * * @param classId
+     * @return
+     */
+    @Delete("delete from klass where id=#{classId}")
+    public Long deleteClassByClassId(@Param(value="classId") Long classId);
+
+
+    /**
+     * 根据classId删除klass_team信息
+     * * @param classId
+     * @return
+     */
+    @Delete("delete from klass_team where klass_id=#{classId}")
+    public Long deleteClassTeamByClassId(@Param(value="classId") Long classId);
+
 
 }

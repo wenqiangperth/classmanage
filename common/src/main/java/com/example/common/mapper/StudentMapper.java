@@ -152,4 +152,16 @@ public interface StudentMapper {
     })
     public User getStudentInfo(@Param("id") Long id);
 
+    /**
+     * 通过学号和姓名查询学生信息
+     * @param account
+     * @param studentName
+     * @return
+     */
+    @Select("select * from student where account=#{account} and student_name=#{studentName}")
+    @ResultMap(value="studentMap")
+    public Student findStudentByAccountAndStudentName(@Param(value="account") String account,@Param(value="studentName") String studentName);
+
+    @Insert("insert into student(account,password,is_active,student_name,email) values(#{account},#{password},#{isActive},#{studentName},#{email}")
+    public Long insertStudent(Student student);
 }

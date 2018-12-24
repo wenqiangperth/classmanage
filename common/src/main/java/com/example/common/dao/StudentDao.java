@@ -98,5 +98,15 @@ public class StudentDao {
         return studentMapper.updateStudentAcctive(student);
     }
 
+    public Student findStudentByAccountAndStudentName(String account,String studentName)
+    {
+        return studentMapper.findStudentByAccountAndStudentName(account,studentName);
+    }
+
+    public Long insertStudent(Student student)
+    {
+        return studentMapper.insertStudent(student);
+    }
+
 }
 
