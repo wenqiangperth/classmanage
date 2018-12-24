@@ -69,25 +69,25 @@ public class RoundDao {
         return i;
     }
 
-    /**
-     * 查询：轮次一轮所有成绩
-     * @param roundId
-     * @return
-     */
-    public ArrayList<Team> selectRoundScore(Long roundId){
-        ArrayList<Team> teams=teamMapper.selectTeamByRoundId(roundId);
-        if(teams!=null){
-            for (Team team:teams
-                 ) {
-                Score score=scoreMapper.selectRoundScore(roundId,team.getId());
-                score.setSeminarOrRoundId(roundId);
-                team.setScore(score);
-            }
-            return teams;
-        }else {
-            return null;
-        }
-    }
+//    /**
+//     * 查询：轮次一轮所有成绩
+//     * @param roundId
+//     * @return
+//     */
+//    public ArrayList<Team> selectRoundScore(Long roundId){
+//        ArrayList<Team> teams=teamMapper.selectTeamByRoundId(roundId);
+//        if(teams!=null){
+//            for (Team team:teams
+//                 ) {
+//                Score score=scoreMapper.selectRoundScore(roundId,team.getId());
+//                score.setSeminarOrRoundId(roundId);
+//                team.setScore(score);
+//            }
+//            return teams;
+//        }else {
+//            return null;
+//        }
+//    }
 
     /**
      * 查询：team在某轮次的score

@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.common.entity.User;
 import com.example.user.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,7 @@ public class UserController {
      * @throws MessagingException
      */
     @GetMapping(value = "/password")
-    public Long getUserPassword(@RequestParam(value="account")String account) throws MessagingException {
+    public Long getUserPassword(@RequestParam(value = "account") String account) throws MessagingException {
         //String role=(String)request.getAttribute("role");
         //Long id=(Long)request.getAttribute("id");
         return userService.getUserPassword(account);
