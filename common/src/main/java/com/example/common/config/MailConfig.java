@@ -1,11 +1,11 @@
 package com.example.common.config;
 
-import javax.mail.internet.MimeMessage;
-import javax.mail.MessagingException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 /**
  * @ClassName MailConfig
  * @Description

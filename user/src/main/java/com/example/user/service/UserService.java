@@ -1,12 +1,8 @@
 package com.example.user.service;
 
 import com.example.common.config.MailConfig;
-import com.example.common.dao.StudentDao;
-import com.example.common.dao.TeacherDao;
 import com.example.common.dao.UserDao;
 import com.example.common.entity.User;
-import com.example.common.mapper.StudentMapper;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

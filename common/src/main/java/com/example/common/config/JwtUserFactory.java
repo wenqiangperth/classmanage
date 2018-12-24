@@ -1,6 +1,6 @@
 package com.example.common.config;
 
-import com.example.common.entity.Administrator;
+import com.example.common.config.JwtUser;
 import com.example.common.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

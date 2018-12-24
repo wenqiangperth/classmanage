@@ -1,8 +1,11 @@
-package com.example.common.config;
+package com.example.user.config;
 
+import com.example.common.config.FailureHandler;
+import com.example.common.config.JwtUserDetailsService;
+import com.example.common.config.MyAuthenticationSuccessHandler;
+import com.example.common.config.MyPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;

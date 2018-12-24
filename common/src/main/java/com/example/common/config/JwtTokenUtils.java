@@ -1,5 +1,6 @@
 package com.example.common.config;
 
+import com.example.common.config.JwtUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

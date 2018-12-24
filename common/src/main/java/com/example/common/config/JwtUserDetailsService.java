@@ -1,8 +1,7 @@
 package com.example.common.config;
 
-import com.example.common.dao.AdministratorDao;
+import com.example.common.config.JwtUserFactory;
 import com.example.common.dao.UserDao;
-import com.example.common.entity.Administrator;
 import com.example.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

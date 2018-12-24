@@ -3,7 +3,6 @@ package com.example.user.controller;
 import com.example.common.config.FileUploudConfig;
 import com.example.common.entity.*;
 import com.example.user.service.SeminarService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
