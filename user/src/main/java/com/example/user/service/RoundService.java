@@ -48,14 +48,14 @@ public class RoundService {
         return roundDao.updateRound(round);
     }
 
-//    /**
-//     * 查询：roundId->轮次所有成绩。在team里
-//     * @param roundId
-//     * @return
-//     */
-//    public ArrayList<Team>getRoundScore(Long roundId){
-//        return roundDao.selectRoundScore(roundId);
-//    }
+    /**
+     * 查询：roundId->轮次所有成绩。在team里
+     * @param roundId
+     * @return
+     */
+    public ArrayList<Team>getRoundScore(Long roundId){
+        return roundDao.selectRoundScore(roundId);
+    }
 
     /**
      * 查询：轮次下的team成绩

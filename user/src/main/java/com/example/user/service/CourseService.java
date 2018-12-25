@@ -6,10 +6,7 @@ import com.example.common.dao.CourseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.ArrayList;
 
 
@@ -57,6 +54,10 @@ public class CourseService {
         return courseDao.deleteCourseById(courseId);
     }
 
+    public ArrayList<RoundTeamScoreVO>getRoundTeamScoreByCourseIdAndRoundId(Long courseId,Long roundId){
+        return courseDao.getRoundTeamScoreByCourseIdAndRoundId(courseId,roundId);
+    }
+
     /**
      * 查询所有课程
      * @return
@@ -77,9 +78,14 @@ public class CourseService {
      * @param courseId
      * @return
      */
-    public ArrayList<Round> getAllRoundByCourseId(long courseId)
+    public ArrayList<Round> getAllRoundByCourseId(Long courseId)
     {
-        return courseDao.getAllRoundByCourseId(courseId);
+        Course course=courseDao.getCourseById(courseId);
+        Long id=courseId;
+        if(course.getSeminarMainCourseId()!=null&&course.getSeminarMainCourseId()!=0){
+            id=course.getSeminarMainCourseId();
+        }
+        return courseDao.getAllRoundByCourseId(id);
     }
 
     /**

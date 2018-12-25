@@ -20,6 +20,7 @@ public class Team {
     private long leaderId;
     private String teamName;
     private int teamSerial;
+    private int klassSerial;
     private int status;
     private ArrayList<Student> students;
     private Score score;

@@ -47,5 +47,4 @@ public class KlassController {
     public Long addClass(@RequestBody Klass klass){
         return klassService.addKlass(klass);
     }
-
 }

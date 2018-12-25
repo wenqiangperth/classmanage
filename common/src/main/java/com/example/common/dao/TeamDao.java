@@ -52,7 +52,7 @@ public class TeamDao {
     }
 
     /**
-     * 获取课程下所有讨论课
+     * 课程下班级team
      * @param klassId
      * @param courseId
      * @return
@@ -79,6 +79,10 @@ public class TeamDao {
         }
         team.setStudents(students);
         return team;
+    }
+
+    public ArrayList<Team>getTeamsByCourseId(Long courseId){
+        return teamMapper.selectTeamsByCourseId(courseId);
     }
 
     /**
@@ -130,15 +134,6 @@ public class TeamDao {
             return 0L;
         }
         return teamMapper.deleteTeamStudentByTeamIdAndStudentId(teamId,studentId);
-    }
-
-    /**
-     * 查找课程组队策略总表
-     * @param courseId
-     * @return
-     */
-    public TeamStrategy getTeamStrategy(Long courseId){
-        return teamMapper.getTeamStrategy(courseId);
     }
 
 

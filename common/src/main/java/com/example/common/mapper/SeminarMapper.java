@@ -3,6 +3,7 @@ package com.example.common.mapper;
 import com.example.common.entity.KlassSeminar;
 import com.example.common.entity.Seminar;
 import org.apache.ibatis.annotations.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import javax.xml.crypto.Data;
@@ -92,7 +93,18 @@ public interface SeminarMapper {
      */
     @Select("select * from seminar where round_id=#{roundId}")
     @ResultMap(value = "seminarMap")
-    public ArrayList<Seminar> selectAllSeminarsByRoundId(Long roundId);
+    public ArrayList<Seminar> selectAllSeminarsByRoundId(@Param("roundId") Long roundId);
+
+    /**
+     * 查询:ROUNDID,COURSEID->SEMINAR
+     * @param roundId
+     * @param courseId
+     * @return
+     */
+    @Select("select *from seminar where round_id=#{roundId} and course_id=#{courseId}")
+    @ResultMap(value = "seminarMap")
+    public ArrayList<Seminar>selectSeminarByCourseIdAndRoundId(@Param("roundId")Long roundId,@Param("courseId")Long courseId);
+
 
     /**
      * 查询：id->seminar

@@ -17,4 +17,5 @@ public class Score {
     private double presentationScore;
     private double questionScore;
     private double reportScore;
+    private String seminarName;
 }

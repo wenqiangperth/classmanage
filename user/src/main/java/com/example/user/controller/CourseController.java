@@ -29,8 +29,17 @@ public class CourseController {
    @Autowired
     private CourseService courseService;
 
-   @Autowired
-   private TeamService teamService;
+    @Autowired
+    private TeamService teamService;
+
+   @GetMapping(value = "/{courseId}/round/{roundId}/roundscore")
+   public ArrayList<RoundTeamScoreVO>getAllRoundScore(@PathVariable("courseId")Long courseId,@PathVariable("roundId")Long roundId){
+        return courseService.getRoundTeamScoreByCourseIdAndRoundId(courseId,roundId);
+   }
+
+
+
+
     /**
      * 添加课程
      * @param course
@@ -84,8 +93,7 @@ public class CourseController {
      */
     @GetMapping(value="/{courseId}/round")
     public ArrayList<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId) {
-        System.out.println("进入"+"perth"+courseId);
-     return courseService.getAllRoundByCourseId(courseId);
+         return courseService.getAllRoundByCourseId(courseId);
     }
 
   /**
@@ -116,20 +124,9 @@ public class CourseController {
   @GetMapping(value="/{courseId}/team")
   public ArrayList<Team> getAllTeamByCourseId(@PathVariable(value="courseId")long courseId)
   {
-//      ArrayList<Klass> klasses=courseService.getAllClassByCourseId(courseId);
-//      ArrayList<Long> teamIds=new ArrayList<>();
-//      ArrayList<Team> teams=new ArrayList<>();
-//      for(Klass klass:klasses)
-//      {
-//          teamIds.addAll(teamService.getAllTeamIdByClassId(klass.getId()));
-//      }
-//      for(Long teamId:teamIds)
-//      {
-//          teams.add(teamService.getTeamById(teamId));
-//      }
-//
-//      System.out.println(teams);return teams;
-        return courseService.getAllTeamByCourseId(courseId);
+      ArrayList<Team>teams=courseService.getAllTeamByCourseId(courseId);
+
+      System.out.println(teams);return teams;
   }
 
     /**

@@ -38,6 +38,32 @@ public class CourseDao {
     @Autowired
     private RoundMapper roundMapper;
 
+    @Autowired
+    private ScoreMapper scoreMapper;
+
+    public ArrayList<RoundTeamScoreVO>getRoundTeamScoreByCourseIdAndRoundId(Long courseId,Long roundId){
+        ArrayList<Team> teams=teamMapper.selectTeamsByCourseId(courseId);
+        ArrayList<RoundTeamScoreVO>roundTeamScoreVOS=new ArrayList<>();
+
+        ArrayList<Seminar>seminars=seminarMapper.selectSeminarByCourseIdAndRoundId(roundId,courseId);
+        for (Team team:teams
+        ) {
+            Score roundScore=scoreMapper.selectRoundScore(roundId,team.getId());
+            RoundTeamScoreVO roundTeamScoreVO=new RoundTeamScoreVO();
+            roundTeamScoreVO.setTeam(team);
+            roundTeamScoreVO.setRoundScore(roundScore);
+            ArrayList<Score>seminarScores=new ArrayList<>();
+            for (Seminar seminar:seminars
+                 ) {
+                Score seminarScore=scoreMapper.selectSeminarScoreByTeamIdAndSeminarId(seminar.getId(),team.getId(),courseId);
+                seminarScores.add(seminarScore);
+            }
+            roundTeamScoreVO.setSeminarScores(seminarScores);
+            roundTeamScoreVOS.add(roundTeamScoreVO);
+        }
+        return roundTeamScoreVOS;
+    }
+
     public Course getCourseById(long courseId) {
         return courseMapper.getCourseById(courseId);
     }
