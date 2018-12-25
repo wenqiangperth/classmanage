@@ -111,7 +111,9 @@ public class CourseController {
   @GetMapping(value="/{courseId}/team")
   public ArrayList<Team> getAllTeamByCourseId(@PathVariable(value="courseId")long courseId)
   {
-      return courseService.getAllTeamByCourseId(courseId);
+      ArrayList<Team>teams=courseService.getAllTeamByCourseId(courseId);
+
+      System.out.println(teams);return teams;
   }
 
     /**
@@ -132,6 +134,7 @@ public class CourseController {
      */
   @GetMapping(value="/{courseId}/class")
   public ArrayList<Klass> getAllClassByCourseId(@PathVariable(value="courseId")long courseId){
+      System.out.println("jinruzheli");
       return courseService.getAllClassByCourseId(courseId);
   }
 

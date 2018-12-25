@@ -6,6 +6,7 @@ import com.example.common.config.MyAuthenticationSuccessHandler;
 import com.example.common.config.MyPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -59,7 +60,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/student/active").hasRole("STUDENT")
                 .antMatchers("/user/email").hasRole("STUDENT")
                 .antMatchers("/course").permitAll()
-                .antMatchers("/course/{courseId}").hasRole("STUDENT")
+                .antMatchers("/course/{courseId}").permitAll()
+                .antMatchers("/course/{courseId}/class").hasRole("TEACHER")
+                .antMatchers("/course/{courseId}/round").hasRole("TEACHER")
+                .antMatchers("/seminar/{seminarId}").hasRole("TEACHER")
+                .antMatchers("/seminar").hasRole("TEACHER")
                // .antMatchers("/user/*").permitAll()
                // .antMatchers("/user/information").hasRole("TEACHER")
                 .antMatchers("/user/email").hasRole("TEACHER")
@@ -68,8 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-                //.antMatchers(HttpMethod.OPTIONS)
-               // .permitAll()
+                .antMatchers(HttpMethod.OPTIONS)
+                .permitAll()
 
                 .anyRequest().authenticated()
 //                .and()

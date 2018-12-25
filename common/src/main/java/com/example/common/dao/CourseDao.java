@@ -83,7 +83,10 @@ public class CourseDao {
 
     public ArrayList<Klass> getAllClassByCourseId(long courseId)
     {
-        return klassMapper.getAllClassByCourseId(courseId);
+         ArrayList<Klass> klasses= klassMapper.getAllClassByCourseId(courseId);
+        System.out.println(courseId+"perth");
+        System.out.println(klasses);
+        return klasses;
     }
 
     public ArrayList<Student> getAllNoTeamByCourseId(long courseId)
