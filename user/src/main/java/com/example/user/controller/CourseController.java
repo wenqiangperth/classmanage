@@ -142,9 +142,9 @@ public class CourseController {
      * @return
      */
   @GetMapping(value="/{courseId}/myteam")
-  public Team getTeamByCourseIdAndStudentId(HttpServletRequest request,@PathVariable(value="courseId")long courseId)
+  public Team getTeamByCourseIdAndStudentId(HttpServletRequest request,@PathVariable(value="courseId")Long courseId)
   {
-      long studentId=(long)request.getAttribute("id");
+      long studentId=Long.parseLong(request.getAttribute("id").toString());
       return courseService.getTeamByCourseIdAndStudentId(studentId,courseId);
   }
 

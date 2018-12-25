@@ -20,8 +20,8 @@ public class MailConfig {
     public MailConfig()
     {
         mailSender= new JavaMailSenderImpl();
-        mailSender.setHost("smtp.126.com");
-        mailSender.setUsername("wangqiangperth@126.com");
+        mailSender.setHost("smtp.163.com");
+        mailSender.setUsername("untitled_mail@163.com");
         mailSender.setPassword("perth199822");
 
     }
@@ -29,7 +29,7 @@ public class MailConfig {
     public void sendEmail(String email,String title,String text) throws MessagingException {
         MimeMessage mimeMessage = this.mailSender.createMimeMessage();
         MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-        message.setFrom("wangqiangperth@126.com");
+        message.setFrom("untitled_mail@163.com");
         message.setTo(email);
         message.setSubject(title);
         message.setText(text);

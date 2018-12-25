@@ -82,17 +82,7 @@ public interface SeminarMapper {
      * @return
      */
     @Select("select * from seminar where course_id=#{courseId}")
-    @Results(id = "seminarMap",value = {
-            @Result(property = "courseId",column = "course_id"),
-            @Result(property = "roundId",column = "round_id"),
-            @Result(property = "seminarName",column = "seminar_name"),
-            @Result(property = "introduction",column = "introduction"),
-            @Result(property = "maxTeam",column = "max_team"),
-            @Result(property = "isVisible",column = "is_visible"),
-            @Result(property = "seminarSerial",column = "seminar_serial"),
-            @Result(property = "enrollStartTime",column = "enroll_start_time"),
-            @Result(property = "enrollEndTime",column = "enroll_end_time")
-    })
+    @ResultMap(value = "seminarMap")
     public ArrayList<Seminar> findAllSeminarByCourseId(@Param(value="courseId") long courseId);
 
     /**
@@ -109,8 +99,19 @@ public interface SeminarMapper {
      * @param id
      * @return
      */
-    @Select("select * from seminar where id=#{id}")
-    @ResultMap(value = "seminarMap")
+    @Select("select s.*,r.round_serial from seminar s,round r where s.round_id=r.id and s.id=#{id}")
+    @Results(id = "seminarMap",value = {
+            @Result(property = "roundSerial",column = "round_serial"),
+            @Result(property = "courseId",column = "course_id"),
+            @Result(property = "roundId",column = "round_id"),
+            @Result(property = "seminarName",column = "seminar_name"),
+            @Result(property = "introduction",column = "introduction"),
+            @Result(property = "maxTeam",column = "max_team"),
+            @Result(property = "isVisible",column = "is_visible"),
+            @Result(property = "seminarSerial",column = "seminar_serial"),
+            @Result(property = "enrollStartTime",column = "enroll_start_time"),
+            @Result(property = "enrollEndTime",column = "enroll_end_time")
+    })
     public Seminar selectSeminarById(@Param("id")Long id);
 
     /**
@@ -155,7 +156,7 @@ public interface SeminarMapper {
      * @param seminarId
      * @return
      */
-    @Select("select id from klass_seminar where klass_id=#{classId} and seminarId=#{seminarId}")
+    @Select("select id from klass_seminar where klass_id=#{classId} and seminar_id=#{seminarId}")
     public Long getClassSeminarIdBySeminarIdAndClassId(@Param(value="classId") Long classId,@Param(value="seminarId") Long seminarId);
 
 }

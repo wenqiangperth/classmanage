@@ -36,12 +36,11 @@ public class RoundController {
 
     /**
      * 查询：roundID->Round(包括与班级的关系)
-     * @param request
+     * @param id
      * @return
      */
     @GetMapping(value = "/{roundId}")
-    public Round getRoundById(HttpServletRequest request){
-        Long id=(Long)request.getAttribute("id");
+    public Round getRoundById(@PathVariable(name = "roundId")Long id){
         return roundService.getRoundById(id);
     }
 

@@ -134,7 +134,7 @@ public interface CourseMapper {
      * @return
      */
     @Select("select team_id from klass_student where student_id=#{studentOrTeacherId} and course_id=#{courseId}")
-    public long getTeamIdByCourseIdAndStudentId(@Param(value="studentOrTeacherId") long studentId,@Param(value="courseId") long courseId);
+    public Long getTeamIdByCourseIdAndStudentId(@Param(value="studentOrTeacherId") long studentId,@Param(value="courseId") long courseId);
 
     /**
      * 根据teamShareId查看subCourseId

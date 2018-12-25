@@ -17,6 +17,7 @@ public class Seminar {
     private Long id;
     private Long courseId;
     private Long roundId;
+    private int roundSerial;
     private String seminarName;
     private String introduction;
     private int maxTeam;

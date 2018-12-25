@@ -97,6 +97,7 @@ public class SeminarDao {
      * @return
      */
     public Seminar selectSeminarById(Long id){
+
         return seminarMapper.selectSeminarById(id);
     }
 
