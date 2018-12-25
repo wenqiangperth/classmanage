@@ -1,7 +1,5 @@
 package com.example.common.dao;
 
-import com.example.common.entity.ConflictCourseStrstegy;
-import com.example.common.entity.Student;
 import com.example.common.entity.Team;
 import com.example.common.entity.TeamStrategy;
 import com.example.common.mapper.TeamMapper;
@@ -11,10 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TeamDaoTest {

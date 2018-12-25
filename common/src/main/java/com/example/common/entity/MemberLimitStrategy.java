@@ -10,9 +10,11 @@ import lombok.Data;
  * @Version 1.0
  **/
 @Data
-public class MemberLimitStrategy {
+public class MemberLimitStrategy  {
     private Long id;
     private int minMember;
     private int maxMember;
     private Long courseId;
+
+
 }

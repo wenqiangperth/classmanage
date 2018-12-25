@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 public class TeamStrategy {
     private Long courseId;
+    private int strategySerial;
     private Long strategyId;
     private String strategyName;
 }

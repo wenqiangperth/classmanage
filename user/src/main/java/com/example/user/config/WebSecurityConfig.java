@@ -45,8 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
 
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
@@ -54,21 +54,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/login").permitAll()
               //  .antMatchers("/user/*").permitAll()
 
+                .antMatchers("/websocket").permitAll()
 
                 .antMatchers("/user/information").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/user/password").hasRole("STUDENT")
                 .antMatchers("/student/active").hasRole("STUDENT")
+
+
+                .antMatchers("/course").hasAnyRole("STUDENT","TEACHER")
+                .antMatchers("/course/{courseId}").hasAnyRole("STUDENT","TEACHER")
                 .antMatchers("/user/email").hasRole("STUDENT")
                 .antMatchers("/course").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}/class").hasRole("TEACHER")
+                .antMatchers("/course/{courseId}/round").hasAnyRole("TEACHER","STUDENT")
+
+                .antMatchers("/seminar/{seminarId}").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}/round").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/seminar/{seminarId}").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/seminar").hasRole("TEACHER")
                 .antMatchers("/seminar/{seminarId}/class/{classId}/attendance").hasRole("STUDENT")
                // .antMatchers("/user/*").permitAll()
                // .antMatchers("/user/information").hasRole("TEACHER")
-                .antMatchers("/user/email").hasRole("TEACHER")
                 //.antMatchers("/user/password").hasRole("TEACHER")
 
 

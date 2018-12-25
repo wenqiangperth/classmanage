@@ -23,4 +23,5 @@ public class Team {
     private int status;
     private ArrayList<Student> students;
     private Score score;
+    private ArrayList<TeamStrategy>teamStrategies;
 }

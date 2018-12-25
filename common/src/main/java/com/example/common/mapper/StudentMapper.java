@@ -68,7 +68,7 @@ public interface StudentMapper {
      * @return
      */
     @Select("select c.id,c.teacher_id,c.course_name,c.introduction,c.presentation_percentage," +
-            "c.question_percentage,c.report_percentage,c.team_start_time,c.team_end_time,c.team_main_course_id,c.seminar_main_course_id from course c,klass_student ks where c.id=ks.course_id and ks.student_id=#{studentOrTeacherId}")
+            "c.question_percentage,c.report_percentage,c.team_start_time,c.team_end_time,c.team_main_course_id,c.seminar_main_course_id from course c,klass_student ks where c.id=ks.course_id and ks.student_id=#{studentId}")
     @Results(id="courseMap",value = {
             @Result(property = "teacherId",column = "teacher_id"),
             @Result(property = "courseName",column = "course_name"),
@@ -80,7 +80,7 @@ public interface StudentMapper {
             @Result(property = "teamMainCourseId",column = "team_main_course_id"),
             @Result(property = "seminarMainCourseId",column = "seminar_main_course_id")
     })
-    public ArrayList<Course> getAllCoursesByStundetId(@Param("studentOrTeacherId")Long stundetId);
+    public ArrayList<Course> getAllCoursesByStundetId(@Param("studentId")Long studentId);
 
 
     /**

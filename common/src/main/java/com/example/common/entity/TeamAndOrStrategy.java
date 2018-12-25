@@ -12,8 +12,6 @@ import lombok.Data;
 @Data
 public class TeamAndOrStrategy {
     private Long id;
-    private String strategyName1;
-    private Long strategyId1;
-    private String strategyName2;
-    private Long strategyId2;
+    private String strategyName;
+    private Long strategyId;
 }

@@ -80,6 +80,7 @@ public class CourseController {
      */
     @GetMapping(value="/{courseId}/round")
     public ArrayList<Round> getAllRoundByCourseId(@PathVariable(value="courseId")long courseId) {
+        System.out.println("进入"+"perth"+courseId);
      return courseService.getAllRoundByCourseId(courseId);
     }
 

@@ -136,50 +136,7 @@ public class TeamDao {
         return teamMapper.getTeamStrategy(courseId);
     }
 
-    /**
-     * 查找冲突课程
-     * @param id
-     * @return
-     */
-    public ConflictCourseStrstegy getConflictCourseId(Long id){
-        return teamMapper.getConflictCourseId(id);
-    }
 
-    /**
-     * 查找小组人数量限制
-     * @param id
-     * @return
-     */
-    public MemberLimitStrategy getMemberLimitStrategy(Long id){
-        return teamMapper.getMemberLimitStrategy(id);
-    }
-
-    /**
-     * 查找小组内选择某一课程的人数限制
-     * @param id
-     * @return
-     */
-    public MemberLimitStrategy getCourseMemberLimit(Long id){
-        return teamMapper.getCourseMemberLimit(id);
-    }
-
-    /**
-     * 组队与策略
-     * @param id
-     * @return
-     */
-    public TeamAndOrStrategy getTeamAndStrategy(Long id){
-        return teamMapper.getTeamAndStrategy(id);
-    }
-
-    /**
-     * 组队或策略
-     * @param id
-     * @return
-     */
-    public TeamAndOrStrategy getTeamOrStrategy(Long id){
-        return teamMapper.getTeamOrStrategy(id);
-    }
 
     /**
      * 设置队伍状态

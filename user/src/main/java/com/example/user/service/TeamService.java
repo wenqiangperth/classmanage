@@ -2,6 +2,7 @@ package com.example.user.service;
 
 import com.example.common.dao.StudentDao;
 import com.example.common.dao.TeamDao;
+import com.example.common.dao.TeamStrategyDao;
 import com.example.common.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class TeamService {
     private TeamDao teamDao;
     @Autowired
     private StudentDao studentDao;
+    @Autowired
+    private TeamStrategyDao teamStrategyDao;
 
 
     /**
@@ -29,149 +32,7 @@ public class TeamService {
      * @return
      */
     public boolean isTeamValid(Long teamId){
-        Team team=teamDao.getTeamById(teamId);
-        TeamStrategy teamStrategy=teamDao.getTeamStrategy(team.getCourseId());
-        if(teamStrategy==null){
-            return true;
-        }else {
-            return isStrategyOK(teamStrategy.getStrategyName(), teamStrategy.getStrategyId(), team);
-        }
-    }
-
-    /**
-     * 通过策略名，调用不同策略验证
-     * @param strategyName
-     * @param strategyId
-     * @param team
-     * @return
-     */
-    public boolean isStrategyOK(String strategyName,Long strategyId,Team team){
-        if(strategyName.equals("conflict_course_strategy")){
-            return isConflictCourseStrategy(strategyId,team);
-        }else if(strategyName.equals("member_limit_strategy")){
-            return isMemberLimit(strategyId,team);
-        }else if(strategyName.equals("course_member_limit_strategy")){
-            return isCourseMemberLimit(strategyId,team);
-        }else if(strategyName.equals("team_and_strategy")){
-            return isTeamAndStrategy(strategyId,team);
-        }else if(strategyName.equals("team_or_strategy")){
-            return isTeamOrStrategy(strategyId,team);
-        }
-        return true;
-    }
-
-    /**
-     * 组队或策略是否符合
-     * @param strategyId
-     * @param team
-     * @return
-     */
-    public boolean isTeamOrStrategy(Long strategyId,Team team){
-        TeamAndOrStrategy teamOrStrategy=teamDao.getTeamOrStrategy(strategyId);
-        if(teamOrStrategy==null){
-            return true;
-        }
-        if(isStrategyOK(teamOrStrategy.getStrategyName1(),teamOrStrategy.getStrategyId1(),team)
-        ||isStrategyOK(teamOrStrategy.getStrategyName2(),teamOrStrategy.getStrategyId2(),team)){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 组队与策略是否符合
-     * @param strategyId
-     * @param team
-     * @return
-     */
-    public boolean isTeamAndStrategy(Long strategyId,Team team){
-        TeamAndOrStrategy teamAndStrategy=teamDao.getTeamAndStrategy(strategyId);
-        if(teamAndStrategy==null){
-            return true;
-        }
-        if(isStrategyOK(teamAndStrategy.getStrategyName1(),teamAndStrategy.getStrategyId1(),team)
-                &&isStrategyOK(teamAndStrategy.getStrategyName2(),teamAndStrategy.getStrategyId2(),team)){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 判断组内选择某一课程的人数是否超限
-     * @param strategyId
-     * @param team
-     * @return
-     */
-    public boolean isCourseMemberLimit(Long strategyId,Team team){
-        MemberLimitStrategy memberLimitStrategy=teamDao.getCourseMemberLimit(strategyId);
-        if(memberLimitStrategy==null){
-            return true;
-        }
-        ArrayList<Student>students=team.getStudents();
-        int count=0;
-        for (Student student:students
-             ) {
-            ArrayList<Course>courses=studentDao.getAllCoursesByStundetId(student.getId());
-            for (Course course:courses
-                 ) {
-                if(course.getId()==memberLimitStrategy.getCourseId()){
-                    count++;
-                }
-            }
-        }
-        if(count>=memberLimitStrategy.getMinMember()&&count<=memberLimitStrategy.getMaxMember()){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 判断组队人数限制
-     * @param strategyId
-     * @param team
-     * @return
-     */
-    public boolean isMemberLimit(Long strategyId,Team team){
-        MemberLimitStrategy memberLimitStrategy=teamDao.getMemberLimitStrategy(strategyId);
-        if(memberLimitStrategy==null){
-            return true;
-        }
-        int num=team.getStudents().size();
-        if(num>=memberLimitStrategy.getMinMember()&&num<=memberLimitStrategy.getMaxMember()){
-            return  true;
-        }
-        return false;
-    }
-    /**
-     * 判断小组中成员是否符合冲突课程规则,true,符合
-     * @param strategyId
-     * @param team
-     * @return
-     */
-    public boolean isConflictCourseStrategy(Long strategyId,Team team){
-        ConflictCourseStrstegy conflictCourseStrstegy =teamDao.getConflictCourseId(strategyId);
-        if(conflictCourseStrstegy==null){
-            return true;
-        }
-        ArrayList<Student>students=team.getStudents();
-        boolean courseId1=false,courseId2=false;
-        for (Student student:students
-             ) {
-            ArrayList<Course> courses=studentDao.getAllCoursesByStundetId(student.getId());
-            for (Course course:courses
-                 ) {
-                if(course.getId()==conflictCourseStrstegy.getCourseId1()){
-                    courseId1=true;
-                }else if(course.getId()==conflictCourseStrstegy.getCourseId2()){
-                    courseId2=true;
-                }
-            }
-        }
-        if(courseId1&&courseId2) {
-            return false;
-        }else{
-            return true;
-        }
+        return teamStrategyDao.isTeamValid(teamId);
     }
 
     /**

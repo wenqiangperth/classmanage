@@ -3,6 +3,7 @@ package com.example.common.config;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -29,20 +30,23 @@ public class CorsFilter implements Filter {
         HttpServletRequest reqs = (HttpServletRequest) req;
 
         System.out.println("进入跨域设置");
+        System.out.println(reqs.getHeader("Origin"));
 
         response.setHeader("Access-Control-Allow-Origin",reqs.getHeader("Origin"));
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT,PATCH");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type,Origin, X-Requested-With,Accept,XFILENAME,XFILECATEGORY,XFILESIZE,Authorization");
-        response.setHeader("Access-Control-Allow-Headers","*");
+       // response.setHeader("Access-Control-Allow-Headers","*");
         response.setHeader("Access-Control-Allow-Credentials","true");
         //是否允许请求带有验证信息
 
         System.out.println("跨域设置结束");
 
-        if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
-//        if(((HttpServletRequest)req).getMethod().equals("OPTIONS")){
+//        if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
+//            System.out.println("options");
+        if(((HttpServletRequest)req).getMethod().equals(RequestMethod.OPTIONS.name())){
+            System.out.println("options");
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             chain.doFilter(req, res);
