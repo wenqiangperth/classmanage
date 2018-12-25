@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
  * @Version 1.0
  **/
 @RestController
-
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
@@ -34,14 +33,14 @@ public class TeacherController {
         return teacherService.activeTeacher(teacher);
     }
 
-    /**
-     * 删除班级以及关系
-     * @param klassId
-     * @return
-     */
-    @DeleteMapping(value = "/class/{classId}")
-    public Long deleteKlass(@PathVariable(name = "classId")Long klassId){
-        return teacherService.deleteKlassById(klassId);
-    }
+//    /**
+//     * 删除班级以及关系
+//     * @param klassId
+//     * @return
+//     */
+//    @DeleteMapping(value = "/class/{classId}")
+//    public Long deleteKlass(@PathVariable(name = "classId")Long klassId){
+//        return teacherService.deleteKlassById(klassId);
+//    }
 
 }
