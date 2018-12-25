@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
+import java.util.Date;
+
 /**
  * @ClassName KlassDao
  * @Description
@@ -128,5 +130,14 @@ public class KlassDao {
     public Long deleteAllKlassSeminarByKlassId(Long classId)
     {
         return klassMapper.deleteAllKlassSeminarByKlassId(classId);
+    }
+    public Long insertKlassRound(Long klassId,Long roundId)
+    {
+        return klassMapper.insertKlassRound(klassId,roundId);
+    }
+
+    public Long insertKlassSeminar(Long klassId, Long seminarId, Date reportDdl,int status)
+    {
+        return klassMapper.insertKlassSeminar(klassId,seminarId,reportDdl,status);
     }
 }

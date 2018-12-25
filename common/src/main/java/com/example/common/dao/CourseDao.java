@@ -91,14 +91,25 @@ public class CourseDao {
 
     public ArrayList<Student> getAllNoTeamByCourseId(long courseId)
     {
-        long maincourseId;
         ArrayList<Student> students = new ArrayList<Student>();
         ArrayList<Klass> klasses = klassMapper.getAllClassByCourseId(courseId);
         ArrayList<Long> studentIds = new ArrayList<>();
+        ArrayList<Long> noStudentIds = new ArrayList<>();
+        ArrayList<Long> teamIds = new ArrayList<>();
         for(Klass klass:klasses) {
-            studentIds.addAll(teamMapper.getAllNoTeamStudentByClassId(klass.getId()));
+            teamIds.addAll(teamMapper.findAllTeamByClassId(klass.getId()));
+            studentIds.addAll(klassMapper.findAllStudentByClassId(klass.getId()));
         }
-        for(Long studentId:studentIds)
+        for(Long teamId:teamIds)
+        {
+            for(Long stId:(teamMapper.findAllStudentIdByTeamId(teamId)))
+            {
+                if(!studentIds.contains(stId)){
+                    noStudentIds.add(stId);
+                }
+            }
+        }
+        for(Long studentId:noStudentIds)
         {
             Student student = studentMapper.selectStudentById(studentId);
             students.add(student);

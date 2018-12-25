@@ -172,7 +172,11 @@ public class RequestService {
             {
                 for(Round mainRound:mainRounds)
                 {
-
+                    klassDao.insertKlassRound(subKlass.getId(),mainRound.getId());
+                }
+                for(Seminar mainSeminar:mainSeminars)
+                {
+                    klassDao.insertKlassSeminar(subKlass.getId(),mainSeminar.getId(),null,0);
                 }
             }
         }

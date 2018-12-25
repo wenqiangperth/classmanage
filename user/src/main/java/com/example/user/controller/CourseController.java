@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.common.entity.*;
 import com.example.user.service.CourseService;
+import com.example.user.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,9 @@ public class CourseController {
 
    @Autowired
     private CourseService courseService;
+
+   @Autowired
+   private TeamService teamService;
     /**
      * 添加课程
      * @param course
@@ -112,7 +116,12 @@ public class CourseController {
   @GetMapping(value="/{courseId}/team")
   public ArrayList<Team> getAllTeamByCourseId(@PathVariable(value="courseId")long courseId)
   {
-      ArrayList<Team>teams=courseService.getAllTeamByCourseId(courseId);
+      ArrayList<Klass> klasses=courseService.getAllClassByCourseId(courseId);
+      ArrayList<Team>teams=new ArrayList<>();
+      for(Klass klass:klasses)
+      {
+          teams.addAll(teamService.getAllTeamsByCourseId(klass.getId(),klass.getCourseId()));
+      }
 
       System.out.println(teams);return teams;
   }

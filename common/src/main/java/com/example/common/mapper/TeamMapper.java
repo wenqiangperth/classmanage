@@ -106,6 +106,14 @@ public interface TeamMapper {
     public ArrayList<Team> selectTeamsByCourseIdAndClassId(@Param("klassId") Long klassId,@Param("courseId") Long courseId);
 
     /**
+     * 查询：从klass_team表中查询某课程某班级下所有的teamid
+     * @param klassId
+     * @return
+     */
+    @Select("select team_id from team where klass_id=#{klassId}")
+    public ArrayList<Long> selectTeamsIdByClassId(@Param("klassId") Long klassId);
+
+    /**
      * 查询：roundId->teams
      * @param roundId
      * @return
@@ -230,6 +238,14 @@ public interface TeamMapper {
 //    @Options(useGeneratedKeys = true,keyColumn = "id")
 //    public Long aa(Team team);
 
-    @Select("select student_id from team_student a,klass_team b,student c where a.team_id=b.team_id and a.student_id=c.id and klass_id=#{klassId} and team_id is NULL")
-    public ArrayList<Long> getAllNoTeamStudentByClassId(@Param("klassId")Long klassId);
+//    @Select("select student_id from team_student a,klass_team b,student c where a.team_id=b.team_id and a.student_id=c.id and klass_id=#{klassId} and team_id is null")
+//    public ArrayList<Long> getAllNoTeamStudentByClassId(@Param("klassId")Long klassId);
+
+    /**
+     * 根据teamid查找其下所有学生id
+     * @param teamId
+     * @return
+     */
+    @Select("select student_id from team_student where team_id=#{teamId}")
+    public ArrayList<Long> findAllStudentIdByTeamId(@Param("teamId")Long teamId);
 }

@@ -19,8 +19,7 @@ import java.util.ArrayList;
 public class TeamService {
     @Autowired
     private TeamDao teamDao;
-    @Autowired
-    private StudentDao studentDao;
+
     @Autowired
     private TeamStrategyDao teamStrategyDao;
 
@@ -133,4 +132,10 @@ public class TeamService {
     public Long updateTeamName(Team team){
         return teamDao.updateTeamName(team);
     }
+
+    public ArrayList<Team> getAllTeamsByCourseId(Long courseId,Long klassId)
+    {
+        return teamDao.getAllTeamsByCourseId(klassId,courseId);
+    }
+
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * @ClassName KlassMapper
@@ -177,5 +178,22 @@ public interface KlassMapper {
     @Insert("insert into klass_round(klass_id,round_id) values(#{klassId},#{roundId})")
     public Long insertKlassRound(@Param("klassId")Long klassId,@Param("roundId")Long roundId);
 
+    /**
+     * 在klass_seminar表中插入数据
+     * @param klassId
+     * @param seminarId
+     * @param reportDdl
+     * @param status
+     * @return
+     */
+    @Insert("insert into klass_round(klass_id,seminar_id,report_ddl,status) values(#{klassId},#{seminarId},#{reportDdl},#{status})")
+    public Long insertKlassSeminar(@Param("klassId")Long klassId, @Param("seminarId")Long seminarId, @Param("reportDdl") Date reportDdl, @Param("status")int status);
 
+    /**
+     * 根据班级id查看其下所有学生
+     * @param classId
+     * @return
+     */
+    @Select("select student_id from klass_student where klass_id=#{classId}")
+    public ArrayList<Long> findAllStudentByClassId(@Param("classId")Long classId);
 }
