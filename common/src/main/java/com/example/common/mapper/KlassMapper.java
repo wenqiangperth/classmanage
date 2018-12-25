@@ -18,6 +18,16 @@ import java.util.ArrayList;
 @Mapper
 @Repository
 public interface KlassMapper {
+
+    /**
+     * 插入班级
+     * @param klass
+     * @return
+     */
+    @Insert("insert into klass (id,course_id,grade,klass_serial,klass_time,klass_location) values (#{id},#{courseId},#{grade},#{klassSerial},#{klassTime},#{klassLocation}")
+    @Options(useGeneratedKeys = true,keyColumn = "id")
+    public Long insertKlass(Klass klass);
+
     /**
      * 根据课程id查看班级
      * @param courseId

@@ -2,14 +2,18 @@ package com.example.user.service;
 
 import com.example.common.config.FileUploudConfig;
 import com.example.common.config.ReadExcelServlet;
+import com.example.common.dao.CourseDao;
 import com.example.common.dao.KlassDao;
 import com.example.common.dao.StudentDao;
+import com.example.common.entity.Course;
 import com.example.common.entity.Klass;
+import com.example.common.entity.Round;
 import com.example.common.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +30,18 @@ public class KlassService {
 
     @Autowired
     StudentDao studentDao;
+
+    @Autowired
+    private CourseDao courseDao;
+
+    /**
+     * 创建班级
+     * @param klass
+     * @return
+     */
+    public Long addKlass(Klass klass){
+        return klassDao.insertKlass(klass);
+    }
 
     public Long updateClassStudentByExcel(Long classId, MultipartFile file)
     {

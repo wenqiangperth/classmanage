@@ -1,11 +1,15 @@
 package com.example.common.dao;
 
+import com.example.common.entity.Course;
 import com.example.common.entity.Klass;
-import com.example.common.mapper.KlassMapper;
-import com.example.common.mapper.TeamMapper;
+import com.example.common.entity.Round;
+import com.example.common.entity.Seminar;
+import com.example.common.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 
 /**
  * @ClassName KlassDao
@@ -21,8 +25,51 @@ public class KlassDao {
     private KlassMapper klassMapper;
 
     @Autowired
+    private CourseMapper courseMapper;
+
+    @Autowired
     private TeamMapper teamMapper;
 
+    @Autowired
+    private RoundMapper roundMapper;
+
+    @Autowired
+    private SeminarMapper seminarMapper;
+
+    /**
+     * 新建班级,同时增减klass_seminar和klass_round关系
+     * @param klass
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Long insertKlass(Klass klass){
+        Long i=klassMapper.insertKlass(klass);
+        if(i<=0){
+            return i;
+        }
+        Course course=courseMapper.getCourseById(klass.getCourseId());
+        Long courseId=course.getId();
+        if(course.getSeminarMainCourseId()!=null){
+            courseId=course.getSeminarMainCourseId();
+        }
+        ArrayList<Round> rounds=roundMapper.getAllRoundByCourseId(courseId);
+        for (Round round:rounds
+        ) {
+            klassMapper.insertKlassRound(klass.getId(),round.getId());
+        }
+        ArrayList<Seminar>seminars=seminarMapper.findAllSeminarByCourseId(courseId);
+        for (Seminar seminar:seminars
+             ) {
+            seminarMapper.insertKlassSeminar(klass.getId(),seminar.getId(),0);
+        }
+        return i;
+    }
+
+    /**
+     * 查询:klass
+     * @param classId
+     * @return
+     */
     public Klass getClassByClassId(Long classId)
     {
         return klassMapper.getKlassByKlassId(classId);
@@ -46,6 +93,13 @@ public class KlassDao {
         return i;
     }
 
+    /**
+     * 插入:班级学生
+     * @param klassId
+     * @param studentId
+     * @param courseId
+     * @return
+     */
     public Long insertKlassStudent(Long klassId,Long studentId,Long courseId)
     {
         return klassMapper.insertKlassStudent(klassId,studentId,courseId);

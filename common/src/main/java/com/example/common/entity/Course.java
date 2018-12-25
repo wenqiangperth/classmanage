@@ -15,8 +15,8 @@ import java.util.Date;
 
 @Data
 public class Course {
-    private long id;
-    private long teacherId;
+    private Long id;
+    private Long teacherId;
     private String courseName;
     private String introduction;
     private int presentationPercentage;
@@ -24,8 +24,8 @@ public class Course {
     private int reportPercentage;
     private Date teamStartTime;
     private Date teamEndTime;
-    private long teamMainCourseId;
-    private long seminarMainCourseId;
+    private Long teamMainCourseId;
+    private Long seminarMainCourseId;
     private ArrayList<Team> teams;
 
 }
