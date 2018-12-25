@@ -182,5 +182,11 @@ public class SeminarService {
         return seminarDao.updateAttendanceByClassSeminarId(seminarId,classId,teamId,teamOrder);
     }
 
+    public Long updateReportScoreByTeamId(Long seminarId,Long classId,Long teamId,double reportScore)
+    {
+        Long klassSeminarId=seminarDao.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+        return seminarDao.updateReportScoreByKlassSeminarIdTeamId(klassSeminarId,teamId,reportScore);
+    }
+
 
 }

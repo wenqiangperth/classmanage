@@ -159,4 +159,14 @@ public interface SeminarMapper {
     @Select("select id from klass_seminar where klass_id=#{classId} and seminar_id=#{seminarId}")
     public Long getClassSeminarIdBySeminarIdAndClassId(@Param(value="classId") Long classId,@Param(value="seminarId") Long seminarId);
 
+    /**
+     * 根据klass_seminar_id和teamid修改书面报告成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param reportScore
+     * @return
+     */
+    @Update("update seminar_score set report_score=#{reportScore} where klass_seminar_id=#{klassSeminarId} and team_id=#{teamId}")
+    public Long updateReportScoreByKlassSeminarIdTeamId(@Param(value="klassSeminarId") Long klassSeminarId,@Param(value="teamId") Long teamId,@Param(value="reportScore") double reportScore);
+
 }

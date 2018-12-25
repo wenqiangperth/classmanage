@@ -252,4 +252,9 @@ public class SeminarDao {
         return attendanceMapper.insertAttendanceByClassSeminarId(teamId,teamOrder,classSeminarId);
     }
 
+    public Long updateReportScoreByKlassSeminarIdTeamId(Long klassSeminarId,Long teamId,double reportScore)
+    {
+        return seminarMapper.updateReportScoreByKlassSeminarIdTeamId(klassSeminarId,teamId,reportScore);
+    }
+
 }

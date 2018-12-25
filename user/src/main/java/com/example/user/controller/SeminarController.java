@@ -232,4 +232,17 @@ public class SeminarController {
     {
         return seminarService.updateAttendanceByClassSeminarId(seminarId,classId,teamId,teamOrder);
     }
+
+    /**
+     * 修改书面报告成绩
+     * @param seminarId
+     * @param classId
+     * @param score
+     * @return
+     */
+    @PutMapping(value="/{seminarId}/class/{classId}/reportScore")
+    public Long updateReportScoreByTeamId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody Score score)
+    {
+        return seminarService.updateReportScoreByTeamId(seminarId,classId,score.getTeamId(),score.getReportScore());
+    }
 }
