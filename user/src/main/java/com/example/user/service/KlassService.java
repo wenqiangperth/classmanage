@@ -74,4 +74,8 @@ public class KlassService {
     {
         return klassDao.deleteClassByClassId(classId);
     }
+
+    public Klass getKlassById(Long id){
+        return klassDao.getClassByClassId(id);
+    }
 }

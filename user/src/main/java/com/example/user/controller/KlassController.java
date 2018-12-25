@@ -32,6 +32,11 @@ public class KlassController {
         return klassService.updateClassStudentByExcel(classId,file);
     }
 
+    @GetMapping(value = "/{classId}")
+    public Klass getKlassById(@PathVariable(name = "classId")Long klassId){
+        return klassService.getKlassById(klassId);
+    }
+
     /**
      * 删除班级
      * @param classId
