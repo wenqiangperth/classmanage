@@ -92,13 +92,13 @@ public interface CourseMapper {
 
 
 
-    /**
-     * 根据课程id找所有没有组队的学生id
-     * @param courseId
-     * @return
-     */
-    @Select("select student_id from klass_student where course_id=#{courseId} and team_id is null")
-    public ArrayList<Long> getAllNoTeamStudentByCourseId(@Param(value="courseId") long courseId);
+//    /**
+//     * 根据课程id找所有没有组队的学生id
+//     * @param courseId
+//     * @return
+//     */
+//    @Select("select student_id from klass_student where course_id=#{courseId} and team_id is null")
+//    public ArrayList<Long> getAllNoTeamStudentByCourseId(@Param(value="courseId") long courseId);
 
     /**
      * 获得所有共享分组请求
@@ -128,14 +128,14 @@ public interface CourseMapper {
     })
     public ArrayList<SeminarShareVO> getAllSeminarShare(@Param(value="courseId") long courseId);
 
-    /**
-     * 根据学生id和课程id获得队伍Id
-     * @param studentId
-     * @param courseId
-     * @return
-     */
-    @Select("select team_id from klass_student where student_id=#{studentOrTeacherId} and course_id=#{courseId}")
-    public Long getTeamIdByCourseIdAndStudentId(@Param(value="studentOrTeacherId") long studentId,@Param(value="courseId") long courseId);
+//    /**
+//     * 根据学生id和课程id获得队伍Id
+//     * @param studentId
+//     * @param courseId
+//     * @return
+//     */
+//    @Select("select team_id from klass_student where student_id=#{studentOrTeacherId} and course_id=#{courseId}")
+//    public Long getTeamIdByCourseIdAndStudentId(@Param(value="studentOrTeacherId") long studentId,@Param(value="courseId") long courseId);
 
     /**
      * 根据teamShareId查看subCourseId

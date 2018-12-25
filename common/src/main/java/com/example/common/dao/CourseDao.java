@@ -91,8 +91,13 @@ public class CourseDao {
 
     public ArrayList<Student> getAllNoTeamByCourseId(long courseId)
     {
+        long maincourseId;
         ArrayList<Student> students = new ArrayList<Student>();
-        ArrayList<Long> studentIds = courseMapper.getAllNoTeamStudentByCourseId(courseId);
+        ArrayList<Klass> klasses = klassMapper.getAllClassByCourseId(courseId);
+        ArrayList<Long> studentIds = new ArrayList<>();
+        for(Klass klass:klasses) {
+            studentIds.addAll(teamMapper.getAllNoTeamStudentByClassId(klass.getId()));
+        }
         for(Long studentId:studentIds)
         {
             Student student = studentMapper.selectStudentById(studentId);
@@ -166,7 +171,8 @@ public class CourseDao {
 
     public Team getTeamByCourseIdAndStudentId(long studentId,long courseId)
     {
-        long teamId=courseMapper.getTeamIdByCourseIdAndStudentId(studentId,courseId);
+        long classId = klassMapper.getClassIdByCourseIdAndStudentId(courseId,studentId);
+        long teamId=teamMapper.selectTeamIdByStudentIdAndCourseIdAndClassId(studentId,courseId,classId);
         Team team = teamMapper.selectTeamById(teamId);
         team.setStudents(teamMapper.selectStudentsByTeamId(teamId));
         return team;

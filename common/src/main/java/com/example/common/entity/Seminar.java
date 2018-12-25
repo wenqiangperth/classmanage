@@ -3,7 +3,7 @@ package com.example.common.entity;
 import lombok.Data;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @ClassName Seminar
@@ -26,11 +26,6 @@ public class Seminar {
     private Date enrollStartTime;
     private Date enrollEndTime;
 
-    public Date getEnrollStartTime(){
-        return enrollStartTime;
-    }
-    public Date getEnrollEndTime(){
-        return enrollEndTime;
-    }
+
 
 }

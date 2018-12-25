@@ -267,8 +267,28 @@ public interface TeamMapper {
     @Select("select team_id from team_valid_application where id=#{teamValideId}")
     public Long findTeamIdByTeamValidId(@Param(value="teamValidId")Long teamValidId);
 
+    /**
+     * 根据班级查看所有队伍
+     * @param classId
+     * @return
+     */
+    @Select("select team_id from klass_team where klass_id=#{classId}")
+    public ArrayList<Long> findAllTeamByClassId(@Param(value="classId")Long classId);
+
+    /**
+     * 根据studentId和courseId和classId查找teamId
+     * @param studentId
+     * @param courseId
+     * @param classId
+     * @return
+     */
+    @Select("select team_id from team_student s,team st where s.team_id=st.id and student_id=#{studentId} and course_id=#{courseId} and klass_id=#{classId}")
+    public Long selectTeamIdByStudentIdAndCourseIdAndClassId(@Param("studentId")Long studentId,@Param("courseId")Long courseId,@Param("classId")Long classId);
 
 //    @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
 //    @Options(useGeneratedKeys = true,keyColumn = "id")
 //    public Long aa(Team team);
+
+    @Select("select student_id from team_student a,klass_team b,student c where a.team_id=b.team_id and a.student_id=c.id and klass_id=#{klassId} and team_id is NULL")
+    public ArrayList<Long> getAllNoTeamStudentByClassId(@Param("klassId")Long klassId);
 }

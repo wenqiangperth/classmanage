@@ -31,7 +31,7 @@ public class StudentController {
      */
     @PutMapping(value = "/active")
     public Long activeStudent(HttpServletRequest request, @RequestBody Student student){
-        student.setId((Long)request.getAttribute("id"));
+        student.setId(Long.parseLong(request.getAttribute("id").toString()));
         student.setIsActive(1);
         return studentService.activeStudentActive(student);
     }
