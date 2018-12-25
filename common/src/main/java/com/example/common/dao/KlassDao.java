@@ -45,4 +45,19 @@ public class KlassDao {
         }
         return i;
     }
+
+    public Long insertKlassStudent(Long klassId,Long studentId,Long courseId)
+    {
+        return klassMapper.insertKlassStudent(klassId,studentId,courseId);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Long deleteClassByClassId(Long classId)
+    {
+        klassMapper.deleteClassRoundByClassId(classId);
+        klassMapper.deleteClassSeminarByClassId(classId);
+        klassMapper.deleteClassStudentByClassId(classId);
+        klassMapper.deleteClassTeamByClassId(classId);
+        return klassMapper.deleteClassByClassId(classId);
+    }
 }

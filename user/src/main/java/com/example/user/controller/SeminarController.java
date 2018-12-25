@@ -99,7 +99,7 @@ public class SeminarController {
      * @return
      */
     @GetMapping(value = "/{seminarId}/class/{classId}")
-    public KlassSeminar getKlassSeminarByKlassIdAndSeminarId(@PathVariable(name = "classId")Long klassId,@PathVariable(name = "seminarid")Long seminarId){
+    public KlassSeminar getKlassSeminarByKlassIdAndSeminarId(@PathVariable(name = "classId")Long klassId,@PathVariable(name = "seminarId")Long seminarId){
         return seminarService.getKlassSeminarByKlassIdAndSeminarId(klassId,seminarId);
     }
 
