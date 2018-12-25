@@ -104,7 +104,18 @@ public class CourseService {
 
     public ArrayList<Team> getAllTeamByCourseId(long courseId)
     {
-        return courseDao.getAllTeamByCourseId(courseId);
+        ArrayList<Klass> klasses=courseDao.getAllClassByCourseId(courseId);
+        ArrayList<Long> teamIds=new ArrayList<>();
+        ArrayList<Team> teams=new ArrayList<>();
+        for(Klass klass:klasses)
+        {
+            teamIds.addAll(teamDao.getAllTeamIdByClassId(klass.getId()));
+        }
+        for(Long teamId:teamIds)
+        {
+            teams.add(teamDao.getTeamById(teamId));
+        }
+        return teams;
     }
 
     public ArrayList<Klass> getAllClassByCourseId(long courseId){

@@ -116,14 +116,20 @@ public class CourseController {
   @GetMapping(value="/{courseId}/team")
   public ArrayList<Team> getAllTeamByCourseId(@PathVariable(value="courseId")long courseId)
   {
-      ArrayList<Klass> klasses=courseService.getAllClassByCourseId(courseId);
-      ArrayList<Team>teams=new ArrayList<>();
-      for(Klass klass:klasses)
-      {
-          teams.addAll(teamService.getAllTeamsByCourseId(klass.getId(),klass.getCourseId()));
-      }
-
-      System.out.println(teams);return teams;
+//      ArrayList<Klass> klasses=courseService.getAllClassByCourseId(courseId);
+//      ArrayList<Long> teamIds=new ArrayList<>();
+//      ArrayList<Team> teams=new ArrayList<>();
+//      for(Klass klass:klasses)
+//      {
+//          teamIds.addAll(teamService.getAllTeamIdByClassId(klass.getId()));
+//      }
+//      for(Long teamId:teamIds)
+//      {
+//          teams.add(teamService.getTeamById(teamId));
+//      }
+//
+//      System.out.println(teams);return teams;
+        return courseService.getAllTeamByCourseId(courseId);
   }
 
     /**

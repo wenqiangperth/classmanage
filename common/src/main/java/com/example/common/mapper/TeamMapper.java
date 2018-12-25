@@ -248,4 +248,12 @@ public interface TeamMapper {
      */
     @Select("select student_id from team_student where team_id=#{teamId}")
     public ArrayList<Long> findAllStudentIdByTeamId(@Param("teamId")Long teamId);
+
+    /**
+     * 根据班级id查找其下所有组队信息
+     * @param klassId
+     * @return
+     */
+    @Select("select team_id from klass_team where klass_id=#{klassId}")
+    public ArrayList<Long> getAllTeamIdByClassId(@Param("klassId")Long klassId);
 }

@@ -133,9 +133,14 @@ public class TeamService {
         return teamDao.updateTeamName(team);
     }
 
-    public ArrayList<Team> getAllTeamsByCourseId(Long courseId,Long klassId)
+//    public ArrayList<Team> getAllTeamsByCourseId(Long courseId,Long klassId)
+//    {
+//        return teamDao.getAllTeamsByCourseId(klassId,courseId);
+//    }
+
+    public ArrayList<Long> getAllTeamIdByClassId(Long klassId)
     {
-        return teamDao.getAllTeamsByCourseId(klassId,courseId);
+        return teamDao.getAllTeamIdByClassId(klassId);
     }
 
 }

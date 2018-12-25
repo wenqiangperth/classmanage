@@ -61,6 +61,11 @@ public class TeamDao {
         return teamMapper.selectTeamsByCourseIdAndClassId(klassId,courseId);
     }
 
+    public ArrayList<Long> getAllTeamIdByClassId(Long klassId)
+    {
+        return teamMapper.getAllTeamIdByClassId(klassId);
+    }
+
     /**
      * 根据ID获取team包括组员
      * @param teamId
