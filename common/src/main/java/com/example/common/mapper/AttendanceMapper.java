@@ -89,6 +89,7 @@ public interface AttendanceMapper {
     @Results({
             @Result(property = "klassSeminarId",column = "klass_seminar_id"),
             @Result(property = "teamId",column = "team_id"),
+            @Result(property = "teamOrder",column = "team_order"),
             @Result(property = "isPresent",column = "is_present"),
             @Result(property = "reportName",column = "report_name"),
             @Result(property = "reportUrl",column = "report_url"),

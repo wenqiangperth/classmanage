@@ -60,4 +60,19 @@ public class KlassDao {
         klassMapper.deleteClassTeamByClassId(classId);
         return klassMapper.deleteClassByClassId(classId);
     }
+
+    public Long getClassIdByCourseIdAndStudentId(Long courseId,Long studentId){
+        return klassMapper.getClassIdByCourseIdAndStudentId(courseId,studentId);
+    }
+
+    public Long deleteAllKlassRoundByKlassId(Long classId)
+    {
+        return klassMapper.deleteAllKlassRoundByKlassId(classId);
+    }
+
+
+    public Long deleteAllKlassSeminarByKlassId(Long classId)
+    {
+        return klassMapper.deleteAllKlassSeminarByKlassId(classId);
+    }
 }

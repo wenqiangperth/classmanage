@@ -5,6 +5,7 @@ import com.example.common.entity.*;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 
@@ -214,6 +215,33 @@ public interface CourseMapper {
     @Select("select * from share_seminar_application where id=#{seminarShareId}")
     @ResultMap(value="SeminarShareMap")
     public SeminarShareVO getSeminarShareBySeminarShareId(@Param(value="seminarShareId") Long seminarShareId);
+
+    /**
+     * 学生是否选课
+     * @param courseId
+     * @param studentId
+     * @return
+     */
+    @Select("select count(*) from klass_student where course_id=#{courseId} and student_id=#{studentId}")
+    public Long isSelectCourse(@Param(value="courseId") Long courseId,@Param(value="studentId") Long studentId);
+
+    /**
+     * 在course表里添加组队共享的主课程id
+     * @param mainCourseId
+     * @param courseId
+     * @return
+     */
+    @Update("update course set team_main_course_id=#{mainCourseId} where id=#{courseId}")
+    public Long updateTeamMainCourseIdByCourseId(@Param(value="mainCourseId")Long mainCourseId,@Param(value="courseId")Long courseId);
+
+    /**
+     * 在course表里添加讨论课共享的主课程id
+     * @param mainCourseId
+     * @param courseId
+     * @return
+     */
+    @Update("update course set seminar_main_course_id=#{mainCourseId} where id=#{courseId}")
+    public Long updateSeminarMainCourseIdByCourseId(@Param(value="mainCourseId")Long mainCourseId,@Param(value="courseId")Long courseId);
 
 }
 

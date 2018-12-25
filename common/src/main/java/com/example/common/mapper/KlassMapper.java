@@ -133,5 +133,38 @@ public interface KlassMapper {
     @Delete("delete from klass_team where klass_id=#{classId}")
     public Long deleteClassTeamByClassId(@Param(value="classId") Long classId);
 
+    /**
+     * 通过学号和课程Id查找班级id
+     * @param courseId
+     * @param studentId
+     * @return
+     */
+    @Select("select klass_id from klass_student where course_id=#{courseId} and student_id=#{studentId}")
+    public Long getClassIdByCourseIdAndStudentId(@Param(value="courseId") Long courseId,@Param(value="studentId") Long studentId);
+
+    /**
+     * 根据klassid删除所有klass_round关系
+     * @param classId
+     * @return
+     */
+    @Delete("delete from klass_round where klass_id=#{classId}")
+    public Long deleteAllKlassRoundByKlassId(@Param(value="classId")Long classId);
+
+    /**
+     * 根据klassid删除所有klass_seminar关系
+     * @param classId
+     * @return
+     */
+    @Delete("delete from klass_seminar where klass_id=#{classId}")
+    public Long deleteAllKlassSeminarByKlassId(@Param(value="classId")Long classId);
+
+    /**
+     * 在klass_round表中插入数据
+     * @param klassId
+     * @param roundId
+     * @return
+     */
+    @Insert("insert into klass_round(klass_id,round_id) values(#{klassId},#{roundId})")
+    public Long insertKlassRound(@Param("klassId")Long klassId,@Param("roundId")Long roundId);
 
 }

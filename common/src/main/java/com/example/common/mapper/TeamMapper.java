@@ -26,6 +26,7 @@ public interface TeamMapper {
     @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
     @Options(useGeneratedKeys =true,keyColumn ="id" )
     public Long insertTeam(Team team);
+
     /**
      * 更新：klass_student表小组的关系，小组成员
      * @param klassId
@@ -33,8 +34,51 @@ public interface TeamMapper {
      * @param teamId
      * @return
      */
-    @Update("update klass_student set team_id=#{teamId} where klass_id=#{klassId} and student_id=#{studentOrTeacherId}")
-    public Long updateKlassStudent(@Param("klassId") Long klassId,@Param("studentOrTeacherId") Long studentId,@Param("teamId") Long teamId);
+    //@Update("update klass_student set team_id=#{teamId} where klass_id=#{klassId} and student_id=#{studentOrTeacherId}")
+    //public Long updateKlassStudent(@Param("klassId") Long klassId,@Param("studentOrTeacherId") Long studentId,@Param("teamId") Long teamId);
+
+    /**
+     * 更新：team_student表小组的关系，小组成员
+     * @param teamId
+     * @param studentId
+     * @return
+     */
+    @Insert("insert into team_student(team_id,student_id) values(#{teamId},#{studentOrTeacherId})")
+    public Long insertTeamStudent(@Param("teamId") Long teamId,@Param("studentOrTeacherId") Long studentId);
+
+    /**
+     * 删除队伍和学生关系
+     * @param teamId
+     * @return
+     */
+    @Delete("delete from team_student where team_id=#{teamId}")
+    public Long deleteTeamStudentByTeamId(@Param("teamId")Long teamId,@Param("studentId")Long studentId);
+
+    /**
+     * 删除队伍和单个学生关系
+     * @param teamId
+     * @return
+     */
+    @Delete("delete from team_student where team_id=#{teamId} and student_id=#{studentId}")
+    public Long deleteTeamStudentByTeamIdAndStudentId(@Param("teamId")Long teamId,@Param("studentId")Long studentId);
+
+    /**
+     * 更新klass_student表关系
+     * @param klass_id
+     * @param teamId
+     * @return
+     */
+    @Insert("insert into klass_team(klass_id,team_id) values(#{klassId},#{teamId})")
+    public Long insertKlassTeam(@Param("klassId")Long klass_id,@Param("team_id")Long teamId);
+
+    /**
+     * 删除klass_team关系
+     * @param klass_id
+     * @param teamId
+     * @return
+     */
+    @Delete("delete from klassTeam where klass_id=#{klassId} and team_id=#{teamId}")
+    public Long deleteKlassTeam(@Param("klassId")Long klass_id,@Param("team_id")Long teamId);
 
     /**
      * 查询：从team表中根据course和leader查询team
@@ -93,7 +137,7 @@ public interface TeamMapper {
      * @param teamId
      * @return
      */
-    @Select("select s.id,s.account,s.password,s.is_active,s.student_name,s.email from klass_student ks,student s where ks.team_id=#{teamId} and ks.student_id=s.id")
+    @Select("select s.id,s.account,s.password,s.is_active,s.student_name,s.email from team_student ks,student s where ks.team_id=#{teamId} and ks.student_id=s.id")
     @Results(id = "klassStudentMap",value = {
             @Result(property = "isAcctive",column = "is_acctive"),
             @Result(property = "studentName",column = "student_name")
@@ -115,6 +159,7 @@ public interface TeamMapper {
      */
     @Delete("delete from team where klass_id=#{klassId}")
     public Long deleteTeamByKlassId(@Param("klassId")Long klassId);
+
 
     /**
      * 查询：查找课程的组队策略总表
@@ -221,6 +266,7 @@ public interface TeamMapper {
      */
     @Select("select team_id from team_valid_application where id=#{teamValideId}")
     public Long findTeamIdByTeamValidId(@Param(value="teamValidId")Long teamValidId);
+
 
 //    @Insert("insert into team (klass_id,course_id,leader_id,team_name,team_serial,status) values (#{klassId},#{courseId},#{leaderId},#{teamName},#{teamSerial},#{status})")
 //    @Options(useGeneratedKeys = true,keyColumn = "id")

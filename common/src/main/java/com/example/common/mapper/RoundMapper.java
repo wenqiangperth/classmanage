@@ -98,5 +98,15 @@ public interface RoundMapper {
     @Options(useGeneratedKeys = true,keyProperty = "id")
     public Long insertRound(Round round);
 
+    /**
+     * 根据courseid删除该课程底下所以round
+     * @param courseId
+     * @return
+     */
+    @Delete("delete from round where course_id=#{courseId}")
+    public Long deleteAllRoundByCourseId(@Param(value="courseId")Long courseId);
+
+
+
 
 }

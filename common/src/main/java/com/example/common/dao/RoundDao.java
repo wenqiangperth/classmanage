@@ -101,4 +101,14 @@ public class RoundDao {
         team.setScore(score);
         return team;
     }
+
+    public Long deleteAllRoundByCourseId(Long courseId)
+    {
+        return roundMapper.deleteAllRoundByCourseId(courseId);
+    }
+
+    public ArrayList<Round> selectAllRoundByCourseId(Long courseId)
+    {
+        return roundMapper.getAllRoundByCourseId(courseId);
+    }
 }

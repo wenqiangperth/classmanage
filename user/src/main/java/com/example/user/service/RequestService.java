@@ -32,6 +32,9 @@ public class RequestService {
     @Autowired
     private SeminarDao seminarDao;
 
+    @Autowired
+    private RoundDao roundDao;
+
     public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(long courseId)
     {
         return courseDao.getAllTeamShare(courseId);
@@ -101,9 +104,50 @@ public class RequestService {
                 teams.addAll(teamDao.getAllTeamsByCourseId(klass.getId(), subCourseId));
             }
             for (Team team : teams) {
+                team=teamDao.getTeamById(team.getId());
                 teamDao.deleteTeamById(team.getId());
             }
-        }
+            Long mainCourseId = courseDao.getTeamShareByTeamShareId(teamShareId).getMainCourseId();
+            ArrayList<Klass> mainKlasses=courseDao.getAllClassByCourseId(mainCourseId);
+            ArrayList<Team> mainTeams = new ArrayList<Team>();
+            for(Klass mainKlass:mainKlasses)
+            {
+                mainTeams.addAll(teamDao.getAllTeamsByCourseId(mainKlass.getId(),mainCourseId));
+            }
+            for(Team mainTeam:mainTeams)
+            {
+                int max=0;
+                Long maxKlassId=0L;
+                mainTeam=teamDao.getTeamById(mainTeam.getId());
+                ArrayList<Long> classIds=new ArrayList<Long>();
+                for(Student student:(mainTeam.getStudents()))
+                {
+                    classIds.add(klassDao.getClassIdByCourseIdAndStudentId(subCourseId,student.getId()));
+                }
+                for(Klass klass:klasses) {
+                    int count = 0;
+                    for (Long classId : classIds) {
+
+                        if (klass.getId() == classId) {
+                            count++;
+                        }
+                    }
+                    if (count >= max) {
+                        max = count;
+                        maxKlassId = klass.getId();
+                    }
+                }
+                teamDao.insertKlassTeam(maxKlassId,mainTeam.getId());
+//                for(Student student:(mainTeam.getStudents()))
+//                {
+//                    if(courseDao.isSelectCourse(subCourseId,student.getId())!=0)
+//                    {
+//                        teamDao.insertTeamStudent(mainTeam.getId(),student.getId());
+//                    }
+//                }
+            }
+            courseDao.updateTeamMainCourseIdByCourseId(mainCourseId,subCourseId);
+         }
         return requestDao.updateTeamShareRequestById(teamShareId,status);
     }
 
@@ -113,13 +157,23 @@ public class RequestService {
             Long subCourseId = courseDao.getSeminarShareBySeminarShareId(seminarShareId).getSubCourseId();
             Long mainCourseId = courseDao.getSeminarShareBySeminarShareId(seminarShareId).getMainCourseId();
             ArrayList<Klass> klasses = courseDao.getAllClassByCourseId(subCourseId);
+            ArrayList<Round> subRounds=roundDao.selectAllRoundByCourseId(subCourseId);
+            ArrayList<Seminar> subSeminars=seminarDao.findAllSeminarByCourseId(subCourseId);
             seminarDao.deleteAllSeminarByCourseId(subCourseId);
-            for (Klass klass : klasses) {
-                seminarDao.deleteAllClassSeminarByClassId(klass.getId());
+            roundDao.deleteAllRoundByCourseId(subCourseId);
+            for(Klass subKlass:klasses)
+            {
+                klassDao.deleteAllKlassRoundByKlassId(subKlass.getId());
+                klassDao.deleteAllKlassSeminarByKlassId(subKlass.getId());
             }
-            ArrayList<Seminar> seminars = seminarDao.findAllSeminarByCourseId(mainCourseId);
-            for (Seminar seminar : seminars) {
-                seminarDao.addSeminar(seminar);
+            ArrayList<Round> mainRounds=roundDao.selectAllRoundByCourseId(mainCourseId);
+            ArrayList<Seminar> mainSeminars=seminarDao.findAllSeminarByCourseId(mainCourseId);
+            for(Klass subKlass:klasses)
+            {
+                for(Round mainRound:mainRounds)
+                {
+
+                }
             }
         }
         return requestDao.updateSeminarShareRequestById(seminarShareId,status);

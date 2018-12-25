@@ -44,9 +44,10 @@ public class TeamDao {
         Long teamId=team.getId();
         for (Student student:students
              ) {
-          Long j=teamMapper.updateKlassStudent(team.getKlassId(),student.getId(),teamId);
+          Long j=teamMapper.insertTeamStudent(teamId,student.getId());
             if(j<=0){return j;}
         }
+        teamMapper.insertKlassTeam(team.getKlassId(),teamId);
         return teamId;
     }
 
@@ -84,9 +85,10 @@ public class TeamDao {
     public Long deleteTeamById(Long id){
         Team team=getTeamById(id);
         ArrayList<Student>students=team.getStudents();
+        teamMapper.deleteKlassTeam(team.getKlassId(),team.getId());
         for (Student student:students
              ) {
-            teamMapper.updateKlassStudent(team.getKlassId(),student.getId(),null);
+            teamMapper.deleteTeamStudentByTeamId(team.getId(),student.getId());
         }
         return teamMapper.deleteTeamById(id);
     }
@@ -102,7 +104,7 @@ public class TeamDao {
         if(team==null){
             return 0L;
         }
-        return teamMapper.updateKlassStudent(team.getKlassId(),studentId,teamId);
+        return teamMapper.insertTeamStudent(teamId,studentId);
     }
 
     public Long createTeamValidApplication(TeamValidApplication teamValidApplication){
@@ -122,7 +124,7 @@ public class TeamDao {
         if(team==null){
             return 0L;
         }
-        return teamMapper.updateKlassStudent(team.getKlassId(),studentId,null);
+        return teamMapper.deleteTeamStudentByTeamIdAndStudentId(teamId,studentId);
     }
 
     /**
@@ -197,4 +199,14 @@ public class TeamDao {
         return teamMapper.updateTeamName(team);
     }
 
+
+    public Long insertKlassTeam(Long klassId,Long teamId)
+    {
+        return teamMapper.insertKlassTeam(klassId,teamId);
+    }
+
+    public Long insertTeamStudent(Long teamId,Long studentId)
+    {
+        return teamMapper.insertTeamStudent(teamId,studentId);
+    }
 }

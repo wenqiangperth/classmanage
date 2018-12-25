@@ -232,5 +232,20 @@ public class CourseDao {
         return seminarShareVO;
     }
 
+    public Long isSelectCourse(Long courseId,Long studentId)
+    {
+        return courseMapper.isSelectCourse(courseId,studentId);
+    }
+
+    public Long updateTeamMainCourseIdByCourseId(Long mainCourseId,Long courseId)
+    {
+        return courseMapper.updateTeamMainCourseIdByCourseId(mainCourseId,courseId);
+    }
+
+    public Long updateSeminarMainCourseIdByCourseId(Long mainCourseId,Long courseId)
+    {
+        return courseMapper.updateSeminarMainCourseIdByCourseId(mainCourseId,courseId);
+    }
+
 
 }
