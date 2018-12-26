@@ -258,14 +258,14 @@ public class SeminarController {
      * 修改书面报告成绩
      * @param seminarId
      * @param classId
-     * @param score
+     * @param scores
      * @return
      */
     @PutMapping(value="/{seminarId}/class/{classId}/reportScore")
-    public Long updateReportScoreByTeamId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody Score[] score)
+    public Long updateReportScoreByTeamId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody ArrayList<Score> scores)
     {
-        for(int i=0;i<score.length;i++) {
-            seminarService.updateReportScoreByTeamId(seminarId, classId, score[i].getTeamId(), score[i].getReportScore());
+        for(Score score:scores) {
+            seminarService.updateReportScoreByTeamId(seminarId, classId, score.getTeamId(), score.getReportScore());
         }
         return 1L;
     }

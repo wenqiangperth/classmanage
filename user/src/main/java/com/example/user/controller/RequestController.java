@@ -1,8 +1,6 @@
 package com.example.user.controller;
 
-import com.example.common.entity.SeminarShareVO;
-import com.example.common.entity.TeamShareVO;
-import com.example.common.entity.TeamValidVO;
+import com.example.common.entity.*;
 import com.example.user.service.CourseService;
 import com.example.user.service.RequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,24 +26,24 @@ public class RequestController {
 
     /**
      * 根据课程id获得所有请求
-     * @param courseId
+     * @param course
      * @return
      */
     @GetMapping(value="/teamshare")
-    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(@RequestParam long courseId)
+    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(@RequestBody Course course)
     {
-        return requestService.getAllTeamShareRequestBycourseId(courseId);
+        return requestService.getAllTeamShareRequestBycourseId(course.getId());
     }
 
     /**
      * 根据课程id获得所有讨论课共享请求
-     * @param courseId
+     * @param course
      * @return
      */
     @GetMapping(value="/seminarshare")
-    public ArrayList<SeminarShareVO> getAllSeminarShareRequestBycourseId(@RequestParam long courseId)
+    public ArrayList<SeminarShareVO> getAllSeminarShareRequestBycourseId(@RequestBody Course course)
     {
-        return requestService.getAllSeminarShareRequestBycourseId(courseId);
+        return requestService.getAllSeminarShareRequestBycourseId(course.getId());
     }
 
     /**
@@ -72,13 +70,13 @@ public class RequestController {
 
     /**
      * 根据教师id查看所有组队申请
-     * @param teacherId
+     * @param teacher
      * @return
      */
     @GetMapping("/teamvalid")
-    public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(@RequestParam(value="teacherId") Long teacherId)
+    public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(@RequestBody Teacher teacher)
     {
-        return requestService.getAllTeamValidByTeacherId(teacherId);
+        return requestService.getAllTeamValidByTeacherId(teacher.getId());
     }
 
     /**
@@ -95,31 +93,31 @@ public class RequestController {
     /**
      * 处理组队共享请求
      * @param teamShareId
-     * @param status
+     * @param teamShareVO
      * @return
      */
     @PutMapping("/teamshare/{teamshareId}")
-    public Long updateTeamShareRequestById(@PathVariable(value="teamshareId")Long teamShareId,@RequestParam(value="status") int status)
+    public Long updateTeamShareRequestById(@PathVariable(value="teamshareId")Long teamShareId,@RequestBody TeamShareVO teamShareVO)
     {
-        return requestService.updateTeamShareRequestById(teamShareId,status);
+        return requestService.updateTeamShareRequestById(teamShareId,teamShareVO.getStatus());
     }
 
     /**
      * 处理讨论课共享请求
      * @param seminarShareId
-     * @param status
+     * @param seminarShareVO
      * @return
      */
     @PutMapping("/seminarshare/{seminarshareId}")
-    public Long updateSeminarShareRequestById(@PathVariable(value="seminarShareId")Long seminarShareId,@RequestParam(value="status") int status)
+    public Long updateSeminarShareRequestById(@PathVariable(value="seminarShareId")Long seminarShareId,@RequestBody SeminarShareVO seminarShareVO)
     {
-        return requestService.updateSeminarShareRequestById(seminarShareId,status);
+        return requestService.updateSeminarShareRequestById(seminarShareId,seminarShareVO.getStatus());
     }
 
     @PutMapping("request/teamvalid/{teamvalidId}")
-    public Long updateTeamValidRequestById(@PathVariable(value="teamvalidId")Long teamValidId,@RequestParam(value="status") int status)
+    public Long updateTeamValidRequestById(@PathVariable(value="teamvalidId")Long teamValidId,@RequestBody TeamValidVO teamValidVO)
     {
-        return requestService.updateTeamValidRequestById(teamValidId,status);
+        return requestService.updateTeamValidRequestById(teamValidId,teamValidVO.getStatus());
     }
 
 }
