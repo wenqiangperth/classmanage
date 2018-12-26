@@ -32,6 +32,11 @@ public class KlassController {
         return klassService.updateClassStudentByExcel(classId,file);
     }
 
+    @GetMapping(value = "/{classId}")
+    public Klass getKlassById(@PathVariable(name = "classId")Long klassId){
+        return klassService.getKlassById(klassId);
+    }
+
     /**
      * 删除班级
      * @param classId
@@ -47,5 +52,4 @@ public class KlassController {
     public Long addClass(@RequestBody Klass klass){
         return klassService.addKlass(klass);
     }
-
 }

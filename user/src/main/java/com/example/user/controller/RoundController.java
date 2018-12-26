@@ -61,10 +61,10 @@ public class RoundController {
      * @param roundId
      * @return
      */
-//    @GetMapping(value = "/{roundId}/roundscore")
-//    public ArrayList<Team>getRoundScore(@PathVariable(name = "roundId")Long roundId){
-//        return roundService.getRoundScore(roundId);
-//    }
+    @GetMapping(value = "/{roundId}/roundscore")
+    public ArrayList<Team>getRoundScore(@PathVariable(name = "roundId")Long roundId){
+        return roundService.getRoundScore(roundId);
+    }
 
     /**
      * 查询：roundId,teamID->score

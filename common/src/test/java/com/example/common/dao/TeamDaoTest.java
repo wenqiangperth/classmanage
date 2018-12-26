@@ -26,8 +26,8 @@ public class TeamDaoTest {
     @Test
     public void aa(){
 //        ConflictCourseStrstegy a =teamMapper.getConflictCourseId(1L);
-//        System.out.println(a.toString());
-        TeamStrategy teamStrategy=teamMapper.getTeamStrategy(1L);
-        System.out.println(teamStrategy.toString());
+////        System.out.println(a.toString());
+//        TeamStrategy teamStrategy=teamMapper.getTeamStrategy(1L);
+//        System.out.println(teamStrategy.toString());
     }
 }

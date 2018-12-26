@@ -33,6 +33,13 @@ public interface ScoreMapper {
     })
     public Score selectRoundScore(@Param("roundId")Long roundId,@Param("teamId")Long teamId);
 
+    @Select("select ss.* from seminar_score ss,klass_seminar ks,klass k " +
+            "where k.id=ks.klass_id and ks.id=ss.klass_seminar_id and k.course_id=#{courseId}" +
+            " and ks.seminar_id=#{seminarId} and ss.team_id=#{teamId}")
+    @ResultMap(value = "scoreMap")
+    public Score selectSeminarScoreByTeamIdAndSeminarId(@Param("seminarId")Long seminarId,@Param("teamId")Long teamId,@Param("courseId")Long courseId);
+
+
     /**
      * 查询：一个team的一次讨论课成绩
      * @param teamId
