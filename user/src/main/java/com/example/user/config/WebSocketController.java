@@ -13,13 +13,14 @@ import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * @author ren
  */
 
-///{seminarKlassId}/{userId}/{role}
 @ServerEndpoint("/websocket/{seminarKlassId}/{userId}/{role}")
 @Component
 public class WebSocketController {
@@ -27,12 +28,13 @@ public class WebSocketController {
     private TeamDao teamDao;
 
     private static int onlineCount = 0;
+    private static Map<Long,Long> questionNum=new HashMap<>();
     private static CopyOnWriteArraySet<WebSocketController> webSocketSet = new CopyOnWriteArraySet<WebSocketController>();
     private Session session;
     Long seminarKlassId;
     Long userId;
     Long teamId;
-  //  private Map<Long,Long>
+
     String role;
 
 
@@ -67,11 +69,11 @@ public class WebSocketController {
 
     /**
      * 收到客户端消息后调用的方法
-     *1.下一个展示
+     * 1.下一个展示
      * 2.下一个提问
      * 3.结束讨论课
+     * 提问、当前展示小组为：xxx、抽取提问
      * @param */
-    //@PathParam("messageType") Byte messageType,Long attendanceId
     @OnMessage
     public void onMessage(String message,Session session) throws IOException, EncodeException {
         System.out.println(message);
