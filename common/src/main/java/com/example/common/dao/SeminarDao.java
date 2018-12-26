@@ -171,6 +171,8 @@ public class SeminarDao {
     public Team selectTeamSeminarScore(Long teamId,Long seminarId){
         Team team=teamMapper.selectTeamById(teamId);
         Score score=scoreMapper.selectTeamSeminarScore(teamId,team.getKlassId(),seminarId);
+        score.setTotalScore((score.getPresentationScore()+score.getReportScore()+score.getQuestionScore())/3);
+        scoreMapper.updateTeamSeminarScore(score);
         team.setScore(score);
         return team;
     }
