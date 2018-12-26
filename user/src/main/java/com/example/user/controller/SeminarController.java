@@ -315,8 +315,11 @@ public class SeminarController {
      * @return
      */
     @PutMapping(value="/{seminarId}/class/{classId}/reportScore")
-    public Long updateReportScoreByTeamId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody Score score)
+    public Long updateReportScoreByTeamId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody Score[] score)
     {
-        return seminarService.updateReportScoreByTeamId(seminarId,classId,score.getTeamId(),score.getReportScore());
+        for(int i=0;i<score.length;i++) {
+            seminarService.updateReportScoreByTeamId(seminarId, classId, score[i].getTeamId(), score[i].getReportScore());
+        }
+        return 1L;
     }
 }

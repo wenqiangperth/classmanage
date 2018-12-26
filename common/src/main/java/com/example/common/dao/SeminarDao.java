@@ -242,6 +242,7 @@ public class SeminarDao {
         for(Attendance attendance:attendances)
         {
             attendance.setTeam(teamMapper.selectTeamById(attendance.getTeamId()));
+            attendance.setScore(scoreMapper.selectSeminarScoreByClassSeminarIdAndTeamId(classSeminarId,attendance.getTeamId()));
         }
         return attendances;
     }

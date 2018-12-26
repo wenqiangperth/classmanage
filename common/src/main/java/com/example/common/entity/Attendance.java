@@ -22,4 +22,5 @@ public class Attendance {
     private String pptName;
     private String pptUrl;
     private Team team;
+    private Score score;
 }

@@ -68,9 +68,11 @@ public interface ScoreMapper {
      */
     @Select("select ss.* from klass_seminar ks,seminar_score ss where ks.id=ss.klass_seminar_id and ks.klass_id=#{klassId} and ks.seminar_id=#{seminarId}")
     @ResultMap(value = "scoreMap")
-    public ArrayList<Score>selectSeminarScore(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
+    public ArrayList<Score> selectSeminarScore(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
 
-
+    @Select("select * from seminar_score where klass_seminar_id=#{classSeminarId} and team_id=#{teamId}")
+    @ResultMap(value = "scoreMap")
+    public Score selectSeminarScoreByClassSeminarIdAndTeamId(@Param("classSeminarId")Long classSeminarId,@Param("teamId")Long teamId);
 
 
 }
