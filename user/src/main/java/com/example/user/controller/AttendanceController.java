@@ -1,6 +1,7 @@
 package com.example.user.controller;
 
 import com.example.common.config.FileUploudConfig;
+import com.example.common.entity.Question;
 import com.example.user.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +24,16 @@ public class AttendanceController {
 
     @Autowired
     private AttendanceService attendanceService;
+
+    /**
+     * 抽取提问
+     * @param atteandanceId
+     * @return
+     */
+    @GetMapping(value = "/{attendanceId}/question")
+    public Question getQuestionByAttendance(@PathVariable("attendanceId")Long atteandanceId){
+        return attendanceService.getQuestionByAttendanceId(atteandanceId);
+    }
 
     /**
      * 上传书面报告

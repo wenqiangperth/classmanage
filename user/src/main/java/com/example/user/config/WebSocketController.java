@@ -75,7 +75,7 @@ public class WebSocketController {
     @OnMessage
     public void onMessage(String message,Session session) throws IOException, EncodeException {
         System.out.println(message);
-        if(message.equals("2")){
+        if(message.equals("")){
             for(WebSocketController webSocketController:webSocketSet){
                 webSocketController.sendMessage("1");
             }

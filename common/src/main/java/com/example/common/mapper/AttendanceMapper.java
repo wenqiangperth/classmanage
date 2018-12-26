@@ -85,8 +85,18 @@ public interface AttendanceMapper {
     @Delete("delete from attendance where id=#{attendanceId}")
     public Long deleteAttendanceByAttendanceId(@Param(value="attendanceId")Long attendanceId);
 
+    /**
+     * 查询：某组某次讨论课展示
+     * @param klassSeminarId
+     * @param teamOrder
+     * @return
+     */
+    @Select("select * from attendance where klass_seminar_id=#{klassSeminarId} and team_order=#{teamOrder}")
+    @ResultMap(value = "attendanceMap")
+    public Attendance getAtteandanceByTeamOrderAndKlassSeminarId(@Param("klassSeminarId")Long klassSeminarId,@Param("teamOrder")int teamOrder);
+
     @Select("select * from attendance where klass_seminar_id=#{klassSeminarId}")
-    @Results({
+    @Results(id = "attendanceMap",value = {
             @Result(property = "klassSeminarId",column = "klass_seminar_id"),
             @Result(property = "teamId",column = "team_id"),
             @Result(property = "teamOrder",column = "team_order"),

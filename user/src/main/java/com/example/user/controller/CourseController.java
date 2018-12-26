@@ -125,8 +125,7 @@ public class CourseController {
   public ArrayList<Team> getAllTeamByCourseId(@PathVariable(value="courseId")long courseId)
   {
       ArrayList<Team>teams=courseService.getAllTeamByCourseId(courseId);
-
-      System.out.println(teams);return teams;
+      return teams;
   }
 
     /**

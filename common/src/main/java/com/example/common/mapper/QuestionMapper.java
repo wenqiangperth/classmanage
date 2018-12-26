@@ -1,7 +1,11 @@
 package com.example.common.mapper;
 
-import org.apache.ibatis.annotations.Mapper;
+import com.example.common.entity.Question;
+import org.apache.ibatis.annotations.*;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 
 /**
  * @ClassName QuestionMapper
@@ -14,4 +18,34 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface QuestionMapper {
+
+    /**
+     * 查询：attenanceID->questions
+     * @param attendanceId
+     * @return
+     */
+    @Select("select * from question where attendance_id=#{attendanceId} and is_selected=0")
+    @Results(id = "questionMap",value = {
+            @Result(property = "klassSeminarId",column = "klass_seminar_id"),
+            @Result(property = "teamId",column = "team_id"),
+            @Result(property = "attendanceId",column = "attendance_id"),
+            @Result(property = "studentId",column = "student_id"),
+            @Result(property = "isSelected",column = "is_selected"),
+            @Result(property = "score",column = "score")
+    })
+    public ArrayList<Question>getAllQuestionByAttendanceId(@Param("attendanceId")Long attendanceId);
+
+    /**
+     * 查询：某节讨论课下所有question
+     * @param klassSeminarId
+     * @return
+     */
+    @Select("select * from question where klass_seminar_id=#{klassSeminarId}")
+    @ResultMap(value = "questionMap")
+    public ArrayList<Question>getAllQuestionByKlassSeminarId(@Param("klassSeminarId")Long klassSeminarId);
+
+    @Update("update question set is_selected=1 where id=#{id}")
+    public Long updateQuestionIsSelected(@Param("id")Long id);
+
+
 }

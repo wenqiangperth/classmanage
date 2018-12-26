@@ -1,8 +1,12 @@
 package com.example.common.dao;
 
+import com.example.common.entity.Question;
 import com.example.common.mapper.AttendanceMapper;
+import com.example.common.mapper.QuestionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
 
 /**
  * @ClassName attendanceDao
@@ -15,6 +19,25 @@ import org.springframework.stereotype.Repository;
 public class AttendanceDao {
     @Autowired
     private AttendanceMapper attendanceMapper;
+    @Autowired
+    private QuestionMapper questionMapper;
+
+    /**
+     * 更新问题状态
+     * @param id
+     * @return
+     */
+    public Long uodateQuestionIsSelected(Long id){
+        return questionMapper.updateQuestionIsSelected(id);
+    }
+
+    public ArrayList<Question>getAllQuestionByAttendanceId(Long attendanceId){
+        return questionMapper.getAllQuestionByAttendanceId(attendanceId);
+    }
+
+    public ArrayList<Question>getAllQuestionByKlassSeminarId(Long klassSeminarId){
+        return questionMapper.getAllQuestionByKlassSeminarId(klassSeminarId);
+    }
 
     public Long setAttendanceReport(String fileName,String filePath,Long attendanceId)
     {

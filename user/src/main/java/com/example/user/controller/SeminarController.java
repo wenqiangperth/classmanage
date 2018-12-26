@@ -282,6 +282,17 @@ public class SeminarController {
     }
 
     /**
+     * 查询：某组某次讨论课展示
+     * @param klassSeminarId
+     * @param teamOrder
+     * @return
+     */
+    @GetMapping(value = "/{klassseminarId}/team/{teamorder}/attendance")
+    public Attendance getAtteandanceByTeamOrderAndKlassSeminarId(@PathVariable(name = "klassseminarId")Long klassSeminarId,@PathVariable(name = "teamorder")int teamOrder){
+        return seminarService.getAtteandanceByTeamOrderAndKlassSeminarId(klassSeminarId,teamOrder);
+    }
+
+    /**
      * 获得讨论课报名信息
      * @param seminarId
      * @param classId

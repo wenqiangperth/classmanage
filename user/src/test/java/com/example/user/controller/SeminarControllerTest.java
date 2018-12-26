@@ -1,9 +1,6 @@
 package com.example.user.controller;
 
-import com.example.common.entity.KlassSeminar;
-import com.example.common.entity.Score;
-import com.example.common.entity.Seminar;
-import com.example.common.entity.Team;
+import com.example.common.entity.*;
 import com.example.user.service.SeminarService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +18,12 @@ import static org.junit.Assert.*;
 public class SeminarControllerTest {
     @Autowired
     private SeminarService seminarService;
+
+    @Test
+    public void b(){
+        Attendance attendance=seminarService.getAtteandanceByTeamOrderAndKlassSeminarId(9L,2);
+        System.out.println(attendance);
+    }
 
     @Test
     public void createSeminar() {

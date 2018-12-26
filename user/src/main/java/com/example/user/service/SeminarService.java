@@ -177,6 +177,10 @@ public class SeminarService {
         return seminarDao.getAllAttendance(seminarId,classId);
     }
 
+    public Attendance getAtteandanceByTeamOrderAndKlassSeminarId(Long klassSeminarId,int teamOrder){
+        return seminarDao.getAtteandanceByTeamOrderAndKlassSeminarId(klassSeminarId,teamOrder);
+    }
+
     public Long updateAttendanceByClassSeminarId(Long seminarId,Long classId,Long teamId,int teamOrder)
     {
         return seminarDao.updateAttendanceByClassSeminarId(seminarId,classId,teamId,teamOrder);

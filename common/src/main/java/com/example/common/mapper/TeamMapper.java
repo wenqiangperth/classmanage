@@ -91,7 +91,8 @@ public interface TeamMapper {
             @Result(property = "courseId",column = "course_id"),
             @Result(property = "leaderId",column = "leader_id"),
             @Result(property = "teamName",column = "team_name"),
-            @Result(property = "teamSerial",column = "team_serial")
+            @Result(property = "teamSerial",column = "team_serial"),
+            @Result(property = "klassSerial",column = "klass_serial")
     })
     public Team selectTeamByCourseIdAndLeaderId(Team team);
 

@@ -247,6 +247,10 @@ public class SeminarDao {
         return attendances;
     }
 
+    public Attendance getAtteandanceByTeamOrderAndKlassSeminarId(Long klassSeminarId,int teamOrder){
+        return attendanceMapper.getAtteandanceByTeamOrderAndKlassSeminarId(klassSeminarId,teamOrder);
+    }
+
     public Long updateAttendanceByClassSeminarId(Long seminarId,Long classId,Long teamId,int teamOrder)
     {
         Long classSeminarId=seminarMapper.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
