@@ -243,5 +243,12 @@ public interface CourseMapper {
     @Update("update course set seminar_main_course_id=#{mainCourseId} where id=#{courseId}")
     public Long updateSeminarMainCourseIdByCourseId(@Param(value="mainCourseId")Long mainCourseId,@Param(value="courseId")Long courseId);
 
+    /**
+     * 根据classId查找其courseId
+     * @param classId
+     * @return
+     */
+    @Select("select course_id from klass where id=#{classId}")
+    public Long findCourseIdByClassId(@Param(value="classId")Long classId);
 }
 

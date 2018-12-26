@@ -57,7 +57,7 @@ public interface AttendanceMapper {
      * @param classSeminarId
      * @return
      */
-    @Select("select ppt_name from attendance where klass_seminar_id=#{classSeminarId}")
+    @Select("select ppt_name from attendance where klass_seminar_id=#{classSeminarId} and ppt_name is not null")
     public ArrayList<String> getAllSeminarPptByClassSeminarId(@Param(value="classSeminarId") Long classSeminarId);
 
     /**
@@ -65,7 +65,7 @@ public interface AttendanceMapper {
      * @param classSeminarId
      * @return
      */
-    @Select("select ppt_name from attendance where klass_seminar_id=#{classSeminarId}")
+    @Select("select report_name from attendance where klass_seminar_id=#{classSeminarId} and report_name is not null")
     public ArrayList<String> getAllSeminarReportByClassSeminarId(@Param(value="classSeminarId") Long classSeminarId);
 
     /**

@@ -36,6 +36,9 @@ public class SeminarDao {
     @Autowired
     private AttendanceMapper attendanceMapper;
 
+    @Autowired
+    private CourseMapper courseMapper;
+
     /**
      * 创建:讨论课，klass_seminar关系
      * @param seminar
@@ -170,8 +173,11 @@ public class SeminarDao {
      */
     public Team selectTeamSeminarScore(Long teamId,Long seminarId){
         Team team=teamMapper.selectTeamById(teamId);
+
+        Long courseId=courseMapper.findCourseIdByClassId(team.getKlassId());
+        Course course=courseMapper.getCourseById(courseId);
         Score score=scoreMapper.selectTeamSeminarScore(teamId,team.getKlassId(),seminarId);
-        score.setTotalScore((score.getPresentationScore()+score.getReportScore()+score.getQuestionScore())/3);
+        score.setTotalScore((score.getPresentationScore()*course.getPresentationPercentage()/100+score.getReportScore()*course.getReportPercentage()/100+score.getQuestionScore()*course.getQuestionPercentage()/100));
         scoreMapper.updateTeamSeminarScore(score);
         team.setScore(score);
         return team;
