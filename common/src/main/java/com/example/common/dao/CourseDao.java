@@ -56,6 +56,8 @@ public class CourseDao {
             for (Seminar seminar:seminars
                  ) {
                 Score seminarScore=scoreMapper.selectSeminarScoreByTeamIdAndSeminarId(seminar.getId(),team.getId(),courseId);
+                seminarScore.setSeminarOrRoundId(seminar.getId());
+                seminarScore.setSeminarName(seminar.getSeminarName());
                 seminarScores.add(seminarScore);
             }
             roundTeamScoreVO.setSeminarScores(seminarScores);

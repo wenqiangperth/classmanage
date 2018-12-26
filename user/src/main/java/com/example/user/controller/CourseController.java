@@ -32,6 +32,12 @@ public class CourseController {
     @Autowired
     private TeamService teamService;
 
+    /**
+     * 查询：轮次下所有team的成绩：轮次and 讨论课
+     * @param courseId
+     * @param roundId
+     * @return
+     */
    @GetMapping(value = "/{courseId}/round/{roundId}/roundscore")
    public ArrayList<RoundTeamScoreVO>getAllRoundScore(@PathVariable("courseId")Long courseId,@PathVariable("roundId")Long roundId){
         return courseService.getRoundTeamScoreByCourseIdAndRoundId(courseId,roundId);
