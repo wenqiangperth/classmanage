@@ -46,7 +46,7 @@ public class AttendanceController {
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         String fileName=fileUploudConfig.upload(file);
-        String filePath="E://test//"+fileName;
+        String filePath="../files"+fileName;
         if((!filePath.equals("文件为空"))&&(!filePath.equals("上传失败"))) {
             attendanceService.setAttendanceReport(fileName,filePath, attendanceId);
         }
@@ -81,7 +81,7 @@ public class AttendanceController {
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         String fileName=fileUploudConfig.upload(file);
-        String filePath="E://test//"+fileName;
+        String filePath="../files"+fileName;
         if((!filePath.equals("文件为空"))&&(!filePath.equals("上传失败"))) {
             attendanceService.setAttendancePpt(fileName,filePath, attendanceId);
         }

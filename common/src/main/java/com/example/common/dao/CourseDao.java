@@ -165,12 +165,15 @@ public class CourseDao {
         return teamShareVOS;
     }
 
-    public ArrayList<Team> deleteTeamShareByTeamShareId(long teamShareId)
+    public Long deleteTeamShareByTeamShareId(long teamShareId)
     {
         Long subCourseId=courseMapper.getSubCourseIdByTeamShareId(teamShareId);
-        courseMapper.deleteTeamShareByteamShareId(teamShareId);
-        ArrayList<Team> teams = teamMapper.selectTeamsByCourseId(subCourseId);
-        return teams;
+
+        ArrayList<Klass> klasses=klassMapper.getAllClassByCourseId(subCourseId);
+        for(Klass klass:klasses) {
+            teamMapper.deleteAllKlassTeam(klass.getId());
+        }
+        return courseMapper.deleteTeamShareByteamShareId(teamShareId);
     }
 
     public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)

@@ -144,16 +144,11 @@ public class CourseService {
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public Long deleteTeamShareByTeamShareId(long teamShareId)
-    {
-        Long temp=(long)1;
-        ArrayList<Team> teams=courseDao.deleteTeamShareByTeamShareId(teamShareId);
-        for(Team team:teams)
-        {
-            temp=teamDao.deleteTeamById(team.getId());
-        }
-        return temp;
+    public Long deleteTeamShareByTeamShareId(long teamShareId) {
+
+        return courseDao.deleteTeamShareByTeamShareId(teamShareId);
     }
+
 
     public Long deleteSeminarShareBySeminarShareId(long seminarShareId)
     {

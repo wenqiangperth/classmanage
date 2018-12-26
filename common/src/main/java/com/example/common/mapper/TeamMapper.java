@@ -180,6 +180,14 @@ public interface TeamMapper {
     @Delete("delete from team where klass_id=#{klassId}")
     public Long deleteTeamByKlassId(@Param("klassId")Long klassId);
 
+    /**
+     * 根据klass_id删除klass_team关系
+     * @param klassId
+     * @return
+     */
+    @Delete("delete from klas_team where klass_id=#{klassId}")
+    public Long deleteAllKlassTeam(@Param("klassId")Long klassId);
+
 
 
     /**

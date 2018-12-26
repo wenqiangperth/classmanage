@@ -41,7 +41,7 @@ public class FileUploudConfig {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         logger.info("上传的后缀名为：" + suffixName);
         // 文件上传后的路径
-        String filePath = "E://test//";
+        String filePath = "../files";
         // 解决中文问题，liunx下中文路径，图片显示问题
         // fileName = UUID.randomUUID() + suffixName;
         File dest = new File(filePath + fileName);
@@ -143,7 +143,7 @@ public class FileUploudConfig {
             }
         }*/
         //String fileName = path.substring(path.lastIndexOf("\\") +1 ,path.length());
-        File file = new File("E://test//"+fileName);
+        File file = new File("../files"+fileName);
         if (!file.exists()){
             logger.error("路径有误，文件不存在！");
         }
