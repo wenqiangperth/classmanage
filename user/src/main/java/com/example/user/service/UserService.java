@@ -1,6 +1,7 @@
 package com.example.user.service;
 
 import com.example.common.config.MailConfig;
+import com.example.common.config.SendMailConfig;
 import com.example.common.dao.UserDao;
 import com.example.common.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +54,12 @@ public class UserService {
 
     public long getUserPassword(String account) throws MessagingException
     {
-        MailConfig mailConfig=new MailConfig();
+        SendMailConfig mailConfig=new SendMailConfig();
         User user=userDao.getUserPassWord(account);
         if(user!=null) {
             String title = "温馨提醒";
             String text = "您当前使用的" + user.getAccount() + "用户初始密码为:" + user.getPassword() + "。请及时修改密码！";
-            mailConfig.sendEmail(user.getEmail(), title, text);
+            mailConfig.sendEmail(title,text,user.getEmail());
         }
         return user.getId();
     }
