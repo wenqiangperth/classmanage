@@ -119,7 +119,17 @@ public class CourseService {
         }
         for(Long teamId:teamIds)
         {
-            teams.add(teamDao.getTeamById(teamId));
+            Team temp=teamDao.getTeamById(teamId);
+            ArrayList<Student> selectStudents=new ArrayList<>();
+            for (Student tempStudent:(temp.getStudents()))
+            {
+                if(courseDao.isSelectCourse(courseId,tempStudent.getId())==1)
+                {
+                    selectStudents.add(tempStudent);
+                }
+            }
+            temp.setStudents(selectStudents);
+            teams.add(temp);
         }
         return teams;
     }

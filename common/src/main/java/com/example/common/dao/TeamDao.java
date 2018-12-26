@@ -60,8 +60,8 @@ public class TeamDao {
     public ArrayList<Team>getAllTeamsByCourseId(Long klassId,Long courseId){
         return teamMapper.selectTeamsByCourseIdAndClassId(klassId,courseId);
     }
-
     public ArrayList<Long> getAllTeamIdByClassId(Long klassId)
+
     {
         return teamMapper.getAllTeamIdByClassId(klassId);
     }

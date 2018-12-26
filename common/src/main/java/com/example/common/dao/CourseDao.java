@@ -115,11 +115,12 @@ public class CourseDao {
         return klasses;
     }
 
-    public ArrayList<Student> getAllNoTeamByCourseId(long courseId)
+    public ArrayList<Student>getAllNoTeamByCourseId(long courseId)
     {
         ArrayList<Student> students = new ArrayList<Student>();
         ArrayList<Klass> klasses = klassMapper.getAllClassByCourseId(courseId);
         ArrayList<Long> studentIds = new ArrayList<>();
+        ArrayList<Long> teamStudentIds=new ArrayList<>();
         ArrayList<Long> noStudentIds = new ArrayList<>();
         ArrayList<Long> teamIds = new ArrayList<>();
         for(Klass klass:klasses) {
@@ -128,11 +129,13 @@ public class CourseDao {
         }
         for(Long teamId:teamIds)
         {
-            for(Long stId:(teamMapper.findAllStudentIdByTeamId(teamId)))
+           teamStudentIds.addAll(teamMapper.findAllStudentIdByTeamId(teamId));
+        }
+        for(Long studentId:studentIds)
+        {
+            if(!teamStudentIds.contains(studentId))
             {
-                if(!studentIds.contains(stId)){
-                    noStudentIds.add(stId);
-                }
+                noStudentIds.add(studentId);
             }
         }
         for(Long studentId:noStudentIds)
