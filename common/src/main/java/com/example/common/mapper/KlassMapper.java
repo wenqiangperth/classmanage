@@ -97,7 +97,7 @@ public interface KlassMapper {
      * @param classId
      * @return
      */
-    @Delete("delete from klass_student where klass_id=#{class_id}")
+    @Delete("delete from klass_student where klass_id=#{classId}")
     public long deleteClassStudentByClassId(@Param(value="classId")long classId);
 
     /**
@@ -125,7 +125,7 @@ public interface KlassMapper {
      * @return
      */
     @Insert("insert into klass_student(klass_id,student_id,course_id) values(#{klassId},#{studentId},#{courseId})")
-    public Long insertKlassStudent(Long klassId,Long studentId,Long courseId);
+public Long insertKlassStudent(@Param("klassId") Long klassId,@Param("studentId") Long studentId,@Param("courseId") Long courseId);
 
     /**
      * 根据classId删除class信息

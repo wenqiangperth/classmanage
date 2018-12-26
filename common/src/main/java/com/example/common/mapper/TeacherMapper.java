@@ -128,7 +128,7 @@ public interface TeacherMapper {
      * @param teacher
      * @return
      */
-    @Update("update teacher set password=#{password},email=#{email},is_active=#{isActive} where id=#{id}")
+    @Update("update teacher set password=#{password},is_active=#{isActive} where id=#{id}")
     public Long updateTeacherAcive(Teacher teacher);
 
 }

@@ -113,6 +113,7 @@ public interface SeminarMapper {
      */
     @Select("select s.*,r.round_serial from seminar s,round r where s.round_id=r.id and s.id=#{id}")
     @Results(id = "seminarMap",value = {
+            @Result(property = "id",column = "id"),
             @Result(property = "roundSerial",column = "round_serial"),
             @Result(property = "courseId",column = "course_id"),
             @Result(property = "roundId",column = "round_id"),

@@ -162,6 +162,6 @@ public interface StudentMapper {
     @ResultMap(value="studentMap")
     public Student findStudentByAccountAndStudentName(@Param(value="account") String account,@Param(value="studentName") String studentName);
 
-    @Insert("insert into student(account,password,is_active,student_name,email) values(#{account},#{password},#{isActive},#{studentName},#{email}")
+    @Insert("insert into student(account,password,is_active,student_name,email) values(#{account},#{password},#{isActive},#{studentName},#{email})")
     public Long insertStudent(Student student);
 }

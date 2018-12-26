@@ -64,6 +64,8 @@ public class KlassService {
                 studentDao.insertStudent(student);
                 s=studentDao.findStudentByAccountAndStudentName(student.getAccount(),student.getStudentName());
             }
+            System.out.println(s.getAccount());
+            System.out.println(s.getStudentName());
             klassDao.insertKlassStudent(klass.getId(),s.getId(),klass.getCourseId());
 
         }

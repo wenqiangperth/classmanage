@@ -212,6 +212,7 @@ public class SeminarDao {
         for (Score score:scores
              ) {
             Team team=teamMapper.selectTeamById(score.getTeamId());
+            score.setTotalScore((score.getPresentationScore()+score.getQuestionScore()+score.getReportScore())/3);
             team.setScore(score);
             teams.add(team);
         }
