@@ -181,4 +181,8 @@ public interface SeminarMapper {
     @Update("update seminar_score set report_score=#{reportScore} where klass_seminar_id=#{klassSeminarId} and team_id=#{teamId}")
     public Long updateReportScoreByKlassSeminarIdTeamId(@Param(value="klassSeminarId") Long klassSeminarId,@Param(value="teamId") Long teamId,@Param(value="reportScore") double reportScore);
 
+    @Select("select * from seminar s,klass_seminar ks  where s.id=ks.seminar_id and ks.id=#{klassSeminarId}")
+    @ResultMap(value = "seminarMap")
+    public Seminar getSeminarByKlassSeminarId(@Param("klassSeminarId")Long klassSeminarId);
+
 }
