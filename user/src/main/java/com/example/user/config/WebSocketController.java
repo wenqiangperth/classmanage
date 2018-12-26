@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 
 ///{seminarKlassId}/{userId}/{role}
-@ServerEndpoint("/websocket")
+@ServerEndpoint("/websocket/{seminarKlassId}/{userId}/{role}")
 @Component
 public class WebSocketController {
     @Autowired
@@ -32,17 +32,17 @@ public class WebSocketController {
     Long seminarKlassId;
     Long userId;
     Long teamId;
-    Long priority;
+  //  private Map<Long,Long>
     String role;
 
 
     /**
      * 连接建立成功调用的方法*/
     @OnOpen
-    public void onOpen(Session session/*, @PathParam("seminarKlassId") Long seminarKlassId,@PathParam("role")String role,@PathParam("userId")Long userId*/) throws IOException, EncodeException {
-//        this.userId=userId;
-//        this.role=role;
-//        this.seminarKlassId=seminarKlassId;
+    public void onOpen(Session session, @PathParam("seminarKlassId") Long seminarKlassId,@PathParam("role")String role,@PathParam("userId")Long userId) throws IOException, EncodeException {
+        this.userId=userId;
+        this.role=role;
+        this.seminarKlassId=seminarKlassId;
         this.session = session;
         webSocketSet.add(this);
         System.out.println("连接成功");
@@ -75,7 +75,7 @@ public class WebSocketController {
     @OnMessage
     public void onMessage(String message,Session session) throws IOException, EncodeException {
         System.out.println(message);
-        if(message.equals("")){
+        if(message.equals("提问")){
             for(WebSocketController webSocketController:webSocketSet){
                 webSocketController.sendMessage("1");
             }
