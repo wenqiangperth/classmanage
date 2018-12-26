@@ -118,8 +118,12 @@ public class SeminarService {
         return seminarDao.selectTeamSeminarScore(teamId,seminaId);
     }
 
+    public Long updateTeamSeminarPresentationScore(Score score){
+        return seminarDao.updateTeamSeminarPresentationScore(score);
+    }
+
     /**
-     * 更新：团队讨论课成绩
+     * 更新：团队讨论课成绩,计算总成绩
      * @param score
      * @param seminarId
      * @return

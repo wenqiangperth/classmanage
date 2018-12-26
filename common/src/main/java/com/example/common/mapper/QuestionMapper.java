@@ -19,6 +19,14 @@ import java.util.ArrayList;
 @Repository
 public interface QuestionMapper {
 
+
+    /**
+     * 插入：question
+     * @param question
+     * @return
+     */
+    @Insert("insert into question (klass_seminar_id,attendance_id,team_id,student_id,is_selected) values (#{klassSeminarId},#{attendanceId},#{teamId},#{studentId},#{isSelected}")
+    public Long insertQuestion(Question question);
     /**
      * 查询：attenanceID->questions
      * @param attendanceId
@@ -46,6 +54,8 @@ public interface QuestionMapper {
 
     @Update("update question set is_selected=1 where id=#{id}")
     public Long updateQuestionIsSelected(@Param("id")Long id);
+
+
 
 
 }

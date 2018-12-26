@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @SpringBootTest
 public class SeminarControllerTest {
     @Autowired
@@ -21,8 +21,8 @@ public class SeminarControllerTest {
 
     @Test
     public void b(){
-        Attendance attendance=seminarService.getAtteandanceByTeamOrderAndKlassSeminarId(9L,2);
-        System.out.println(attendance);
+//        Attendance attendance=seminarService.getAtteandanceByTeamOrderAndKlassSeminarId(9L,2);
+//        System.out.println(attendance);
     }
 
     @Test

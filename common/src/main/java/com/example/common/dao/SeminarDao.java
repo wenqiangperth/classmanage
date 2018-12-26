@@ -183,6 +183,10 @@ public class SeminarDao {
         return team;
     }
 
+    public Long updateTeamSeminarPresentationScore(Score score){
+        return scoreMapper.updateTeamSeminarPresentationScore(score);
+    }
+
     /**
      * 更新：团队讨论课成绩
      * @param score

@@ -1,8 +1,11 @@
 package com.example.common.dao;
 
+import com.example.common.entity.Attendance;
 import com.example.common.entity.Question;
+import com.example.common.entity.Team;
 import com.example.common.mapper.AttendanceMapper;
 import com.example.common.mapper.QuestionMapper;
+import com.example.common.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,12 +25,23 @@ public class AttendanceDao {
     @Autowired
     private QuestionMapper questionMapper;
 
+    @Autowired
+    private TeamMapper teamMapper;
+
+
+    public Attendance getAttendanceById(Long id){
+        Attendance attendance= attendanceMapper.selectAttendanceById(id);
+        Team team=teamMapper.selectTeamById(attendance.getTeamId());
+        attendance.setTeam(team);
+        return attendance;
+    }
+
     /**
      * 更新问题状态
      * @param id
      * @return
      */
-    public Long uodateQuestionIsSelected(Long id){
+    public Long updateQuestionIsSelected(Long id){
         return questionMapper.updateQuestionIsSelected(id);
     }
 

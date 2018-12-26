@@ -3,11 +3,13 @@ package com.example.user.controller;
 import com.example.common.config.FileUploudConfig;
 import com.example.common.entity.*;
 import com.example.user.service.SeminarService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.server.PathParam;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,6 +31,29 @@ public class SeminarController {
     @Autowired
     private SeminarService seminarService;
 
+    private final static String websever="localhost:8081";
+
+//    /**
+//     * 给前端websockt的url
+//     * @param teamId
+//     * @param seminarKlassId
+//     * @param httpServletRequest
+//     * @return
+//     */
+//    @GetMapping(value = "/{klassseminarId}/enterseminar")
+//    public String enterWebSocket(@PathVariable("teamId")Long teamId,@PathVariable("klassseminarId")Long seminarKlassId,HttpServletRequest httpServletRequest){
+//        Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
+//        String role=httpServletRequest.getAttribute("role").toString();
+//        return "ws://"+websever+"/websocket/"+seminarKlassId+"/"+userId+"/"+teamId+"/"+role;
+//    }
+
+
+    @GetMapping(value = "/{klassseminarId}/enterseminar")
+    public String enterWebSocketTeacher(@PathVariable("klassseminarId")Long klassSeminarId,HttpServletRequest httpServletRequest){
+        Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
+        String role=httpServletRequest.getAttribute("role").toString();
+        return "ws://"+websever+"/websocket/"+klassSeminarId+"/"+userId+"/"+role;
+    }
 
     /**
      * 创建讨论课
@@ -152,6 +177,15 @@ public class SeminarController {
     public Long updateTeamSeminarScore(@PathVariable(name = "teamId")Long teamId,@PathVariable(name = "seminarId")Long seminarId,@RequestBody Score score){
         score.setTeamId(teamId);
         return seminarService.updateTeamSeminarScore(score,seminarId);
+    }
+
+    @PutMapping(value = "/klassseminarId}/team/{teamId}/presentationscore")
+    public Long updateTeamSeminarPresentationScore(@PathVariable(name = "klassseminarId")Long klassSeminarId,@PathVariable(name = "teamId")Long teamId,@RequestBody double presentationScore){
+        Score score=new Score();
+        score.setSeminarOrRoundId(klassSeminarId);
+        score.setTeamId(teamId);
+        score.setPresentationScore(presentationScore);
+        return seminarService.updateTeamSeminarPresentationScore(score);
     }
 
     /**

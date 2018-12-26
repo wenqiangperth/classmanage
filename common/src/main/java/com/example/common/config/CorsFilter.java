@@ -29,8 +29,6 @@ public class CorsFilter implements Filter {
 
         HttpServletRequest reqs = (HttpServletRequest) req;
 
-        System.out.println("进入跨域设置");
-        System.out.println(reqs.getHeader("Origin"));
 
         response.setHeader("Access-Control-Allow-Origin",reqs.getHeader("Origin"));
         response.setHeader("Access-Control-Allow-Credentials", "true");
@@ -41,12 +39,10 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Credentials","true");
         //是否允许请求带有验证信息
 
-        System.out.println("跨域设置结束");
 
 //        if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
 //            System.out.println("options");
         if(((HttpServletRequest)req).getMethod().equals(RequestMethod.OPTIONS.name())){
-            System.out.println("options");
             response.setStatus(HttpServletResponse.SC_OK);
         } else {
             chain.doFilter(req, res);

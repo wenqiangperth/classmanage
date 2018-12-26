@@ -54,7 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/login").permitAll()
               //  .antMatchers("/user/*").permitAll()
 
-                .antMatchers("/websocket/{seminarKlassId}/{userId}/{role}").permitAll()
+                .antMatchers("/websocket/{klassseminarId}/{userId}/{role}").permitAll()
+               // .antMatchers("/{klassseminarId}/team/{teamId}/enterseminar").permitAll()
+
 
                 .antMatchers("/user/information").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/user/password").hasRole("STUDENT")

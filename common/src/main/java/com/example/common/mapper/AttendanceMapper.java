@@ -18,6 +18,25 @@ import java.util.ArrayList;
 @Mapper
 @Repository
 public interface AttendanceMapper {
+
+
+    /**
+     * 查询：id->attendance
+     * @param id
+     * @return
+     */
+    @Select("select * from attendance where id=#{id}")
+    @ResultMap(value = "attendanceMap")
+    public Attendance selectAttendanceById(@Param("id")Long id);
+
+    /**
+     * 设置attendance的状态
+     * @param attendance
+     * @return
+     */
+    @Update("update attendance set is_present=#{isPresent} where id=#{id}")
+    public Long updateAttendanceIsPresent(Attendance attendance);
+
     /**
      * 添加report存储路径
      * @param filePath

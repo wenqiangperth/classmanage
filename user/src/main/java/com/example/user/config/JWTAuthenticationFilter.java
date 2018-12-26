@@ -40,7 +40,6 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
 
-        System.out.println("进入过滤器");
 
         if (header == null || !header.startsWith("Bearer ")) {
             chain.doFilter(request, response);

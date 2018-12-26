@@ -61,6 +61,14 @@ public interface ScoreMapper {
     public Long updateTeamSeminarScore(Score score);
 
     /**
+     * 更新：展示成绩
+     * @param score
+     * @return
+     */
+    @Update("update seminar_score set presentation_score=#{presentationScore} where klass_seminar_id=#{seminarOrRoundId} and team_id=#{teamId}")
+    public Long updateTeamSeminarPresentationScore(Score score);
+
+    /**
      * 查询：一个班的一次讨论课成绩
      * @param klassId
      * @param seminarId

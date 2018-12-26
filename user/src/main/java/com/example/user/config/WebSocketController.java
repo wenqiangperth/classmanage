@@ -2,12 +2,16 @@ package com.example.user.config;
 
 
 import com.example.common.dao.TeamDao;
+import com.example.common.entity.Attendance;
+import com.example.common.entity.Question;
 import com.example.common.entity.Team;
+import com.example.common.mapper.QuestionMapper;
 import com.example.user.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.*;
@@ -22,21 +26,29 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * @author ren
  */
 
-@ServerEndpoint("/websocket/{seminarKlassId}/{userId}/{role}")
+@ServerEndpoint("/websocket/{klassseminarId}/{userId}/{role}")
 @Component
 public class WebSocketController {
-    @Autowired
-    private TeamDao teamDao;
-    @Autowired
-    private AttendanceService attendanceService;
+//
+//    @Autowired
+//    private AttendanceService attendanceService;
+//
+//    @Autowired
+//    private QuestionMapper questionMapper;
+
+    private final static String studentRole="ROLE_STUDENT";
+//    private final static String nextGroup="下一组展示";
+//    private final static String chooseQuestion="抽取提问";
+//    private final static String askQuestion="提问";
+//    private final static String nowQuestionNum="当前提问人数";
 
     private static int onlineCount = 0;
-    private static Map<Long,Long> questionNum=new HashMap<>();
     private static CopyOnWriteArraySet<WebSocketController> webSocketSet = new CopyOnWriteArraySet<WebSocketController>();
     private Session session;
     Long seminarKlassId;
     Long userId;
-    Long teamId;
+//    Long teamId;
+//    boolean isAsked;
 
     String role;
 
@@ -44,7 +56,8 @@ public class WebSocketController {
     /**
      * 连接建立成功调用的方法*/
     @OnOpen
-    public void onOpen(Session session, @PathParam("seminarKlassId") Long seminarKlassId,@PathParam("role")String role,@PathParam("userId")Long userId) throws IOException, EncodeException {
+    public void onOpen(Session session, @PathParam("klassseminarId") Long seminarKlassId, @PathParam("role")String role, @PathParam("userId")Long userId) throws IOException, EncodeException {
+
         this.userId=userId;
         this.role=role;
         this.seminarKlassId=seminarKlassId;
@@ -54,7 +67,6 @@ public class WebSocketController {
         //加入set中
         addOnlineCount();
         StringBuffer stringBuffer=new StringBuffer("连接成功");
-        sendMessage("200"+"perth"+onlineCount);
     }
 
     /**
@@ -64,6 +76,7 @@ public class WebSocketController {
     public void onClose() {
         webSocketSet.remove(this);
         //从set中删除
+
         subOnlineCount();
         //在线数减1
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
@@ -80,30 +93,88 @@ public class WebSocketController {
     @OnMessage
     public void onMessage(String message,Session session) throws IOException, EncodeException {
         System.out.println(message);
-        if(message.startsWith("当前展示小组")){
-            for (WebSocketController webSocketController:webSocketSet
-                 ) {
-                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
-                    if(webSocketController.getRole().equals("STUDENT")){
-                        webSocketController.sendObject(2L);
-                    }
-                    webSocketController.sendMessage(message);
-                }
-            }
-        }else if(message.startsWith("抽取提问")){
 
-        }
-        if(message.equals("提问")){
-            for(WebSocketController webSocketController:webSocketSet){
-                webSocketController.sendMessage("1");
-            }
-        }else if(message.equals("1")){
-            for(WebSocketController webSocketController:webSocketSet){
-                webSocketController.sendMessage("2");
-            }
-        }else{
-            sendMessage("系统出错");
-        }
+
+        //         if(message.equals("1")){
+//         //   questionNum.put(this.getSeminarKlassId(),0L);
+//            //Long attendanceId=Long.parseLong(message.replace("当前展示小组",""));
+//           // Attendance attendance=attendanceService.getAttendanceById(attendanceId);
+//            for (WebSocketController webSocketController:webSocketSet
+//                 ) {
+//                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
+//                    if(webSocketController.getRole().equals(studentRole)){
+//
+//                  //      webSocketController.sendObject(attendance);
+//                        webSocketController.sendMessage("1");
+//
+//                    }
+//
+//          //          webSocketController.sendMessage("question"+questionNum.get(webSocketController.getSeminarKlassId()));
+//
+//                }
+//            }
+//        }else if(message.startsWith("抽取提问")){
+////             if(attendanceService==null){
+////                 System.out.println("wuuwuwwuw");
+////             }
+////             System.out.println(attendanceService.toString());
+////             System.out.println(message+"perth");
+////            Long attendanceId=Long.parseLong(message.replace("抽取提问",""));
+////             System.out.println(attendanceId);
+////            Question question=attendanceService.getQuestionByAttendanceId(attendanceId);
+////            this.sendObject(question);
+////            questionNum.put(this.getSeminarKlassId(),questionNum.get(this.getSeminarKlassId())-1);
+//               for (WebSocketController webSocketController:webSocketSet
+//                 ) {
+//                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
+//                    if (webSocketController.getUserId().equals(question.getStudentId())) {
+//                        webSocketController.isAsked=false;
+//
+//                         webSocketController.sendMessage("请您开始提问");
+//
+//                    } else if(webSocketController.getRole().equals(studentRole)) {
+//
+//                        webSocketController.sendMessage("很遗憾，请你继续等待");
+//
+//                    }
+//
+//                    webSocketController.sendMessage(""+questionNum.get(webSocketController.getSeminarKlassId()));
+//
+//                }
+//            }
+//        }else if(message.startsWith("3")){
+//            if(this.isAsked){
+//
+//                this.sendMessage("您已进入提问队列，请您耐心等待！");
+//
+//            }else{
+//                Long attendanceId=Long.parseLong(message.replace("提问",""));
+//                this.isAsked=true;
+//                if(questionNum.get(this.getSeminarKlassId())==null){
+//                    questionNum.put(this.getSeminarKlassId(),1L);
+//                }else{
+//                    questionNum.put(this.getSeminarKlassId(),questionNum.get(this.getSeminarKlassId())+1L);
+//                }
+//                Question question=new Question();
+//                question.setKlassSeminarId(this.getSeminarKlassId());
+//                question.setStudentId(this.getUserId());
+//                question.setTeamId(this.teamId);
+//                question.setAttendanceId(attendanceId);
+//                question.setIsSelected(0);
+//                questionMapper.insertQuestion(question);
+//
+//                this.sendMessage("提问成功");
+//
+//                for (WebSocketController webSocketController:webSocketSet
+//                     ) {
+//                    if (this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
+//
+//                        webSocketController.sendMessage("" +questionNum.get(webSocketController.getSeminarKlassId()));
+//
+//                    }
+//                }
+//            }
+//        }
     }
 
     /**

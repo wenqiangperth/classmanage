@@ -2,6 +2,7 @@ package com.example.user.service;
 
 import com.example.common.dao.AttendanceDao;
 import com.example.common.dao.TeamDao;
+import com.example.common.entity.Attendance;
 import com.example.common.entity.Question;
 import com.example.common.entity.Team;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class AttendanceService {
     @Autowired
     private TeamDao teamDao;
 
+
+    public Attendance getAttendanceById(Long attendanceId){
+        return attendanceDao.getAttendanceById(attendanceId);
+    }
 
     /**
      * 抽取提问
@@ -60,7 +65,7 @@ public class AttendanceService {
             }
 
         }
-        attendanceDao.uodateQuestionIsSelected(chooseQuestion.getId());
+        attendanceDao.updateQuestionIsSelected(chooseQuestion.getId());
         Team team=teamDao.getTeamById(chooseQuestion.getTeamId());
         chooseQuestion.setTeam(team);
         return chooseQuestion;
