@@ -226,15 +226,18 @@ public class CourseDao {
     public Long deleteSeminarShareBySeminarShareId(long seminarShareId)
     {
         Long subCourseId = courseMapper.getSubCourseIdBySeminarShareId(seminarShareId);
+        Long mainCourseId=courseMapper.getSeminarShareBySeminarShareId(seminarShareId).getMainCourseId();
         ArrayList<Klass> klasses=klassMapper.getAllClassByCourseId(subCourseId);
-        ArrayList<Seminar> seminars=seminarMapper.findAllSeminarByCourseId(subCourseId);
+        ArrayList<Seminar> seminars=seminarMapper.findAllSeminarByCourseId(mainCourseId);
+        ArrayList<Round> rounds=roundMapper.getAllRoundByCourseId(mainCourseId);
         for(Klass klass:klasses)
         {
             for(Seminar seminar:seminars)
             {
                 courseMapper.deleteKlassSeminarByCourseId(klass.getId(),seminar.getId());
-            }
 
+            }
+            klassMapper.deleteClassRoundByClassId(klass.getId());
         }
         return courseMapper.deleteSeminarShareBySeminarShareId(seminarShareId);
     }
