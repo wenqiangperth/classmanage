@@ -1,7 +1,9 @@
 package com.example.user.service;
 
 import com.example.common.dao.AttendanceDao;
+import com.example.common.dao.TeamDao;
 import com.example.common.entity.Question;
+import com.example.common.entity.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ public class AttendanceService {
     @Autowired
     private AttendanceDao attendanceDao;
 
+    @Autowired
+    private TeamDao teamDao;
 
 
     /**
@@ -34,7 +38,6 @@ public class AttendanceService {
             return null;
         }
         ArrayList<Question>allQuestions=attendanceDao.getAllQuestionByKlassSeminarId(questions.get(0).getKlassSeminarId());
-        ArrayList<Long>teamIds=new ArrayList<>();
         Map<Long,Long>teamMaps=new HashMap<Long,Long>();
         for (Question question:allQuestions
              ) {
@@ -58,6 +61,8 @@ public class AttendanceService {
 
         }
         attendanceDao.uodateQuestionIsSelected(chooseQuestion.getId());
+        Team team=teamDao.getTeamById(chooseQuestion.getTeamId());
+        chooseQuestion.setTeam(team);
         return chooseQuestion;
     }
 

@@ -3,6 +3,7 @@ package com.example.user.config;
 
 import com.example.common.dao.TeamDao;
 import com.example.common.entity.Team;
+import com.example.user.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class WebSocketController {
     @Autowired
     private TeamDao teamDao;
+    @Autowired
+    private AttendanceService attendanceService;
 
     private static int onlineCount = 0;
     private static Map<Long,Long> questionNum=new HashMap<>();
@@ -77,6 +80,19 @@ public class WebSocketController {
     @OnMessage
     public void onMessage(String message,Session session) throws IOException, EncodeException {
         System.out.println(message);
+        if(message.startsWith("当前展示小组")){
+            for (WebSocketController webSocketController:webSocketSet
+                 ) {
+                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
+                    if(webSocketController.getRole().equals("STUDENT")){
+                        webSocketController.sendObject(2L);
+                    }
+                    webSocketController.sendMessage(message);
+                }
+            }
+        }else if(message.startsWith("抽取提问")){
+
+        }
         if(message.equals("提问")){
             for(WebSocketController webSocketController:webSocketSet){
                 webSocketController.sendMessage("1");
@@ -107,8 +123,8 @@ public class WebSocketController {
         this.session.getBasicRemote().sendText(message);
     }
 
-    public void sendObject(Object object){
-
+    public void sendObject(Object object) throws IOException, EncodeException {
+        this.session.getBasicRemote().sendObject(object);
     }
     /**
      * 群发自定义消息

@@ -19,4 +19,5 @@ public class Question {
     private long studentId;
     private int isSelected;
     private double score;
+    private Team team;
 }
