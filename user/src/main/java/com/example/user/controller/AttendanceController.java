@@ -21,6 +21,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping(value="/attendance")
 public class AttendanceController {
+    private final static String FILEPATH="D:/test/";
 
     @Autowired
     private AttendanceService attendanceService;
@@ -46,7 +47,7 @@ public class AttendanceController {
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         String fileName=fileUploudConfig.upload(file);
-        String filePath="../files"+fileName;
+        String filePath=FILEPATH+fileName;
         if((!filePath.equals("文件为空"))&&(!filePath.equals("上传失败"))) {
             attendanceService.setAttendanceReport(fileName,filePath, attendanceId);
         }
@@ -81,7 +82,7 @@ public class AttendanceController {
     {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         String fileName=fileUploudConfig.upload(file);
-        String filePath="../files"+fileName;
+        String filePath=FILEPATH+fileName;
         if((!filePath.equals("文件为空"))&&(!filePath.equals("上传失败"))) {
             attendanceService.setAttendancePpt(fileName,filePath, attendanceId);
         }
