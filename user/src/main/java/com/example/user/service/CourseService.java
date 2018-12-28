@@ -3,6 +3,7 @@ package com.example.user.service;
 import com.example.common.dao.TeamDao;
 import com.example.common.entity.*;
 import com.example.common.dao.CourseDao;
+import com.example.common.mapper.TeamStrategyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,7 @@ public class CourseService {
 
     /**
      * 添加课程
-     * @param course
+     * @param courseDTO
      * @return
      */
     public long addCourse(CourseDTO courseDTO)

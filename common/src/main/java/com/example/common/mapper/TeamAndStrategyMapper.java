@@ -16,6 +16,10 @@ public interface TeamAndStrategyMapper {
      * @return
      */
     @Select("select * from  team_and_strategy where id=#{id}")
+    @Results({
+            @Result(property = "strategyName",column = "strategy_name"),
+            @Result(property = "strategyId",column = "strategy_id")
+    })
     public ArrayList<TeamAndOrStrategy> selectTeamAndStrategyById(@Param("id")Long id);
 
     /**
