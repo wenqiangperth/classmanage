@@ -108,10 +108,10 @@ public class CourseService {
         return courseDao.getAllTeamShare(courseId);
     }
 
-    public ArrayList<CourseVO> getAllCourses()
-    {
-        return courseDao.getAllCourses();
-    }
+//    public ArrayList<CourseVO> getAllCourses()
+//    {
+//        return courseDao.getAllCourses();
+//    }
 
 
     public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)

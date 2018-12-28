@@ -47,9 +47,9 @@ public class RequestService {
 
     }
 
-    public ArrayList<SeminarShareVO> getAllSeminarShareRequestBycourseId(long courseId)
+    public ArrayList<SeminarShareVO> getAllSeminarShareRequestBycourseId(long teacherId)
     {
-        return courseDao.getAllSeminarShare(courseId);
+        return courseDao.getAllSeminarShare(teacherId);
     }
 
     public TeamShareVO getTeamShareRequestById(long teamShareId)
@@ -68,14 +68,14 @@ public class RequestService {
         ArrayList<CourseVO> courses = courseDao.getAllCourseByTeacherId(teacherId);
         for(TeamValidVO teamValidVO:teamValidVOS)
         {
-            teamValidVO.setTeam(teamDao.getTeamById(teamValidVO.getTeamId()));
-            teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
-            for(CourseVO course:courses)
-            {
-                if(teamValidVO.getTeamId()==course.getTeamId())
-                {
-                    teamValidVO.setCourse(courseDao.getCourseById(course.getCourseId()));
+            if(teamValidVO!=null) {
+                teamValidVO.setTeam(teamDao.getTeamById(teamValidVO.getTeamId()));
+                teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
+                for (CourseVO course : courses) {
+                    if (teamValidVO.getTeamId() == course.getTeamId()) {
+                        teamValidVO.setCourse(courseDao.getCourseById(course.getCourseId()));
 
+                    }
                 }
             }
 
@@ -130,7 +130,10 @@ public class RequestService {
                 ArrayList<Long> classIds=new ArrayList<Long>();
                 for(Student student:(mainTeam.getStudents()))
                 {
-                    classIds.add(klassDao.getClassIdByCourseIdAndStudentId(subCourseId,student.getId()));
+                    Long temp=klassDao.getClassIdByCourseIdAndStudentId(subCourseId,student.getId());
+                    if(temp!=null) {
+                        classIds.add(temp);
+                    }
                 }
                 for(Klass klass:klasses) {
                     int count = 0;
@@ -145,6 +148,7 @@ public class RequestService {
                         maxKlassId = klass.getId();
                     }
                 }
+                System.out.println(maxKlassId+" "+mainTeam.getId());
                 teamDao.insertKlassTeam(maxKlassId,mainTeam.getId());
 //                for(Student student:(mainTeam.getStudents()))
 //                {

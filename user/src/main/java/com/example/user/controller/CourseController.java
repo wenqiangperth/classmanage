@@ -118,11 +118,11 @@ public class CourseController {
        return courseService.getAllTeamShare(courseId);
   }
 
-    @GetMapping(value="/AllCourse")
-    public ArrayList<CourseVO> getAllCourses()
-    {
-        return courseService.getAllCourses();
-    }
+//    @GetMapping(value="/AllCourse")
+//    public ArrayList<CourseVO> getAllCourses()
+//    {
+//        return courseService.getAllCourses();
+//    }
 
 
     /**
@@ -212,7 +212,7 @@ public class CourseController {
     @PostMapping(value="/{courseId}/teamsharerequest")
     public Long createTeamShareRequest(@PathVariable(value="courseId") Long courseId,@RequestBody TeamShareVO teamShareVO)
     {
-        return courseService.createSeminarShareRequest(courseId,teamShareVO.getSubCourseId());
+        return courseService.createTeamShareRequest(teamShareVO.getMainCourseId(),teamShareVO.getSubCourseId());
     }
 
     /**

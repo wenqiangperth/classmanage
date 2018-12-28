@@ -135,13 +135,13 @@ public interface CourseMapper {
     })
     public ArrayList<SeminarShareVO> getAllSeminarShare(@Param(value="courseId") long courseId);
 
-    /**
-     * 查看所以创建的课程
-     * @return
-     */
-    @Select("select * from course")
-    @ResultMap(value="courseMap")
-    public ArrayList<Course> getAllCourses();
+//    /**
+//     * 查看所以创建的课程
+//     * @return
+//     */
+//    @Select("select * from course")
+//    @ResultMap(value="courseMap")
+//    public ArrayList<Course> getAllCourses();
 
 //    /**
 //     * 根据学生id和课程id获得队伍Id
@@ -200,7 +200,7 @@ public interface CourseMapper {
      * @param subCourseTeacherId
      * @return
      */
-    @Insert("insert into share_team_application(main_course_id,sub_course_id,subcourse_teacher_id) values (#{courseId},#{subCourseId},#{subCourseTeacherId}")
+    @Insert("insert into share_team_application(main_course_id,sub_course_id,sub_course_teacher_id) values (#{courseId},#{subCourseId},#{subCourseTeacherId})")
     public Long createTeamShareRequest(@Param(value="courseId") Long courseId,@Param(value="subCourseId")Long subCourseId,@Param(value="subCourseTeacherId")Long subCourseTeacherId);
 
     /**
