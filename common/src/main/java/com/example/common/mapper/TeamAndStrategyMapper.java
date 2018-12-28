@@ -1,9 +1,7 @@
 package com.example.common.mapper;
 
 import com.example.common.entity.TeamAndOrStrategy;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,4 +17,22 @@ public interface TeamAndStrategyMapper {
      */
     @Select("select * from  team_and_strategy where id=#{id}")
     public ArrayList<TeamAndOrStrategy> selectTeamAndStrategyById(@Param("id")Long id);
+
+    /**
+     * 查询team_and_strategy中最大id
+     * @return
+     */
+    @Select("select max(id) from team_and_strategy")
+    public Long getMaxTeamAndStrategyId();
+
+    /**
+     * 在team_and_strategy中插入数据
+     * @param teamAndStrategyId
+     * @param strategyName
+     * @param strategyId
+     * @return
+     */
+    @Insert("insert into team_and_strategy(id,strategy_name,strategy_id) values(#{id},#{strategyName},#{strategyId}")
+    @Options(useGeneratedKeys =true,keyColumn ="id" )
+    public Long insertTeamAndStrategy(@Param("id")Long teamAndStrategyId,@Param("strategyName")String strategyName,@Param("strategyId")Long strategyId);
 }

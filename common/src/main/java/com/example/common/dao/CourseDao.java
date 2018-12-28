@@ -41,6 +41,24 @@ public class CourseDao {
     @Autowired
     private ScoreMapper scoreMapper;
 
+    @Autowired
+    private ConflictCourseStrategyMapper conflictCourseStrategyMapper;
+
+    @Autowired
+    private CourseMemberLimitMapper courseMemberLimitMapper;
+
+    @Autowired
+    private MemberLimitStrategyMapper memberLimitStrategyMapper;
+
+    @Autowired
+    private TeamAndStrategyMapper teamAndStrategyMapper;
+
+    @Autowired
+    private TeamOrStrategyMapper teamOrStrategyMapper;
+
+    @Autowired
+    private TeamStrategyMapper teamStrategyMapper;
+
     public ArrayList<RoundTeamScoreVO>getRoundTeamScoreByCourseIdAndRoundId(Long courseId,Long roundId){
         ArrayList<Team> teams=teamMapper.selectTeamsByCourseId(courseId);
         ArrayList<RoundTeamScoreVO>roundTeamScoreVOS=new ArrayList<>();
@@ -73,9 +91,52 @@ public class CourseDao {
         return courseMapper.getCourseById(courseId);
     }
 
-    public long addCourse(Course course)
+    public long addCourse(CourseDTO courseDTO)
     {
-        return courseMapper.addCourse(course);
+        Long courseId= courseMapper.addCourse(courseDTO.getCourse());
+        Long maxConflictCourseStrategyId=conflictCourseStrategyMapper.getMaxConflictCourseStrategyId();
+        Long maxCourseMemberLimitId = courseMemberLimitMapper.getMaxCourseMemberLimitStrategyId();
+        Long maxMemberLimitStrategyId=memberLimitStrategyMapper.getMaxMemberLimitStrategyId();
+        Long maxTeamAndStrategyId=teamAndStrategyMapper.getMaxTeamAndStrategyId();
+        Long maxTeamOrStrategyId=teamOrStrategyMapper.getMaxTeamOrStrategyId();
+        //Long maxTeamStrategyId=teamStrategyMapper.getMaxTeamStrategyId();
+        int serial=0;
+        for(ArrayList<Long> conflictCourseStrategys:(courseDTO.getConflictCourseId()))
+        {
+            if(conflictCourseStrategys!=null) {
+                for(long conflictId:conflictCourseStrategys)
+                {
+                    conflictCourseStrategyMapper.insertConflictCourseStrategy(maxConflictCourseStrategyId + 1, conflictId);
+                }
+                serial=serial+1;
+                teamStrategyMapper.insertTeamStrategy(courseId,serial,"ConflictCourseStrategy",maxConflictCourseStrategyId + 1);
+            }
+        }
+        for(CourseLimit courseLimit:(courseDTO.getCourseLimit()))
+        {
+            if(courseLimit!=null)
+            {
+                courseMemberLimitMapper.insertCourseMemberLimitStrategy(maxCourseMemberLimitId+1,courseLimit.getCourseId(),courseLimit.getTeamMinCount(),courseLimit.getTeamMaxCount());
+                if(courseDTO.getFlag()==1) {
+                    teamAndStrategyMapper.insertTeamAndStrategy(courseId, "CourseMemberLimitStrategy", maxCourseMemberLimitId + 1);
+                    serial=serial+1;
+                    teamStrategyMapper.insertTeamStrategy(courseId,serial,"TeamAndStrategy",maxTeamAndStrategyId + 1);
+                }
+                if(courseDTO.getFlag()==0){
+                    teamOrStrategyMapper.insertTeamOrStrategy(maxTeamOrStrategyId + 1, "CourseMemberLimitStrategy", maxCourseMemberLimitId + 1);
+                    serial=serial+1;
+                    teamStrategyMapper.insertTeamStrategy(courseId,serial,"TeamOrStrategy",maxTeamOrStrategyId + 1);
+                }
+            }
+
+        }
+        if(courseDTO.getMinCount()!=null||courseDTO.getMaxCount()!=null)
+        {
+            memberLimitStrategyMapper.insertMemberLimitStrategy(maxMemberLimitStrategyId+1,courseDTO.getMinCount(),courseDTO.getMaxCount());
+            serial=serial+1;
+            teamStrategyMapper.insertTeamStrategy(courseId,serial,"MemberLimitStrategy",maxMemberLimitStrategyId + 1);
+        }
+        return courseId;
     }
 
     public long deleteCourseById(long courseId)
@@ -102,6 +163,20 @@ public class CourseDao {
         {
             CourseVO temp= new CourseVO();
             temp.setCourseVOByCourse(course);
+            teacherCourseVOS.add(temp);
+        }
+        return teacherCourseVOS;
+    }
+
+    public ArrayList<CourseVO> getAllCourses()
+    {
+        ArrayList<Course> courses = courseMapper.getAllCourses();
+        ArrayList<CourseVO> teacherCourseVOS = new ArrayList<>();
+        for(Course course:courses)
+        {
+            CourseVO temp= new CourseVO();
+            temp.setCourseVOByCourse(course);
+            temp.setStudentOrTeacherName(teacherMapper.getTeacherInfo(temp.getStudentOrTeacherId()).getName());
             teacherCourseVOS.add(temp);
         }
         return teacherCourseVOS;
@@ -178,6 +253,7 @@ public class CourseDao {
         for(Klass klass:klasses) {
             teamMapper.deleteAllKlassTeam(klass.getId());
         }
+        courseMapper.updateTeamMainCourseIdByCourseId(null,subCourseId);
         return courseMapper.deleteTeamShareByteamShareId(teamShareId);
     }
 

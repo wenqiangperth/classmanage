@@ -48,15 +48,15 @@ public class CourseController {
 
     /**
      * 添加课程
-     * @param course
+     * @param courseDTO
      * @return
      */
     @PostMapping(value = "")
-    public long addCourse(HttpServletRequest request, @RequestBody Course course)
+    public long addCourse(HttpServletRequest request, @RequestBody CourseDTO courseDTO)
     {
         Long id=Long.parseLong(request.getAttribute("id").toString());
-        course.setTeacherId(id);
-        return courseService.addCourse(course);
+        courseDTO.getCourse().setTeacherId(id);
+        return courseService.addCourse(courseDTO);
     }
 
     /**
@@ -79,6 +79,12 @@ public class CourseController {
         String role=request.getAttribute("role").toString();
         Long id=Long.parseLong(request.getAttribute("id").toString());
         return courseService.getAllCourseById(role,id);
+    }
+
+    @GetMapping(value="/AllCourse")
+    public ArrayList<CourseVO> getAllCourses()
+    {
+        return courseService.getAllCourses();
     }
 
     /**
@@ -174,7 +180,7 @@ public class CourseController {
      * @param teamShareId
      * @return
      */
-  @DeleteMapping(value="teamshare/{teamshareId}")
+  @DeleteMapping(value="/teamshare/{teamshareId}")
    public Long deleteTeamShareByTeamShareId(@PathVariable(value = "teamshareId") long teamShareId)
   {
       return courseService.deleteTeamShareByTeamShareId(teamShareId);
@@ -193,13 +199,13 @@ public class CourseController {
     /**
      * 发起一个组队共享请求
      * @param courseId
-     * @param subCourseId
+     * @param teamShareVO
      * @return
      */
     @PostMapping(value="/{courseId}/teamsharerequest")
-    public Long createTeamShareRequest(@PathVariable(value="courseId") Long courseId,@RequestParam Long subCourseId)
+    public Long createTeamShareRequest(@PathVariable(value="courseId") Long courseId,@RequestBody TeamShareVO teamShareVO)
     {
-        return courseService.createSeminarShareRequest(courseId,subCourseId);
+        return courseService.createSeminarShareRequest(courseId,teamShareVO.getSubCourseId());
     }
 
     /**
@@ -213,4 +219,5 @@ public class CourseController {
     {
         return courseService.createSeminarShareRequest(courseId,subCourseId);
     }
+
 }

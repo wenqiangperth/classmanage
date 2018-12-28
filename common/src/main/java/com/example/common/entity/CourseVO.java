@@ -19,6 +19,7 @@ public class CourseVO {
     private Long teamMainCourseId;
     private Long seminarMainCourseId;
     private Long teamId;
+    private String studentOrTeacherName;
 
     public void setCourseVOByCourse(Course course){
         courseId=course.getId();
