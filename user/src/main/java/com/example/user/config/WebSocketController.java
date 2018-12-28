@@ -29,17 +29,11 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/websocket/{klassseminarId}/{userId}/{role}")
 @Component
 public class WebSocketController {
-//
-//    @Autowired
-//    private AttendanceService attendanceService;
-//
-//    @Autowired
-//    private QuestionMapper questionMapper;
 
     private final static String studentRole="ROLE_STUDENT";
-//    private final static String nextGroup="下一组展示";
-//    private final static String chooseQuestion="抽取提问";
-//    private final static String askQuestion="提问";
+    private final static String nextGroup="下一组展示";
+    private final static String chooseQuestion="抽取提问";
+    private final static String askQuestion="提问";
 //    private final static String nowQuestionNum="当前提问人数";
 
     private static int onlineCount = 0;
@@ -93,6 +87,37 @@ public class WebSocketController {
     @OnMessage
     public void onMessage(String message,Session session) throws IOException, EncodeException {
         System.out.println(message);
+
+        if(message.equals(nextGroup)){
+            for (WebSocketController webSocketController:webSocketSet
+                 ) {
+                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
+                    if (webSocketController.getRole().equals(studentRole)) {
+                        webSocketController.sendMessage(nextGroup);
+                    }
+                }
+            }
+        }else if(message.equals(askQuestion)){
+            for (WebSocketController webSocketController:webSocketSet
+                 ) {
+                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
+                    webSocketController.sendMessage(askQuestion);
+                }
+            }
+        }else if(message.equals(chooseQuestion)){
+            Long studentId=Long.parseLong(message.replace("当前展示小组",""));
+            for (WebSocketController webSocketController:webSocketSet
+                 ) {
+                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
+                    if (webSocketController.getUserId().equals(studentId)) {
+                        webSocketController.sendMessage("请您开始提问");
+                    } else {
+                        webSocketController.sendMessage("很遗憾，您未被选中，请您耐心等待！");
+                    }
+                }
+            }
+        }
+
 
 
         //         if(message.equals("1")){
