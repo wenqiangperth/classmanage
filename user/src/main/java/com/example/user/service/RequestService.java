@@ -102,6 +102,7 @@ public class RequestService {
             ArrayList<Team> teams = new ArrayList<Team>();
             for (Klass klass : klasses) {
                 teams.addAll(teamDao.getAllTeamsByCourseId(klass.getId(), subCourseId));
+                klassDao.deleteAllKlassTeamByClassId(klass.getId());
             }
             for (Team team : teams) {
                 team=teamDao.getTeamById(team.getId());
