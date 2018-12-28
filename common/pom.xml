@@ -95,6 +95,12 @@
             <version>9.0.8</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>6.2.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>

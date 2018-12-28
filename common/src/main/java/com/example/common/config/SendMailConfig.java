@@ -34,7 +34,7 @@ public class SendMailConfig {
         Authenticator auth = new Authenticator() {
             @Override
             public PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication("untitled_mail@163.com", "perth199822");
+                return new PasswordAuthentication("perthwangqiang@163.com", "perth1998");
             }
         };
         Session session = Session.getInstance(props, auth);
@@ -45,7 +45,7 @@ public class SendMailConfig {
             //防止成为垃圾邮件，披上outlook的马甲
             message.addHeader("X-Mailer","Microsoft Outlook Express 6.00.2900.2869");
             // 设置发送者
-            message.setFrom(new InternetAddress("untitled_mail@163.com"));
+            message.setFrom(new InternetAddress("perthwangqiang@163.com"));
             // 设置发送方式与接收者
             message.setRecipient(MimeMessage.RecipientType.TO, new InternetAddress(email));
             // 设置主题

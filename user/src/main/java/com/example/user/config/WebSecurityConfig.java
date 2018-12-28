@@ -54,9 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/login").permitAll()
               //  .antMatchers("/user/*").permitAll()
 
-                .antMatchers("/websocket/{klassseminarId}/{userId}/{role}").permitAll()
-               // .antMatchers("/{klassseminarId}/team/{teamId}/enterseminar").permitAll()
-
+                .antMatchers("/websocket/{seminarKlassId}/{userId}/{role}").permitAll()
 
                 .antMatchers("/user/information").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/user/password").hasRole("STUDENT")
@@ -69,18 +67,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/course/{courseId}").hasAnyRole("STUDENT","TEACHER")
                 .antMatchers("/course").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}").hasAnyRole("TEACHER","STUDENT")
-                .antMatchers("/course/{courseId}/class").hasRole("TEACHER")
-                .antMatchers("/class/{classId}").hasRole("TEACHER")
+                .antMatchers("/course/{courseId}/class").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}/round").hasAnyRole("TEACHER","STUDENT")
 
                 .antMatchers("/seminar/{seminarId}").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}/round").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/seminar/{seminarId}").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/seminar").hasRole("TEACHER")
-                .antMatchers("/seminar/{seminarId}/class/{classId}/attendance").hasAnyRole("TEACHER","STUDENT")
-                .antMatchers("/seminar/{seminarId}/class/{classId}/report").hasAnyRole("TEACHER","STUDENT")
-                .antMatchers("/seminar/{seminarId}/class/{classId}/seminarScore").hasRole("TEACHER")
-                .antMatchers("/course/{courseId}/class/{classId}").hasRole("TEACHER")
+                .antMatchers("/seminar/{seminarId}/class/{classId}/attendance").hasRole("STUDENT")
                // .antMatchers("/user/*").permitAll()
                // .antMatchers("/user/information").hasRole("TEACHER")
                 //.antMatchers("/user/password").hasRole("TEACHER")

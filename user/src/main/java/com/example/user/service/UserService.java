@@ -58,7 +58,7 @@ public class UserService {
         User user=userDao.getUserPassWord(account);
         if(user!=null) {
             String title = "温馨提醒";
-            String text = "您当前使用的" + user.getAccount() + "用户初始密码为:" + user.getPassword() + "。请及时修改密码！";
+            String text = "您当前使用的" + user.getAccount() + "用户初始PS为:" + user.getPassword() + "。请及时修改！";
             mailConfig.sendEmail(title,text,user.getEmail());
         }
         return user.getId();
