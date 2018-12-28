@@ -179,7 +179,7 @@ public class SeminarController {
         return seminarService.updateTeamSeminarScore(score,seminarId);
     }
 
-    @PutMapping(value = "/klassseminarId}/team/{teamId}/presentationscore")
+    @PutMapping(value = "/{klassseminarId}/team/{teamId}/presentationscore")
     public Long updateTeamSeminarPresentationScore(@PathVariable(name = "klassseminarId")Long klassSeminarId,@PathVariable(name = "teamId")Long teamId,@RequestBody double presentationScore){
         Score score=new Score();
         score.setSeminarOrRoundId(klassSeminarId);

@@ -32,17 +32,22 @@ public class TeamStrategyDao {
     private TeamAndStrategyMapper teamAndStrategyMapper;
 
     @Autowired
+    private TeamDao teamDao;
+
+    @Autowired
     private TeamOrStrategyMapper teamOrStrategyMapper;
 
 
 
     public boolean isTeamValid(Long teamId){
-        Team team=teamMapper.selectTeamById(teamId);
+        Team team=teamDao.getTeamById(teamId);
         ArrayList<TeamStrategy>teamStrategies=teamStrategyMapper.selectTeamStrategyByCourseId(team.getCourseId());
-        for (TeamStrategy teamStrategy:teamStrategies
-        ) {
-            if(!isStrategyOK(team,teamStrategy.getStrategyName(),teamStrategy.getStrategyId())){
-                return false;
+        if(teamStrategies!=null) {
+            System.out.println("3"+teamStrategies);
+            for (TeamStrategy teamStrategy : teamStrategies) {
+                if (!isStrategyOK(team, teamStrategy.getStrategyName(), teamStrategy.getStrategyId())) {
+                    return false;
+                }
             }
         }
         return true;
@@ -50,6 +55,7 @@ public class TeamStrategyDao {
 
     public boolean isStrategyOK(Team team,String strategyName,Long id){
         boolean isok=false;
+        System.out.println("1"+strategyName);
         switch (strategyName){
             case "TeamAndStrategy":isok=isTeamAndStrategy(team,id);break;
             case "TeamOrStrategy":isok=isTeamOrStrategy(team,id);break;
@@ -68,12 +74,10 @@ public class TeamStrategyDao {
         }
         ArrayList<Student> students=team.getStudents();
         int count=0;
-        for (Student student:students
-        ) {
+        for (Student student:students) {
             ArrayList<Course>courses=studentMapper.getAllCoursesByStundetId(student.getId());
-            for (Course course:courses
-            ) {
-                if(course.getId()==courseMemberLimitStrategy.getCourseId()){
+            for (Course course:courses) {
+                if(course.getId().equals(courseMemberLimitStrategy.getCourseId())){
                     count++;
                 }
             }
@@ -96,6 +100,7 @@ public class TeamStrategyDao {
         if(memberLimitStrategy==null){
             return true;
         }
+        System.out.println(team);
         int num=team.getStudents().size();
         if(memberLimitStrategy.getMinMember()<=num){
             if(memberLimitStrategy.getMaxMember()<=0){
@@ -125,7 +130,7 @@ public class TeamStrategyDao {
             ) {
                 for (Long courseId:courseIds
                 ) {
-                    if(courseId==course.getId()){
+                    if(courseId.equals(course.getId())){
                         count++;
                     }
                 }
@@ -139,8 +144,10 @@ public class TeamStrategyDao {
 
     public boolean isTeamOrStrategy(Team team,Long id){
         ArrayList<TeamAndOrStrategy>teamOrStrategies=teamOrStrategyMapper.selectTeamOrStrategyById(id);
-        for (TeamAndOrStrategy teamOrStrategy:teamOrStrategies
-             ) {
+        if(teamOrStrategies==null){
+            return true;
+        }
+        for (TeamAndOrStrategy teamOrStrategy:teamOrStrategies) {
             if(isStrategyOK(team,teamOrStrategy.getStrategyName(),teamOrStrategy.getStrategyId())){
                 return true;
             }
@@ -154,8 +161,8 @@ public class TeamStrategyDao {
         if(teamAndStrategies==null){
             return true;
         }
-        for (TeamAndOrStrategy teamAndStrategy:teamAndStrategies
-             ) {
+        System.out.println("2"+teamAndStrategies);
+        for (TeamAndOrStrategy teamAndStrategy:teamAndStrategies) {
             if(!isStrategyOK(team,teamAndStrategy.getStrategyName(),teamAndStrategy.getStrategyId())){
                 return false;
             }
