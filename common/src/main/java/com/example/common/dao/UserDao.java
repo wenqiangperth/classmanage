@@ -62,7 +62,7 @@ public class UserDao {
         if(role.equals("ROLE_TEACHER")){
             return teacherMapper.updateTeacherPassword(user.getPassword(),user.getOldPassword(),user.getId());
         }else if(role.equals("ROLE_STUDENT")){
-            return studentMapper.updateStundentPassword(user.getPassword(),user.getOldPassword(),user.getId());
+            return studentMapper.updateStundentPassword(user.getPassword(),user.getId());
         }
         return 0L;
     }

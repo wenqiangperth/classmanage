@@ -48,7 +48,7 @@ public interface RequestMapper {
      * @return
      */
     @Update("update share_team_application set status=#{status} where id=#{teamShareId}")
-    public Long updateTeamShareRequestById(@Param(value="teamShareId") Long teamShareId,@Param(value="status") int status);
+    public Long updateTeamShareRequestById(@Param(value="teamShareId") Long teamShareId,@Param(value="status") Long status);
 
     /**
      * 根据Id修改讨论课共享申请请求

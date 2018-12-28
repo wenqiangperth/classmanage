@@ -118,7 +118,14 @@ public class CourseController {
        return courseService.getAllTeamShare(courseId);
   }
 
- /**
+//    @GetMapping(value="/AllCourse")
+//    public ArrayList<CourseVO> getAllCourses()
+//    {
+//        return courseService.getAllCourses();
+//    }
+
+
+    /**
   * 根据课程id查看所有共享讨论课信息
   * @param courseId
   * @return
@@ -205,7 +212,7 @@ public class CourseController {
     @PostMapping(value="/{courseId}/teamsharerequest")
     public Long createTeamShareRequest(@PathVariable(value="courseId") Long courseId,@RequestBody TeamShareVO teamShareVO)
     {
-        return courseService.createSeminarShareRequest(courseId,teamShareVO.getSubCourseId());
+        return courseService.createTeamShareRequest(teamShareVO.getMainCourseId(),teamShareVO.getSubCourseId());
     }
 
     /**

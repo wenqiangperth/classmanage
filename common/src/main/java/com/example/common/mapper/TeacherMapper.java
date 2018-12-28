@@ -64,7 +64,6 @@ public interface TeacherMapper {
     /**
      * 更新：password
      * @param password
-     * @param oldPassword
      * @param id
      * @return
      */
@@ -79,7 +78,7 @@ public interface TeacherMapper {
      * @param id
      * @return
      */
-    @Select("select * from student where id=#{id}")
+    @Select("select * from teacher where id=#{id}")
     @Results(id="UserTeacherMap",value = {
             @Result(property = "account",column = "account"),
             @Result(property = "password",column = "password"),

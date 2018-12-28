@@ -174,19 +174,19 @@ public class CourseDao {
         return teacherCourseVOS;
     }
 
-    public ArrayList<CourseVO> getAllCourses()
-    {
-        ArrayList<Course> courses = courseMapper.getAllCourses();
-        ArrayList<CourseVO> teacherCourseVOS = new ArrayList<>();
-        for(Course course:courses)
-        {
-            CourseVO temp= new CourseVO();
-            temp.setCourseVOByCourse(course);
-            temp.setStudentOrTeacherName(teacherMapper.getTeacherInfo(temp.getStudentOrTeacherId()).getName());
-            teacherCourseVOS.add(temp);
-        }
-        return teacherCourseVOS;
-    }
+//    public ArrayList<CourseVO> getAllCourses()
+//    {
+//        ArrayList<Course> courses = courseMapper.getAllCourses();
+//        ArrayList<CourseVO> teacherCourseVOS = new ArrayList<>();
+//        for(Course course:courses)
+//        {
+//            CourseVO temp= new CourseVO();
+//            temp.setCourseVOByCourse(course);
+//            temp.setStudentOrTeacherName(teacherMapper.getTeacherInfo(temp.getStudentOrTeacherId()).getName());
+//            teacherCourseVOS.add(temp);
+//        }
+//        return teacherCourseVOS;
+//    }
 
     public ArrayList<Round> getAllRoundByCourseId(long courseId)
     {
@@ -263,23 +263,44 @@ public class CourseDao {
         return courseMapper.deleteTeamShareByteamShareId(teamShareId);
     }
 
-    public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
+    public ArrayList<CourseVO> getAllCourses()
     {
-        ArrayList<SeminarShareVO> seminarShareVOS=courseMapper.getAllSeminarShare(courseId);
-        for(SeminarShareVO seminarShareVO:seminarShareVOS){
-            Course mainCourse = courseMapper.getCourseById(seminarShareVO.getMainCourseId());
-            seminarShareVO.setMainCourseName(mainCourse.getCourseName());
-            seminarShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
-            seminarShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
-            if(courseId==seminarShareVO.getMainCourseId()) {
-                seminarShareVO.setMainCourse(1);
-            }
-            Course subCourse = courseMapper.getCourseById(seminarShareVO.getSubCourseId());
-            seminarShareVO.setSubCourseName(subCourse.getCourseName());
-            seminarShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
-            seminarShareVO.setSubCourseTeacherName(teacherMapper.selectTeacherById(subCourse.getTeacherId()).getTeacherName());
+        ArrayList<Course> courses = courseMapper.getAllCourses();
+        ArrayList<CourseVO> teacherCourseVOS = new ArrayList<>();
+        for(Course course:courses)
+        {
+            CourseVO temp= new CourseVO();
+            temp.setCourseVOByCourse(course);
+            temp.setStudentOrTeacherName(teacherMapper.getTeacherInfo(temp.getStudentOrTeacherId()).getName());
+            teacherCourseVOS.add(temp);
         }
-        return seminarShareVOS;
+        return teacherCourseVOS;
+    }
+
+
+
+    public ArrayList<SeminarShareVO> getAllSeminarShare(long teacherId)
+    {
+        ArrayList<SeminarShareVO> allSeminarShareVOS=new ArrayList<>();
+        for(Course course:(courseMapper.getAllCourseByTeacherId(teacherId))) {
+                ArrayList<SeminarShareVO> seminarShareVOS = courseMapper.getAllSeminarShare(course.getId());
+
+            for(SeminarShareVO seminarShareVO:seminarShareVOS){
+                Course mainCourse = courseMapper.getCourseById(seminarShareVO.getMainCourseId());
+                seminarShareVO.setMainCourseName(mainCourse.getCourseName());
+                seminarShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
+                seminarShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
+                if(course.getId()==seminarShareVO.getMainCourseId()) {
+                    seminarShareVO.setMainCourse(1);
+                }
+                Course subCourse = courseMapper.getCourseById(seminarShareVO.getSubCourseId());
+                seminarShareVO.setSubCourseName(subCourse.getCourseName());
+                seminarShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
+                seminarShareVO.setSubCourseTeacherName(teacherMapper.selectTeacherById(subCourse.getTeacherId()).getTeacherName());
+            }
+            allSeminarShareVOS.addAll(seminarShareVOS);
+        }
+        return allSeminarShareVOS;
     }
 
 

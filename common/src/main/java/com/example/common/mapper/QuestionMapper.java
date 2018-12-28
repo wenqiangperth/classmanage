@@ -52,9 +52,21 @@ public interface QuestionMapper {
     @ResultMap(value = "questionMap")
     public ArrayList<Question>getAllQuestionByKlassSeminarId(@Param("klassSeminarId")Long klassSeminarId);
 
+    /**
+     * 更新：问题
+     * @param id
+     * @return
+     */
     @Update("update question set is_selected=1 where id=#{id}")
     public Long updateQuestionIsSelected(@Param("id")Long id);
 
+    /**
+     * 删除：所有未被选中的提问
+     * @param klassSeminarId
+     * @return
+     */
+    @Delete("delete from question where klass_seminar_id=#{klassSeminarId} and is_selected=0")
+    public Long deleteQuestion(@Param("klassSeminarId")Long klassSeminarId);
 
 
 

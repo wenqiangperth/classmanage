@@ -30,9 +30,9 @@ public class RequestController {
      * @return
      */
     @GetMapping(value="/teamshare")
-    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(@RequestBody Course course)
+    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(@RequestParam Long teacherId)
     {
-        return requestService.getAllTeamShareRequestBycourseId(course.getId());
+        return requestService.getAllTeamShareRequestBycourseId(teacherId);
     }
 
     /**
@@ -41,9 +41,9 @@ public class RequestController {
      * @return
      */
     @GetMapping(value="/seminarshare")
-    public ArrayList<SeminarShareVO> getAllSeminarShareRequestBycourseId(@RequestBody Course course)
+    public ArrayList<SeminarShareVO> getAllSeminarShareRequestBycourseId(@RequestParam Long teacherId)
     {
-        return requestService.getAllSeminarShareRequestBycourseId(course.getId());
+        return requestService.getAllSeminarShareRequestBycourseId(teacherId);
     }
 
     /**
@@ -74,9 +74,9 @@ public class RequestController {
      * @return
      */
     @GetMapping("/teamvalid")
-    public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(@RequestBody Teacher teacher)
+    public ArrayList<TeamValidVO> getAllTeamValidByTeacherId(@RequestParam(value="teacherId") Long teacherId)
     {
-        return requestService.getAllTeamValidByTeacherId(teacher.getId());
+        return requestService.getAllTeamValidByTeacherId(teacherId);
     }
 
     /**
