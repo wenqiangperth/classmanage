@@ -28,7 +28,39 @@ public class AttendanceDao {
     @Autowired
     private TeamMapper teamMapper;
 
+    /**
+     * 获取当前提问数
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    public Long selectQuestionNumByKlassSeminarIdAndAttendanceId(Long klassSeminarId,Long attendanceId){
+        return questionMapper.selectQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminarId,attendanceId);
+    }
 
+    /**
+     * 查询当前正在展示attendance
+     * @param klassSeminarId
+     * @return
+     */
+    public Attendance selectIsPresentAttendanceByKlassSeminarId(Long klassSeminarId){
+        return attendanceMapper.selectIsPresentAttendanceByKlassSeminarId(klassSeminarId);
+    }
+
+    /**
+     * 删除所有未被选中的question
+     * @param klassSeminarId
+     * @return
+     */
+    public Long deleteQuestion(Long klassSeminarId){
+        return questionMapper.deleteQuestion(klassSeminarId);
+    }
+
+    /**
+     * 查询：获得展示
+     * @param id
+     * @return
+     */
     public Attendance getAttendanceById(Long id){
         Attendance attendance= attendanceMapper.selectAttendanceById(id);
         Team team=teamMapper.selectTeamById(attendance.getTeamId());

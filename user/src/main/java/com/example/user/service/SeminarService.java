@@ -1,5 +1,6 @@
 package com.example.user.service;
 
+import com.example.common.dao.AttendanceDao;
 import com.example.common.dao.CourseDao;
 import com.example.common.dao.SeminarDao;
 import com.example.common.entity.*;
@@ -24,6 +25,47 @@ public class SeminarService {
 
     @Autowired
     private CourseDao courseDao;
+
+    @Autowired
+    private AttendanceDao attendanceDao;
+
+
+    /**
+     * 获取当前提问人数
+     * @param klassSeminatId
+     * @param attendanceId
+     * @return
+     */
+    public Long getQuestionNumByKlassSeminarIdAndAttendanceId(Long klassSeminatId,Long attendanceId){
+        return attendanceDao.selectQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminatId,attendanceId);
+    }
+
+    /**
+     * 获取当前展示
+     * @param klassSeminarId
+     * @return
+     */
+    public Attendance getIsPresentAttendanceByKlassSeminarId(Long klassSeminarId){
+        return attendanceDao.selectIsPresentAttendanceByKlassSeminarId(klassSeminarId);
+    }
+
+    /**
+     * 提问
+     * @param question
+     * @return
+     */
+    public String addQuestion(Question question){
+       return seminarDao.addQuestion(question);
+    }
+
+    /**
+     * 删除：所有未被选中的question
+     * @param klassSeminarId
+     * @return
+     */
+    public Long deleteQuestion(Long klassSeminarId){
+        return attendanceDao.deleteQuestion(klassSeminarId);
+    }
 
     /**
      * 创建讨论课

@@ -47,12 +47,69 @@ public class SeminarController {
 //        return "ws://"+websever+"/websocket/"+seminarKlassId+"/"+userId+"/"+teamId+"/"+role;
 //    }
 
+    /**
+     * 获取当前正在展示小组
+     * @param klassSeminarId
+     * @return
+     */
+    @GetMapping(value = "/{klassseminarId}/presentattendance")
+    public Attendance getIsPresentAttendanceByKlassSeminarId(@PathVariable("klassseminarId") Long klassSeminarId){
+        return seminarService.getIsPresentAttendanceByKlassSeminarId(klassSeminarId);
+    }
 
+    /**
+     * 获取当前提问人数
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    @GetMapping(value = "/{klassseminarId}/attendance/{attendanceId}/questionnumber")
+    public Long getQuestionNumByKlassSeminarIdAndAttendanceId(@PathVariable("klassseminarId")Long klassSeminarId,@PathVariable("attendanceId")Long attendanceId){
+        return seminarService.getQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminarId,attendanceId);
+    }
+
+    /**
+     * 返回websocket的url
+     * @param klassSeminarId
+     * @param httpServletRequest
+     * @return
+     */
     @GetMapping(value = "/{klassseminarId}/enterseminar")
     public String enterWebSocketTeacher(@PathVariable("klassseminarId")Long klassSeminarId,HttpServletRequest httpServletRequest){
         Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
         String role=httpServletRequest.getAttribute("role").toString();
         return "ws://"+websever+"/websocket/"+klassSeminarId+"/"+userId+"/"+role;
+    }
+
+
+    /**
+     * 提问
+     * @param httpServletRequest
+     * @param klassSeminarId
+     * @param attendanceId
+     * @param teamId
+     * @return
+     */
+    @PostMapping(value = "/{klassseminarId}/attendance/{attendanceId}/team/{teamId}/question")
+    public String addQuestion(HttpServletRequest httpServletRequest, @PathVariable("klassseminarId")Long klassSeminarId,@PathVariable("attendanceId")Long attendanceId,@PathVariable("teamId")Long teamId){
+        Question question=new Question();
+        question.setAttendanceId(attendanceId);
+        question.setKlassSeminarId(klassSeminarId);
+        Long studentId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
+        question.setStudentId(studentId);
+        question.setTeamId(teamId);
+        question.setIsSelected(0);
+        return seminarService.addQuestion(question);
+    }
+
+    /**
+     * 删除所有未被选中的问题
+     * @param klassSeminarId
+     * @return
+     */
+    @DeleteMapping(value = "/{klassseminarId}/question")
+    public Long deleteQuestion(@PathVariable("klassseminarId")Long klassSeminarId){
+        return seminarService.deleteQuestion(klassSeminarId);
     }
 
     /**

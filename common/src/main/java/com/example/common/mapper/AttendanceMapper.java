@@ -1,6 +1,7 @@
 package com.example.common.mapper;
 
 import com.example.common.entity.Attendance;
+import com.example.common.entity.Question;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +19,15 @@ import java.util.ArrayList;
 @Mapper
 @Repository
 public interface AttendanceMapper {
+
+    /**
+     * 查询当前正在展示的attendance
+     * @param klassSeminarId
+     * @return
+     */
+    @Select("select * from attendance where klass_seminar_id=#{klassSeminarId} and is_present=1")
+    @ResultMap(value = "attendanceMap")
+    public Attendance selectIsPresentAttendanceByKlassSeminarId(@Param("klassSeminarId")Long klassSeminarId);
 
 
     /**
