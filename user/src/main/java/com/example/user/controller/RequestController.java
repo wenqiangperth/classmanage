@@ -26,7 +26,7 @@ public class RequestController {
 
     /**
      * 根据课程id获得所有请求
-     * @param course
+     * @param teacherId
      * @return
      */
     @GetMapping(value="/teamshare")
@@ -37,7 +37,7 @@ public class RequestController {
 
     /**
      * 根据课程id获得所有讨论课共享请求
-     * @param course
+     * @param teacherId
      * @return
      */
     @GetMapping(value="/seminarshare")

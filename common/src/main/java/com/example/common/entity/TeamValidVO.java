@@ -18,5 +18,5 @@ public class TeamValidVO {
     private Course course;
     private Klass klass;
     private String reason;
-    private int status;
+    private Long status;
 }

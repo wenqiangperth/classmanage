@@ -66,7 +66,7 @@ public interface RequestMapper {
      * @return
      */
     @Update("update team_valid_application set status=#{status} where id=#{teamValidId}")
-    public Long updateTeamValidRequestById(@Param(value="teamValidId")Long teamValidId,@Param(value="status")int status);
+    public Long updateTeamValidRequestById(@Param(value="teamValidId")Long teamValidId,@Param(value="status")Long status);
 
 
 

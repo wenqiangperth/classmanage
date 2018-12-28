@@ -77,7 +77,7 @@ public interface TeamMapper {
      * @param teamId
      * @return
      */
-    @Delete("delete from klassTeam where klass_id=#{klassId} and team_id=#{teamId}")
+    @Delete("delete from klass_team where klass_id=#{klassId} and team_id=#{teamId}")
     public Long deleteKlassTeam(@Param("klassId")Long klass_id,@Param("teamId")Long teamId);
 
     /**
@@ -197,7 +197,7 @@ public interface TeamMapper {
      * @return
      */
     @Update("update team set status=#{status} where id=#{teamId}")
-    public Long updateTeamStatus(@Param("teamId") Long teamId,@Param("status") int status);
+    public Long updateTeamStatus(@Param("teamId") Long teamId,@Param("status")Long status);
 
     /**
      * 更新：team的name

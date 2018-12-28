@@ -70,16 +70,13 @@ public class RequestService {
         {
             if(teamValidVO!=null) {
                 teamValidVO.setTeam(teamDao.getTeamById(teamValidVO.getTeamId()));
+                System.out.println(teamValidVO);
                 teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
-                for (CourseVO course : courses) {
-                    if (teamValidVO.getTeamId() == course.getTeamId()) {
-                        teamValidVO.setCourse(courseDao.getCourseById(course.getCourseId()));
-
-                    }
+                teamValidVO.setCourse(courseDao.getCourseById(teamValidVO.getKlass().getCourseId()));
                 }
             }
 
-        }
+
         return teamValidVOS;
     }
 
@@ -195,7 +192,7 @@ public class RequestService {
         return requestDao.updateSeminarShareRequestById(seminarShareId,status);
     }
 
-    public Long updateTeamValidRequestById(Long teamValidId,int status)
+    public Long updateTeamValidRequestById(Long teamValidId,Long status)
     {
         return requestDao.updateTeamValidRequestById(teamValidId,status);
     }

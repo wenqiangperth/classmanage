@@ -2,6 +2,7 @@ package com.example.user.service;
 
 import com.example.common.dao.*;
 import com.example.common.entity.*;
+import com.example.common.mapper.KlassMapper;
 import com.example.common.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class TeamService {
 
     @Autowired
     private TeamStrategyDao teamStrategyDao;
+
+    @Autowired
+    private KlassDao klassDao;
 
 
 
@@ -48,12 +52,15 @@ public class TeamService {
             if(teamSerial<team1.getTeamSerial()){teamSerial=team1.getTeamSerial();}
         }
         team.setTeamSerial(teamSerial);
+        Klass klass=klassDao.getClassByClassId(team.getKlassId());
+        team.setKlassSerial(klass.getKlassSerial());
+        Long teamId=teamDao.addTeam(team);
         if(isTeamValid(team.getId())){
             team.setStatus(1);
         }else{
             team.setStatus(0);
         }
-        return teamDao.addTeam(team);
+        return teamId;
     }
 
     /**
@@ -83,9 +90,9 @@ public class TeamService {
     public Long addTeamMemberById(Long teamId,Long studentId){
         Long i=teamDao.addTeamMemberById(teamId,studentId);
         if(isTeamValid(teamId)){
-            teamDao.updateTeamStatus(teamId,1);
+            teamDao.updateTeamStatus(teamId,1L);
         }else{
-            teamDao.updateTeamStatus(teamId,0);
+            teamDao.updateTeamStatus(teamId,0L);
         }
         return i;
     }
@@ -99,9 +106,9 @@ public class TeamService {
     public Long removeTeamMember(Long teamId,Long studentId){
         Long i=teamDao.removeTeamMember(teamId,studentId);
         if(isTeamValid(teamId)){
-            teamDao.updateTeamStatus(teamId,1);
+            teamDao.updateTeamStatus(teamId,1L);
         }else{
-            teamDao.updateTeamStatus(teamId,0);
+            teamDao.updateTeamStatus(teamId,0L);
         }
         return i;
     }
@@ -121,7 +128,7 @@ public class TeamService {
      * @return
      */
     public Long approveTeam(Long teamId){
-        return teamDao.updateTeamStatus(teamId,1);
+        return teamDao.updateTeamStatus(teamId,1L);
     }
 
     /**

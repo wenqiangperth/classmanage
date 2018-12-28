@@ -50,7 +50,7 @@ public class RequestDao {
         return requestMapper.updateSeminarShareRequestById(seminarShareId,status);
     }
 
-    public Long updateTeamValidRequestById(Long teamValidId,int status)
+    public Long updateTeamValidRequestById(Long teamValidId,Long status)
     {
         Long teamId=teamMapper.findTeamIdByTeamValidId(teamValidId);
         teamMapper.updateTeamStatus(teamId,status);

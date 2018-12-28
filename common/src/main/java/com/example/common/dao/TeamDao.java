@@ -32,6 +32,7 @@ public class TeamDao {
      */
     @Transactional(rollbackFor = Exception.class)
     public Long addTeam(Team team){
+        System.out.println(team);
         Long i=teamMapper.insertTeam(team);
         if(i<=0){return i;}
         Student leaderStudent=new Student();
@@ -42,10 +43,13 @@ public class TeamDao {
         }
         students.add(leaderStudent);
         Long teamId=team.getId();
-        for (Student student:students
-             ) {
-          Long j=teamMapper.insertTeamStudent(teamId,student.getId());
-            if(j<=0){return j;}
+        for (Student student:students) {
+            if(student.getId()!=0) {
+                Long j = teamMapper.insertTeamStudent(teamId, student.getId());
+                if (j <= 0) {
+                    return j;
+                }
+            }
         }
         teamMapper.insertKlassTeam(team.getKlassId(),teamId);
         return teamId;
@@ -143,7 +147,7 @@ public class TeamDao {
      * @param teamId
      * @return
      */
-    public Long updateTeamStatus(Long teamId,int status){
+    public Long updateTeamStatus(Long teamId,Long status){
         return teamMapper.updateTeamStatus(teamId,status);
     }
 
