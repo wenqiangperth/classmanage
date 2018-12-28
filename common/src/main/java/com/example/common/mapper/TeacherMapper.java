@@ -67,8 +67,8 @@ public interface TeacherMapper {
      * @param id
      * @return
      */
-    @Update("update teacher set password=#{password} where id=#{id}")
-    public Long updateTeacherPassword(@Param("password")String password,@Param("id") Long id);
+    @Update("update teacher set password=#{password} where id=#{id} and password=#{oldPassword}")
+    public Long updateTeacherPassword(@Param("password")String password,@Param("oldPassword")String oldPassword,@Param("id") Long id);
 
     @Update("update teacher set password=#{password} where id=#{id}")
     public Long updateTeacherPasswordByAdmin(@Param("password")String password,@Param("id")Long id);
