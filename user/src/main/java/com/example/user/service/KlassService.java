@@ -25,7 +25,7 @@ import java.util.List;
  **/
 @Service
 public class KlassService {
-    private final static String FILEPATH="E:/test/";
+    private final static String FILEPATH="/www/wwwroot/zhaotao/";
     @Autowired
     KlassDao klassDao;
 
