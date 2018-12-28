@@ -128,6 +128,14 @@ public interface CourseMapper {
     })
     public ArrayList<SeminarShareVO> getAllSeminarShare(@Param(value="courseId") long courseId);
 
+    /**
+     * 查看所以创建的课程
+     * @return
+     */
+    @Select("select * from course")
+    @ResultMap(value="courseMap")
+    public ArrayList<Course> getAllCourses();
+
 //    /**
 //     * 根据学生id和课程id获得队伍Id
 //     * @param studentId

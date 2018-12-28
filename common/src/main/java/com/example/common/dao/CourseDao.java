@@ -181,6 +181,22 @@ public class CourseDao {
         return courseMapper.deleteTeamShareByteamShareId(teamShareId);
     }
 
+    public ArrayList<CourseVO> getAllCourses()
+    {
+        ArrayList<Course> courses = courseMapper.getAllCourses();
+        ArrayList<CourseVO> teacherCourseVOS = new ArrayList<>();
+        for(Course course:courses)
+        {
+            CourseVO temp= new CourseVO();
+            temp.setCourseVOByCourse(course);
+            temp.setStudentOrTeacherName(teacherMapper.getTeacherInfo(temp.getStudentOrTeacherId()).getName());
+            teacherCourseVOS.add(temp);
+        }
+        return teacherCourseVOS;
+    }
+
+
+
     public ArrayList<SeminarShareVO> getAllSeminarShare(long courseId)
     {
         ArrayList<SeminarShareVO> seminarShareVOS=courseMapper.getAllSeminarShare(courseId);

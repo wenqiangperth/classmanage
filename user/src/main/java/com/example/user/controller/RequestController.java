@@ -30,9 +30,9 @@ public class RequestController {
      * @return
      */
     @GetMapping(value="/teamshare")
-    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(@RequestBody Course course)
+    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(@RequestParam Long teacherId)
     {
-        return requestService.getAllTeamShareRequestBycourseId(course.getId());
+        return requestService.getAllTeamShareRequestBycourseId(teacherId);
     }
 
     /**

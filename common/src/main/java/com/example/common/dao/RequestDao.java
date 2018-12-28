@@ -40,7 +40,7 @@ public class RequestDao {
         return requestMapper.getTeamValidByTeamValidId(teamValidId);
     }
 
-    public Long updateTeamShareRequestById(Long teamShareId,int status)
+    public Long updateTeamShareRequestById(Long teamShareId,Long status)
     {
         return requestMapper.updateTeamShareRequestById(teamShareId,status);
     }

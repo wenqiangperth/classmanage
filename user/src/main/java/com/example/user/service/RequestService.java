@@ -35,9 +35,16 @@ public class RequestService {
     @Autowired
     private RoundDao roundDao;
 
-    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(long courseId)
+    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(long teacherId)
     {
-        return courseDao.getAllTeamShare(courseId);
+        ArrayList<CourseVO> courses=courseDao.getAllCourseByTeacherId(teacherId);
+        ArrayList<TeamShareVO> teamShareVOS=new ArrayList<>();
+        for(CourseVO course:courses)
+        {
+            teamShareVOS.addAll(courseDao.getAllTeamShare(course.getCourseId()));
+        }
+        return teamShareVOS;
+
     }
 
     public ArrayList<SeminarShareVO> getAllSeminarShareRequestBycourseId(long courseId)
@@ -94,7 +101,7 @@ public class RequestService {
         return teamValidVO;
     }
 
-    public Long updateTeamShareRequestById(Long teamShareId,int status)
+    public Long updateTeamShareRequestById(Long teamShareId,Long status)
     {
         if(status==1) {
             Long subCourseId = courseDao.getTeamShareByTeamShareId(teamShareId).getSubCourseId();

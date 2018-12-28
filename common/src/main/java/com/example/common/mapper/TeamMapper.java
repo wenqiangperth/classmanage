@@ -69,7 +69,7 @@ public interface TeamMapper {
      * @return
      */
     @Insert("insert into klass_team(klass_id,team_id) values(#{klassId},#{teamId})")
-    public Long insertKlassTeam(@Param("klassId")Long klass_id,@Param("team_id")Long teamId);
+    public Long insertKlassTeam(@Param("klassId")Long klass_id,@Param("teamId")Long teamId);
 
     /**
      * 删除klass_team关系
@@ -78,7 +78,7 @@ public interface TeamMapper {
      * @return
      */
     @Delete("delete from klassTeam where klass_id=#{klassId} and team_id=#{teamId}")
-    public Long deleteKlassTeam(@Param("klassId")Long klass_id,@Param("team_id")Long teamId);
+    public Long deleteKlassTeam(@Param("klassId")Long klass_id,@Param("teamId")Long teamId);
 
     /**
      * 查询：从team表中根据course和leader查询team
@@ -185,7 +185,7 @@ public interface TeamMapper {
      * @param klassId
      * @return
      */
-    @Delete("delete from klas_team where klass_id=#{klassId}")
+    @Delete("delete from klass_team where klass_id=#{klassId}")
     public Long deleteAllKlassTeam(@Param("klassId")Long klassId);
 
 
