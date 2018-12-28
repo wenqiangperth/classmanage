@@ -127,7 +127,13 @@ public class CourseDao {
                     serial=serial+1;
                     teamStrategyMapper.insertTeamStrategy(courseId,serial,"TeamOrStrategy",maxTeamOrStrategyId + 1);
                 }
+                else
+                {
+                    serial=serial+1;
+                    teamStrategyMapper.insertTeamStrategy(courseId,serial,"CourseMemberLimitStrategy",maxCourseMemberLimitId + 1);
+                }
             }
+
 
         }
         if(courseDTO.getMinCount()!=null||courseDTO.getMaxCount()!=null)
