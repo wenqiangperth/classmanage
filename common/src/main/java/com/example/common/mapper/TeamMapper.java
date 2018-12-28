@@ -185,7 +185,7 @@ public interface TeamMapper {
      * @param klassId
      * @return
      */
-    @Delete("delete from klas_team where klass_id=#{klassId}")
+    @Delete("delete from klass_team where klass_id=#{klassId}")
     public Long deleteAllKlassTeam(@Param("klassId")Long klassId);
 
 

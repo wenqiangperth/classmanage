@@ -196,4 +196,12 @@ public Long insertKlassStudent(@Param("klassId") Long klassId,@Param("studentId"
      */
     @Select("select student_id from klass_student where klass_id=#{classId}")
     public ArrayList<Long> findAllStudentByClassId(@Param("classId")Long classId);
+
+    /**
+     * 根据klass_id删除klass_team关联
+     * @param classId
+     * @return
+     */
+    @Delete("delete from klass_team where klass_id=#{classId}")
+    public Long deleteAllKlassTeamByClassId(@Param("classId")Long classId);
 }

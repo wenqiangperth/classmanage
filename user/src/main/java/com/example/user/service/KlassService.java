@@ -25,6 +25,7 @@ import java.util.List;
  **/
 @Service
 public class KlassService {
+    private final static String FILEPATH="E:/test/";
     @Autowired
     KlassDao klassDao;
 
@@ -48,7 +49,7 @@ public class KlassService {
         Klass klass = klassDao.getClassByClassId(classId);
         FileUploudConfig fileUploudConfig = new FileUploudConfig();
         String fileName=fileUploudConfig.upload(file);
-        String filePath="E://test//"+fileName;
+        String filePath=FILEPATH+fileName;
         ReadExcelServlet readExcelServlet=new ReadExcelServlet();
         List<List<String>> list=readExcelServlet.readExcelInfo(filePath);
         for(List<String> temps:list)

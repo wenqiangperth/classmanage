@@ -26,7 +26,8 @@ public interface CourseMapper {
      * @param course
      * @return
      */
-    @Insert("insert into course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time)values (#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime})")
+    @Insert("insert into course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id)values (#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime},#{teamMainCourseId},#{seminarMainCourseId})")
+    @Options(useGeneratedKeys =true,keyColumn ="id" )
     public long addCourse(Course course);
 
     /**
@@ -89,7 +90,13 @@ public interface CourseMapper {
     @ResultMap(value="courseMap")
     public ArrayList<Course> getAllCourseByTeacherId(@Param(value="teacherId") long teacherId);
 
-
+    /**
+     * 查看所以创建的课程
+     * @return
+     */
+    @Select("select * from course")
+    @ResultMap(value="courseMap")
+    public ArrayList<Course> getAllCourses();
 
 
 //    /**

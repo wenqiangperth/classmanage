@@ -18,4 +18,22 @@ public interface TeamStrategyMapper {
             @Result(property = "strategyName",column = "strategy_name")
     })
     public ArrayList<TeamStrategy>selectTeamStrategyByCourseId(@Param("courseId")Long courseId);
+
+    /**
+     * 在team_strategy中插入数据
+     * @param teamStrategyId
+     * @param strategySerial
+     * @param strategyName
+     * @param strategyId
+     * @return
+     */
+    @Insert("insert into team_strategy(course_id,strategySerial,strategy_name,strategy_id) values(#{courseId},#{strategySerial},#{strategyName},#{strategyId}")
+    public Long insertTeamStrategy(@Param("courseId")Long courseId,@Param("strategySerial")int strategySerial,@Param("strategyName")String strategyName,@Param("strategyId")Long strategyId);
+
+//    /**
+//     * 查询team_strategy中最大id
+//     * @return
+//     */
+//    @Select("select max(id) from team_strategy")
+//    public Long getMaxTeamStrategyId();
 }

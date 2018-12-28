@@ -39,9 +39,9 @@ public class CourseService {
      * @param course
      * @return
      */
-    public long addCourse(Course course)
+    public long addCourse(CourseDTO courseDTO)
     {
-        return courseDao.addCourse(course);
+        return courseDao.addCourse(courseDTO);
     }
 
     /**
@@ -71,6 +71,11 @@ public class CourseService {
             return courseDao.getAllCourseByTeacherId(id);
         }
         return null;
+    }
+
+    public ArrayList<CourseVO> getAllCourses()
+    {
+        return courseDao.getAllCourses();
     }
 
     /**
