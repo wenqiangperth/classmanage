@@ -21,7 +21,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping(value="/attendance")
 public class AttendanceController {
-    private final static String FILEPATH="D:/test/";
+    private final static String FILEPATH="/www/wwwroot/zhaotao/";
 
     @Autowired
     private AttendanceService attendanceService;

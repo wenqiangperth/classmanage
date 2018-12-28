@@ -26,7 +26,7 @@ import java.util.zip.ZipOutputStream;
  * @Version 1.0
  **/
 public class FileUploudConfig {
-    private final static String FILEPATH="D:/test/";
+    private final static String FILEPATH="/www/wwwroot/zhaotao/";
 
     public String greeting(String name, Model model) {
         model.addAttribute("name", name);
