@@ -13,6 +13,7 @@ import lombok.Data;
 public class TeamValidApplication {
     private Long id;
     private Long teamId;
+    private Long courseId;
     private Long teacherId;
     private String reason;
     private Long status;

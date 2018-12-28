@@ -117,7 +117,7 @@ public class TeamDao {
     }
 
     public Long createTeamValidApplication(TeamValidApplication teamValidApplication){
-        Course course=courseMapper.selectCourseByTeamId(teamValidApplication.getTeamId());
+        Course course=courseMapper.getCourseById(teamValidApplication.getCourseId());
         teamValidApplication.setTeacherId(course.getTeacherId());
         return teamMapper.insertTeamValidApplication(teamValidApplication);
     }

@@ -1,5 +1,6 @@
 package com.example.user.controller;
 
+import com.example.common.entity.Student;
 import com.example.common.entity.Team;
 import com.example.common.entity.TeamValidApplication;
 import com.example.user.service.TeamService;
@@ -69,19 +70,19 @@ public class TeamController {
      * @return
      */
     @PutMapping(value = "/{teamId}/add")
-    public Long addTeamMemberById(@PathVariable("teamId")Long teamId ,@RequestBody Long studentId){
-        return teamService.addTeamMemberById(teamId,studentId);
+    public Long addTeamMemberById(@PathVariable("teamId")Long teamId ,@RequestBody Student student){
+        return teamService.addTeamMemberById(teamId,student.getId());
     }
 
     /**
      * 移除组员
      * @param teamId
-     * @param studentId
+     * @param student
      * @return
      */
     @PutMapping(value = "/{teamId}/remove")
-    public Long removeTeamMember(@PathVariable("teamId")Long teamId,@RequestBody Long studentId){
-        return teamService.removeTeamMember(teamId,studentId);
+    public Long removeTeamMember(@PathVariable("teamId")Long teamId,@RequestBody Student student){
+        return teamService.removeTeamMember(teamId,student.getId());
     }
 
     /**
@@ -93,6 +94,7 @@ public class TeamController {
     @PostMapping(value = "/{teamId}/teamvalidrequest")
     public Long createTeamValidRequest(@PathVariable(name = "teamId")Long teamId, @RequestBody TeamValidApplication teamValidApplication){
         teamValidApplication.setTeamId(teamId);
+        System.out.println(teamValidApplication.toString());
         return teamService.createTeamValisApplication(teamValidApplication);
     }
 
