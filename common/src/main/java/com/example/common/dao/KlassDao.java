@@ -140,4 +140,9 @@ public class KlassDao {
     {
         return klassMapper.insertKlassSeminar(klassId,seminarId,reportDdl,status);
     }
+
+    public Long deleteAllKlassTeamByClassId(Long classId)
+    {
+        return klassMapper.deleteAllKlassTeamByClassId(classId);
+    }
 }

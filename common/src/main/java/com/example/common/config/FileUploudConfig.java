@@ -26,6 +26,7 @@ import java.util.zip.ZipOutputStream;
  * @Version 1.0
  **/
 public class FileUploudConfig {
+    private final static String FILEPATH="D:/test/";
 
     public String greeting(String name, Model model) {
         model.addAttribute("name", name);
@@ -46,7 +47,7 @@ public class FileUploudConfig {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         logger.info("上传的后缀名为：" + suffixName);
         // 文件上传后的路径
-        String filePath = "../files";
+        String filePath = FILEPATH;
         // 解决中文问题，liunx下中文路径，图片显示问题
         // fileName = UUID.randomUUID() + suffixName;
         File dest = new File(filePath + fileName);
@@ -72,7 +73,7 @@ public class FileUploudConfig {
          * @param response
          */
 
-        String directory = "E:\\test\\";
+        String directory = FILEPATH;
         File directoryFile=new File(directory);
         if(!directoryFile.isDirectory() && !directoryFile.exists()){
             directoryFile.mkdirs();
@@ -92,7 +93,7 @@ public class FileUploudConfig {
             for(String report:reportNames){
                 //解码获取真实路径与文件名
                 String realFileName = java.net.URLDecoder.decode(report,"UTF-8");
-                String realFilePath = java.net.URLDecoder.decode("E:\\test\\"+report,"UTF-8");
+                String realFilePath = java.net.URLDecoder.decode(FILEPATH+report,"UTF-8");
                 File file = new File(realFilePath);
                 //TODO:未对文件不存在时进行操作，后期优化。
                 if(file.exists())
@@ -219,7 +220,7 @@ public class FileUploudConfig {
             }
         }*/
         //String fileName = path.substring(path.lastIndexOf("\\") +1 ,path.length());
-        File file = new File("../files"+fileName);
+        File file = new File(FILEPATH+fileName);
         if (!file.exists()){
             logger.error("路径有误，文件不存在！");
         }

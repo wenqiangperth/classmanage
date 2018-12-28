@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping(value="/class")
 public class KlassController {
-
+    private final static String FILEPATH="D:/test/";
     @Autowired
     KlassService klassService;
 

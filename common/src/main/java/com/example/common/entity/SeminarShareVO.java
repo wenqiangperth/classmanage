@@ -20,8 +20,8 @@ public class SeminarShareVO {
     private Long subCourseTeacherId;
     private String subCourseName;
     private String subCourseTeacherName;
-    private Integer status;
-    private Integer mainCourse;
+    private int status;
+    private int mainCourse;
 
     public void setStatus(int tempStatus)
     {
