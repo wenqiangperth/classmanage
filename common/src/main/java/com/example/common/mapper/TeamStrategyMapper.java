@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @Mapper
 @Repository
 public interface TeamStrategyMapper {
-    @Select("select * from team_strategy where id=#{id}")
+    @Select("select * from team_strategy where course_id=#{courseId}")
     @Results({
             @Result(property = "courseId",column = "course_id"),
             @Result(property = "strategySerial",column = "strategy_serial"),
