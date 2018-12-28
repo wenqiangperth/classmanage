@@ -91,6 +91,25 @@ public class CourseDao {
         return courseMapper.getCourseById(courseId);
     }
 
+    public Course getCourseAndStrategyById(long courseId) {
+//        CourseDTO courseDTO=new CourseDTO();
+//        courseDTO.setCourse(courseMapper.getCourseById(courseId));
+//        for(TeamStrategy teamStrategy:(teamStrategyMapper.selectTeamStrategyByCourseId(courseId)))
+//        {
+//            switch (teamStrategy.getStrategyName()){
+//                case "TeamAndStrategy":teamAndStrategyMapper.selectTeamAndStrategyById(teamStrategy.getStrategyId());break;
+//                case "TeamOrStrategy":teamOrStrategyMapper.selectTeamOrStrategyById(teamStrategy.getStrategyId());break;
+//                case "CourseMemberLimitStrategy":courseDTO.setCourseCourseLimits(courseMemberLimitMapper.selectCourseMemberLimitStrategyById(teamStrategy.getStrategyId()));break;
+//                case "ConflictCourseStrategy":courseDTO.setConflictCourseIdTemp(conflictCourseStrategyMapper.selectConflictCourseStrategyById(teamStrategy.getStrategyId()));break;
+//                case "MemberLimitStrategy":courseDTO.setMaxCount(memberLimitStrategyMapper.selectMemberLimitStrategyById(teamStrategy.getStrategyId()).getMaxMember());
+//                                               courseDTO.setMinCount(memberLimitStrategyMapper.selectMemberLimitStrategyById(teamStrategy.getStrategyId()).getMinMember());break;
+//                default:break;
+//            }
+//        }
+//        return courseDTO;
+        return courseMapper.getCourseById(courseId);
+    }
+
     public long addCourse(CourseDTO courseDTO)
     {
         Long courseId= courseMapper.addCourse(courseDTO.getCourse());
@@ -290,7 +309,7 @@ public class CourseDao {
                 seminarShareVO.setMainCourseName(mainCourse.getCourseName());
                 seminarShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
                 seminarShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
-                if(course.getId()==seminarShareVO.getMainCourseId()) {
+                if(course.getId().equals(seminarShareVO.getMainCourseId())) {
                     seminarShareVO.setMainCourse(1);
                 }
                 Course subCourse = courseMapper.getCourseById(seminarShareVO.getSubCourseId());

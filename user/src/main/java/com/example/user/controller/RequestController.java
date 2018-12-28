@@ -70,7 +70,7 @@ public class RequestController {
 
     /**
      * 根据教师id查看所有组队申请
-     * @param teacher
+     * @param teacherId
      * @return
      */
     @GetMapping("/teamvalid")
@@ -114,7 +114,7 @@ public class RequestController {
         return requestService.updateSeminarShareRequestById(seminarShareId,seminarShareVO.getStatus());
     }
 
-    @PutMapping("request/teamvalid/{teamvalidId}")
+    @PutMapping("/teamvalid/{teamvalidId}")
     public Long updateTeamValidRequestById(@PathVariable(value="teamvalidId")Long teamValidId,@RequestBody TeamValidVO teamValidVO)
     {
         return requestService.updateTeamValidRequestById(teamValidId,teamValidVO.getStatus());

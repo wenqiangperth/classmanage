@@ -15,4 +15,5 @@ public class CourseLimit {
     private Long courseId;
     private Long teamMinCount;
     private Long teamMaxCount;
+
 }

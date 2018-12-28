@@ -19,4 +19,18 @@ public class CourseDTO {
     private ArrayList<CourseLimit> courseLimit;
     private int flag;
     private ArrayList<ArrayList<Long>> conflictCourseId;
+
+//    public void setCourseCourseLimits(MemberLimitStrategy temp)
+//    {
+//            CourseLimit courseLimitTemp=new CourseLimit();
+//            courseLimitTemp.setCourseId(temp.getCourseId());
+//            courseLimitTemp.setTeamMaxCount(temp.getMaxMember());
+//            courseLimitTemp.setTeamMinCount(temp.getMinMember());
+//            courseLimit.add(courseLimitTemp);
+//    }
+
+    public void setConflictCourseIdTemp(ArrayList<Long> conflicts)
+    {
+        conflictCourseId.add(conflicts);
+    }
 }
