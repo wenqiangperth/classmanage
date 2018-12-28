@@ -31,6 +31,7 @@ public class UserController {
      */
     @PutMapping(value = "/password")
     public Long changeUserPassword(HttpServletRequest request,@RequestBody User user){
+        System.out.println("lllaaa");
         String role=(String)request.getAttribute("role");
         Long id=Long.parseLong(request.getAttribute("id").toString());
         user.setId(id);

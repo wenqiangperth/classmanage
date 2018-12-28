@@ -89,8 +89,8 @@ public interface StudentMapper {
      * @param id
      * @return
      */
-    @Update("update student set password=#{password} where id=#{id} and password=#{oldPassword}")
-    public Long updateStundentPassword(@Param("password") String password,@Param("oldPassword")String oldPassword,@Param("id")Long id);
+    @Update("update student set password=#{password} where id=#{id}")
+    public Long updateStundentPassword(@Param("password") String password,@Param("id")Long id);
 
     @Update("update student set password=#{password} where id=#{id}")
     public Long updateStundentPasswordByAdmin(@Param("password") String password,@Param("id")Long id);
