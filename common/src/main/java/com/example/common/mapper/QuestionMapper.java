@@ -1,6 +1,7 @@
 package com.example.common.mapper;
 
 import com.example.common.entity.Question;
+import org.apache.commons.collections4.QueueUtils;
 import org.apache.ibatis.annotations.*;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
@@ -21,11 +22,30 @@ public interface QuestionMapper {
 
 
     /**
+     * 获取某展示当前提问人数
+     * @param klassSeminarId
+     * @param attendanceId
+     * @return
+     */
+    @Select("select count(id) from question where klass_seminar_id=#{klassSeminarId} and attendance_id=#{attendanceId} and is_selected=0")
+    public Long selectQuestionNumByKlassSeminarIdAndAttendanceId(@Param("klassSeminarId")Long klassSeminarId,@Param("attendanceId")Long attendanceId);
+
+    /**
+     * 查询，某展示下，某人 的提问
+     * @param attendanceId
+     * @param studentId
+     * @return
+     */
+    @Select("select * from question where attendance_id=#{attendanceId} and student_id=#{studentId} and is_selected=#{isSelected}")
+    @ResultMap(value = "questionMap")
+    public Question selectQuestionByAttendanceIdAndStudentId(@Param("attendanceId")Long attendanceId, @Param("studentId")Long studentId,@Param("isSelected")int isSelected);
+
+    /**
      * 插入：question
      * @param question
      * @return
      */
-    @Insert("insert into question (klass_seminar_id,attendance_id,team_id,student_id,is_selected) values (#{klassSeminarId},#{attendanceId},#{teamId},#{studentId},#{isSelected}")
+    @Insert("insert into question (klass_seminar_id,attendance_id,team_id,student_id,is_selected) values (#{klassSeminarId},#{attendanceId},#{teamId},#{studentId},#{isSelected})")
     public Long insertQuestion(Question question);
     /**
      * 查询：attenanceID->questions

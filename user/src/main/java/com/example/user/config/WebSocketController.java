@@ -23,6 +23,9 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
+ * 1：下一组展示
+ * 2：抽取提问
+ * 3：提问
  * @author ren
  */
 
@@ -104,8 +107,8 @@ public class WebSocketController {
                     webSocketController.sendMessage(askQuestion);
                 }
             }
-        }else if(message.equals(chooseQuestion)){
-            Long studentId=Long.parseLong(message.replace("当前展示小组",""));
+        }else if(message.startsWith(chooseQuestion)){
+            Long studentId=Long.parseLong(message.replace(chooseQuestion,""));
             for (WebSocketController webSocketController:webSocketSet
                  ) {
                 if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {

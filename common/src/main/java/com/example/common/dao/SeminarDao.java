@@ -39,6 +39,21 @@ public class SeminarDao {
     @Autowired
     private CourseMapper courseMapper;
 
+    @Autowired
+    private QuestionMapper questionMapper;
+
+    public String addQuestion(Question question){
+        Question oldQuestion=questionMapper.selectQuestionByAttendanceIdAndStudentId(question.getAttendanceId(),question.getStudentId(),question.getIsSelected());
+        if(oldQuestion!=null){
+            return "请您不要重复提问！";
+        }
+        else if(questionMapper.insertQuestion(question)<=0){
+            return "提问失败";
+        }else {
+            return "报名提问成功";
+        }
+    }
+
     /**
      * 创建:讨论课，klass_seminar关系
      * @param seminar
