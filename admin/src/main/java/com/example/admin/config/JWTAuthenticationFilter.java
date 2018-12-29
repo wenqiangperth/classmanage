@@ -27,7 +27,7 @@ import java.util.Map;
  **/
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     private static final String mysecret="wenqiangwang";
-    private static final int expiration=600;
+    private static final int expiration=600000;
 //    @Autowired
 //    private JwtTokenUtils jwtTokenUtils;
 

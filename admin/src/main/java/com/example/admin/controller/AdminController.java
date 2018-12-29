@@ -87,8 +87,9 @@ public class AdminController {
      * @param teacher
      * @return
      */
-    @PostMapping(value = "/teacher")
+    @PostMapping(value = "/admin/teacher")
     public Teacher addTeacher(@RequestBody Teacher teacher){
+        System.out.println("dsf");
         return adminService.addTeacher(teacher);
     }
 
