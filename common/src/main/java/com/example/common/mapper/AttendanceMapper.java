@@ -144,6 +144,6 @@ public interface AttendanceMapper {
      * @param classSeminarId
      * @return
      */
-    @Insert("insert into attendance(team_id,team_order) values(#{teamId},#{teamOrder}) where klass_seminar_id=#{classSeminarId}")
-    public Long insertAttendanceByClassSeminarId(@Param(value="teamId")Long teamId,@Param(value="teamOrder")int teamOrder,@Param(value="classSeminarId")Long classSeminarId);
+    @Insert("insert into attendance(team_id,team_order,klass_seminar_id,is_present) values(#{teamId},#{teamOrder},#{classSeminarId},#{isPresent})")
+    public Long insertAttendanceByClassSeminarId(@Param(value="teamId")Long teamId,@Param(value="teamOrder")int teamOrder,@Param(value="classSeminarId")Long classSeminarId,@Param("isPresent")int isPresent);
 }

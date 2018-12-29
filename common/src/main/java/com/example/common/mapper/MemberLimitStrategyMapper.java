@@ -35,7 +35,7 @@ public interface MemberLimitStrategyMapper {
      * @param maxMember
      * @return
      */
-    @Insert("insert into member_limit_strategy(id,min_member,max_member) values(#{id},#{minMember},#{maxMember}")
+    @Insert("insert into member_limit_strategy(id,min_member,max_member) values(#{id},#{minMember},#{maxMember})")
     @Options(useGeneratedKeys =true,keyColumn ="id" )
     public Long insertMemberLimitStrategy(@Param("id")Long memberLimitStrategyId,@Param("minMember")Long mimMember,@Param("maxMember")Long maxMember);
 }

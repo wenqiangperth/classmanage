@@ -28,7 +28,14 @@ public interface CourseMapper {
      */
     @Insert("insert into course(teacher_id,course_name,introduction,presentation_percentage,question_percentage,report_percentage,team_start_time,team_end_time,team_main_course_id,seminar_main_course_id)values (#{teacherId},#{courseName},#{introduction},#{presentationPercentage},#{questionPercentage},#{reportPercentage},#{teamStartTime},#{teamEndTime},#{teamMainCourseId},#{seminarMainCourseId})")
     @Options(useGeneratedKeys =true,keyColumn ="id" )
-    public long addCourse(Course course);
+    public Long addCourse(Course course);
+
+    /**
+     *返回id最大
+     * @return
+     */
+    @Select("select max(id) from course")
+    public Long getMaxId();
 
     /**
      * 查询：id->查看课程信息

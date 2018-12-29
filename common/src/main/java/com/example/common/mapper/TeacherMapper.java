@@ -20,6 +20,9 @@ import java.util.ArrayList;
 public interface TeacherMapper {
 
 
+    @Select("select count(id) from teacher")
+    public Long selectTeacherNum();
+
     /**
      * 查询：所有老师
      * @return

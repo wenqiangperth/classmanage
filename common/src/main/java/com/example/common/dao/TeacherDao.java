@@ -21,6 +21,11 @@ public class TeacherDao {
     @Autowired
     private TeacherMapper teacherMapper;
 
+
+    public Long seleceTeacherNum(){
+        return teacherMapper.selectTeacherNum();
+    }
+
     /**
      * 插入：创建teacher
      * @param teacher

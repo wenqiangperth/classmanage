@@ -6,6 +6,7 @@ import com.example.common.config.MyAuthenticationSuccessHandler;
 import com.example.common.config.MyPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -36,7 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .formLogin()
-                // .loginPage("/user/login")
+               // .loginPage("/user/login")
                 .loginProcessingUrl("/user/login")
                 .successHandler(myAuthenticationSuccessHandler)
                 .failureHandler(failureHandler)
@@ -44,13 +45,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+              //  .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+             //   .and()
 
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                // .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/user/login").permitAll()
+                .antMatchers("/teacher").permitAll()
                // .antMatchers("/user/*").permitAll()
                 .antMatchers("/user/information").hasRole("TEACHER")
                 .antMatchers("/user/email").hasRole("TEACHER")
@@ -59,8 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-                //.antMatchers(HttpMethod.OPTIONS)
-               // .permitAll()
+                .antMatchers(HttpMethod.OPTIONS)
+                .permitAll()
 
                 .anyRequest().authenticated()
 //                .and()

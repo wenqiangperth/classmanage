@@ -340,9 +340,10 @@ public class SeminarController {
      * @return
      */
     @PostMapping(value="/{seminarId}/class/{classId}/attendance")
-    public Long updateAttendanceByClassSeminarId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestParam(value="teamId") Long teamId,@RequestParam(value="teamOrder")int teamOrder)
+    public Long updateAttendanceByClassSeminarId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody Attendance attendance)
     {
-        return seminarService.updateAttendanceByClassSeminarId(seminarId,classId,teamId,teamOrder);
+        System.out.println(attendance.getTeamId());
+        return seminarService.updateAttendanceByClassSeminarId(seminarId,classId,attendance.getTeamId(),attendance.getTeamOrder());
     }
 
     /**

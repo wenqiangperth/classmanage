@@ -21,13 +21,13 @@ public interface TeamStrategyMapper {
 
     /**
      * 在team_strategy中插入数据
-     * @param teamStrategyId
+     * @param courseId
      * @param strategySerial
      * @param strategyName
      * @param strategyId
      * @return
      */
-    @Insert("insert into team_strategy(course_id,strategySerial,strategy_name,strategy_id) values(#{courseId},#{strategySerial},#{strategyName},#{strategyId}")
+    @Insert("insert into team_strategy(course_id,strategy_serial,strategy_name,strategy_id) values(#{courseId},#{strategySerial},#{strategyName},#{strategyId})")
     public Long insertTeamStrategy(@Param("courseId")Long courseId,@Param("strategySerial")int strategySerial,@Param("strategyName")String strategyName,@Param("strategyId")Long strategyId);
 
 //    /**

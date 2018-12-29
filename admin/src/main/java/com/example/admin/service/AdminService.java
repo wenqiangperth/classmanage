@@ -29,6 +29,10 @@ public class AdminService {
     @Autowired
     private TeacherDao teacherDao;
 
+    public Long selectTeacherNum(){
+        return teacherDao.seleceTeacherNum();
+    }
+
     /**
      * 查询：分页获取所有学生
      * @param pageNum

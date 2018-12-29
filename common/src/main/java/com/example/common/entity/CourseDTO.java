@@ -15,8 +15,8 @@ import java.util.ArrayList;
 public class CourseDTO {
     private Course course;
     private Long courseId;
-    private int minNum;
-    private int maxNum;
+    private Long minNum;
+    private Long maxNum;
     private Long minCount;
     private Long maxCount;
     private ArrayList<CourseLimit> courseLimit;

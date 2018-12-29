@@ -92,6 +92,12 @@ public class AdminController {
         return adminService.addTeacher(teacher);
     }
 
+    @GetMapping(value = "/teacher/number")
+    public Long getTeacherNum(){
+        return adminService.selectTeacherNum();
+    }
+
+
     /**
      * 分页获取teacher
      * @param pageNum

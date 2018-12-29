@@ -220,7 +220,7 @@ public interface TeamMapper {
      * @param teamValidId
      * @return
      */
-    @Select("select team_id from team_valid_application where id=#{teamValideId}")
+    @Select("select team_id from team_valid_application where id=#{teamValidId}")
     public Long findTeamIdByTeamValidId(@Param(value="teamValidId")Long teamValidId);
 
     /**
