@@ -54,6 +54,7 @@ public class CourseController {
     @PostMapping(value = "")
     public long addCourse(HttpServletRequest request, @RequestBody CourseDTO courseDTO)
     {
+        System.out.println(courseDTO);
         Long id=Long.parseLong(request.getAttribute("id").toString());
         courseDTO.getCourse().setTeacherId(id);
         return courseService.addCourse(courseDTO);

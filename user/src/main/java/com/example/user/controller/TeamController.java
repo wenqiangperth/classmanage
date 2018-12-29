@@ -66,7 +66,7 @@ public class TeamController {
     /**
      * 增加组员
      * @param teamId
-     * @param studentId
+     * @param student
      * @return
      */
     @PutMapping(value = "/{teamId}/add")
