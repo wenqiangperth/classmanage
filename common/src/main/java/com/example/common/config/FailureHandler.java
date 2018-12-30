@@ -18,7 +18,6 @@ public class FailureHandler implements AuthenticationFailureHandler {
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         if(e instanceof BadCredentialsException){
             httpServletResponse.setStatus(400);
-           // httpServletResponse.sendRedirect("http://localhost:8083/#/");
         }
         else if(e instanceof UsernameNotFoundException) {
             httpServletResponse.setStatus(400);

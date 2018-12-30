@@ -64,21 +64,21 @@ public interface TeamMapper {
 
     /**
      * 更新klass_student表关系
-     * @param klass_id
+     * @param klassId
      * @param teamId
      * @return
      */
     @Insert("insert into klass_team(klass_id,team_id) values(#{klassId},#{teamId})")
-    public Long insertKlassTeam(@Param("klassId")Long klass_id,@Param("teamId")Long teamId);
+    public Long insertKlassTeam(@Param("klassId")Long klassId,@Param("teamId")Long teamId);
 
     /**
      * 删除klass_team关系
-     * @param klass_id
+     * @param klassId
      * @param teamId
      * @return
      */
     @Delete("delete from klass_team where klass_id=#{klassId} and team_id=#{teamId}")
-    public Long deleteKlassTeam(@Param("klassId")Long klass_id,@Param("teamId")Long teamId);
+    public Long deleteKlassTeam(@Param("klassId")Long klassId,@Param("teamId")Long teamId);
 
     /**
      * 查询：从team表中根据course和leader查询team

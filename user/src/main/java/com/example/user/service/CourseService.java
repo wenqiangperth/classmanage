@@ -25,6 +25,9 @@ public class CourseService {
     private CourseDao courseDao;
     @Autowired
     private TeamDao teamDao;
+
+    private final static String ROLE_STUDENT="ROLE_STUDENT";
+    private final static String ROLE_TEACHER="ROLE_TEACHER";
     /**
      * 获取课程信息
      * @param courseId
@@ -65,10 +68,10 @@ public class CourseService {
      */
     public ArrayList<CourseVO> getAllCourseById(String role, Long id)
     {
-        if(("ROLE_STUDENT").equals(role)){
+        if((ROLE_STUDENT).equals(role)){
             return courseDao.getAllCourseByStudentId(id);
         }
-        else if(("ROLE_TEACHER".equals(role))){
+        else if((ROLE_TEACHER.equals(role))){
             return courseDao.getAllCourseByTeacherId(id);
         }
         return null;

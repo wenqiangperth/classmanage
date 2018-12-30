@@ -1,8 +1,5 @@
 package com.example.common.config;
 
-import com.example.common.config.JwtTokenUtils;
-import com.example.common.config.JwtUser;
-import com.example.common.config.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -27,14 +24,14 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     @Autowired
     private JwtTokenUtils jwtTokenUtils;
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private JwtUserDetailsServiceImpl jwtUserDetailsServiceImpl;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication)
             throws IOException, ServletException {
         System.out.println("登陆验证成功");
         try {
-            JwtUser user = (JwtUser) jwtUserDetailsService.loadUserByUsername(authentication.getName());
+            JwtUser user = (JwtUser) jwtUserDetailsServiceImpl.loadUserByUsername(authentication.getName());
             String token = jwtTokenUtils.generateToken(user);
             httpServletResponse.setHeader("Access-Control-Expose-Headers","Authorization" );
             httpServletResponse.setHeader("Authorization", "Bearer " + token);

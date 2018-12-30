@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
  **/
 @Component
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserDao userDao;
 

@@ -1,7 +1,7 @@
 package com.example.user.config;
 
 import com.example.common.config.FailureHandler;
-import com.example.common.config.JwtUserDetailsService;
+import com.example.common.config.JwtUserDetailsServiceImpl;
 import com.example.common.config.MyAuthenticationSuccessHandler;
 import com.example.common.config.MyPasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsUtils;
 
 /**
@@ -26,7 +25,7 @@ import org.springframework.web.cors.CorsUtils;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private JwtUserDetailsService userDetailsService;
+    private JwtUserDetailsServiceImpl userDetailsService;
     @Autowired
     private MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
 

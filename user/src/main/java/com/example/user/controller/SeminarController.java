@@ -37,19 +37,19 @@ public class SeminarController {
 
     private final static String WEBSEVER="47.107.103.28:8081";
 
-//    /**
-//     * 给前端websockt的url
-//     * @param teamId
-//     * @param seminarKlassId
-//     * @param httpServletRequest
-//     * @return
-//     */
-//    @GetMapping(value = "/{klassseminarId}/enterseminar")
-//    public String enterWebSocket(@PathVariable("teamId")Long teamId,@PathVariable("klassseminarId")Long seminarKlassId,HttpServletRequest httpServletRequest){
-//        Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
-//        String role=httpServletRequest.getAttribute("role").toString();
-//        return "ws://"+websever+"/websocket/"+seminarKlassId+"/"+userId+"/"+teamId+"/"+role;
-//    }
+
+    /**
+     * 返回websocket的url
+     * @param klassSeminarId
+     * @param httpServletRequest
+     * @return
+     */
+    @GetMapping(value = "/{klassseminarId}/enterseminar")
+    public String enterWebSocket(@PathVariable("klassseminarId")Long klassSeminarId,HttpServletRequest httpServletRequest){
+        Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
+        String role=httpServletRequest.getAttribute("role").toString();
+        return "ws://"+WEBSEVER+"/websocket/"+klassSeminarId+"/"+userId+"/"+role;
+    }
 
     /**
      * 获取当前正在展示小组
@@ -75,18 +75,6 @@ public class SeminarController {
         return i;
     }
 
-    /**
-     * 返回websocket的url
-     * @param klassSeminarId
-     * @param httpServletRequest
-     * @return
-     */
-    @GetMapping(value = "/{klassseminarId}/enterseminar")
-    public String enterWebSocket(@PathVariable("klassseminarId")Long klassSeminarId,HttpServletRequest httpServletRequest){
-        Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
-        String role=httpServletRequest.getAttribute("role").toString();
-        return "ws://"+WEBSEVER+"/websocket/"+klassSeminarId+"/"+userId+"/"+role;
-    }
 
     @GetMapping(value = "/{seminarId}/class/{klassId}/enterseminar")
     public String enterSeminar(HttpServletRequest httpServletRequest, @PathVariable("seminarId")Long seminarId,@PathVariable("klassId")Long klassId){
@@ -289,12 +277,6 @@ public class SeminarController {
     {
         Long klassSeminarId=seminarService.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
         ArrayList<String> ppts=seminarService.getAllSeminarPptByClassSeminarId(klassSeminarId);
-//        for(String ppt:ppts)
-//        {
-//            FileUploudConfig fileUploudConfig=new FileUploudConfig();
-//            String fileName=ppt;
-//            fileUploudConfig.downloadFile(request,response,fileName);
-//        }
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         return fileUploudConfig.downLoadAllFile(request,response,ppts);
     }
@@ -313,15 +295,6 @@ public class SeminarController {
     {
          Long klassSeminarId=seminarService.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
          ArrayList<String> reportNames=seminarService.getAllSeminarReportByClassSeminarId(klassSeminarId);
- //        ArrayList<String> reportPaths=new ArrayList<>();
-//         for(String report:reportNames)
-//        {
-//              reportPaths.add("E:\\test\\"+report);
-////            FileUploudConfig fileUploudConfig=new FileUploudConfig();
-////            String fileName=report;
-////            fileUploudConfig.downloadFile(request,response,fileName);
-//        }
-
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
          return fileUploudConfig.downLoadAllFile(request,response,reportNames);
 

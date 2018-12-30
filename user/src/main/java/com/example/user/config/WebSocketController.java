@@ -1,25 +1,11 @@
 package com.example.user.config;
 
-
-import com.example.common.dao.TeamDao;
-import com.example.common.entity.Attendance;
-import com.example.common.entity.Question;
-import com.example.common.entity.Team;
-import com.example.common.mapper.QuestionMapper;
-import com.example.user.service.AttendanceService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
@@ -37,15 +23,12 @@ public class WebSocketController {
     private final static String NEXTGROUP="下一组展示";
     private final static String CHOOSEQUESTION="抽取提问";
     private final static String ASKQUESTION="提问";
-//    private final static String nowQuestionNum="当前提问人数";
 
     private static int onlineCount = 0;
     private static CopyOnWriteArraySet<WebSocketController> webSocketSet = new CopyOnWriteArraySet<WebSocketController>();
     private Session session;
     Long seminarKlassId;
     Long userId;
-//    Long teamId;
-//    boolean isAsked;
 
     String role;
 
@@ -120,89 +103,6 @@ public class WebSocketController {
                 }
             }
         }
-
-
-
-        //         if(message.equals("1")){
-//         //   questionNum.put(this.getSeminarKlassId(),0L);
-//            //Long attendanceId=Long.parseLong(message.replace("当前展示小组",""));
-//           // Attendance attendance=attendanceService.getAttendanceById(attendanceId);
-//            for (WebSocketController webSocketController:webSocketSet
-//                 ) {
-//                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
-//                    if(webSocketController.getRole().equals(studentRole)){
-//
-//                  //      webSocketController.sendObject(attendance);
-//                        webSocketController.sendMessage("1");
-//
-//                    }
-//
-//          //          webSocketController.sendMessage("question"+questionNum.get(webSocketController.getSeminarKlassId()));
-//
-//                }
-//            }
-//        }else if(message.startsWith("抽取提问")){
-////             if(attendanceService==null){
-////                 System.out.println("wuuwuwwuw");
-////             }
-////             System.out.println(attendanceService.toString());
-////             System.out.println(message+"perth");
-////            Long attendanceId=Long.parseLong(message.replace("抽取提问",""));
-////             System.out.println(attendanceId);
-////            Question question=attendanceService.getQuestionByAttendanceId(attendanceId);
-////            this.sendObject(question);
-////            questionNum.put(this.getSeminarKlassId(),questionNum.get(this.getSeminarKlassId())-1);
-//               for (WebSocketController webSocketController:webSocketSet
-//                 ) {
-//                if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
-//                    if (webSocketController.getUserId().equals(question.getStudentId())) {
-//                        webSocketController.isAsked=false;
-//
-//                         webSocketController.sendMessage("请您开始提问");
-//
-//                    } else if(webSocketController.getRole().equals(studentRole)) {
-//
-//                        webSocketController.sendMessage("很遗憾，请你继续等待");
-//
-//                    }
-//
-//                    webSocketController.sendMessage(""+questionNum.get(webSocketController.getSeminarKlassId()));
-//
-//                }
-//            }
-//        }else if(message.startsWith("3")){
-//            if(this.isAsked){
-//
-//                this.sendMessage("您已进入提问队列，请您耐心等待！");
-//
-//            }else{
-//                Long attendanceId=Long.parseLong(message.replace("提问",""));
-//                this.isAsked=true;
-//                if(questionNum.get(this.getSeminarKlassId())==null){
-//                    questionNum.put(this.getSeminarKlassId(),1L);
-//                }else{
-//                    questionNum.put(this.getSeminarKlassId(),questionNum.get(this.getSeminarKlassId())+1L);
-//                }
-//                Question question=new Question();
-//                question.setKlassSeminarId(this.getSeminarKlassId());
-//                question.setStudentId(this.getUserId());
-//                question.setTeamId(this.teamId);
-//                question.setAttendanceId(attendanceId);
-//                question.setIsSelected(0);
-//                questionMapper.insertQuestion(question);
-//
-//                this.sendMessage("提问成功");
-//
-//                for (WebSocketController webSocketController:webSocketSet
-//                     ) {
-//                    if (this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
-//
-//                        webSocketController.sendMessage("" +questionNum.get(webSocketController.getSeminarKlassId()));
-//
-//                    }
-//                }
-//            }
-//        }
     }
 
     /**
@@ -225,24 +125,17 @@ public class WebSocketController {
     public void sendObject(Object object) throws IOException, EncodeException {
         this.session.getBasicRemote().sendObject(object);
     }
-    /**
-     * 群发自定义消息
-     * */
-//    public static void sendInfo(String message,@PathParam("sid") String sid) throws IOException {
-//        System.out.println("推送消息到窗口"+"，推送内容:"+message);
-//        for (WebSocketServer item : webSocketSet) {
-//            try {
-//                //这里可以设定只推送给这个sid的，为null则全部推送
-//                if(sid==null) {
-//                    item.sendMessage(message);
-//                }else if(item.sid.equals(sid)){
-//                    item.sendMessage(message);
-//                }
-//            } catch (IOException e) {
-//                continue;
-//            }
-//        }
-//    }
+
+    @Override
+    public int hashCode(){
+        return role.hashCode()+seminarKlassId.hashCode()+session.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object object){
+        return this.seminarKlassId.equals(((WebSocketController)object).seminarKlassId) && this.userId.equals(((WebSocketController)object).userId);
+    }
+
 
     public static synchronized int getOnlineCount() {
         return onlineCount;
