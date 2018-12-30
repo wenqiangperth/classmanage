@@ -24,9 +24,13 @@ public class SendMailConfig {
     public String sendEmail(String title,String text,String email){
         // 1.创建一个程序与邮件服务器会话对象 Session
         Properties props = new Properties();
-        props.setProperty("mail.transport.protocol", "SMTP");// 连接协议
-        props.setProperty("mail.smtp.host", "smtp.163.com");// 连接协议
-        props.setProperty("mail.smtp.port", "25");// 连接协议
+        // 连接协议
+        props.setProperty("mail.transport.protocol", "SMTP");
+        // 连接协议
+        props.setProperty("mail.smtp.host", "smtp.163.com");
+        // 连接协议
+        props.setProperty("mail.smtp.port", "25");
+
         // 指定验证为true
         props.setProperty("mail.smtp.auth", "true");
         props.setProperty("mail.smtp.timeout","1000");

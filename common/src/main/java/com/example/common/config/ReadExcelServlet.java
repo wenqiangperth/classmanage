@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
@@ -27,6 +28,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ReadExcelServlet {
+    private final static String XLS=".xls";
+    private final static String XLSX=".xlsx";
 
     public  List<List<String>> readExcelInfo(String filePath) {
         Workbook wb =null;
@@ -78,9 +81,9 @@ public class ReadExcelServlet {
         InputStream is = null;
         try {
             is = new FileInputStream(filePath);
-            if(".xls".equals(extString)){
+            if(XLS.equals(extString)){
                 return wb = new HSSFWorkbook(is);
-            }else if(".xlsx".equals(extString)){
+            }else if(XLSX.equals(extString)){
                 return wb = new XSSFWorkbook(is);
             }else{
                 return wb = null;
@@ -98,7 +101,7 @@ public class ReadExcelServlet {
         if(cell!=null){
             //判断cell类型
             switch(cell.getCellType()){
-                case Cell.CELL_TYPE_NUMERIC:{
+                case Cell.CELL_TYPE_NUMERIC: {
                     cellValue = String.valueOf(cell.getNumericCellValue());
                     break;
                 }

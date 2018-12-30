@@ -27,6 +27,8 @@ import java.util.zip.ZipOutputStream;
  **/
 public class FileUploudConfig {
     private final static String FILEPATH="/www/wwwroot/zhaotao/";
+    private final static int SIZE=1024;
+    private final static int NUM=10;
 
     public String greeting(String name, Model model) {
         model.addAttribute("name", name);
@@ -116,7 +118,7 @@ public class FileUploudConfig {
                     bufferStream = new BufferedInputStream(zipSource, 1024 * 10);
                     int read = 0;
                     byte[] buf = new byte[1024 * 10];
-                    while((read = bufferStream.read(buf, 0, 1024 * 10)) != -1)
+                    while((read = bufferStream.read(buf, 0, SIZE * NUM)) != -1)
                     {
                         zipStream.write(buf, 0, read);
                     }

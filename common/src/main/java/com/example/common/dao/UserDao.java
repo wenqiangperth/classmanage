@@ -27,6 +27,9 @@ public class UserDao {
     @Autowired
     private AdministratorMapper administratorMapper;
 
+    private final static String ROLE_STUDENT="ROLE_STUDENT";
+    private final static String ROLE_TEACHER="ROLE_TEACHER";
+
     /**
      * 通过账号获得用户
      * @param account
@@ -59,9 +62,9 @@ public class UserDao {
      * @return
      */
     public Long updateUserPassword(User user,String role){
-        if(("ROLE_TEACHER".equals(role))){
+        if((ROLE_TEACHER.equals(role))){
             return teacherMapper.updateTeacherPassword(user.getPassword(),user.getOldPassword(),user.getId());
-        }else if(("ROLE_STUDENT".equals(role))){
+        }else if((ROLE_STUDENT.equals(role))){
             return studentMapper.updateStundentPassword(user.getPassword(),user.getId());
         }
         return 0L;
@@ -75,9 +78,9 @@ public class UserDao {
      * @return
      */
     public Long updateUserEmail(Long id,String role,String email){
-        if(("ROLE_TEACHER".equals(role))){
+        if((ROLE_TEACHER.equals(role))){
             return teacherMapper.updateTeacherEmail(id,email);
-        }else if(("ROLE_STUDENT".equals(role))){
+        }else if((ROLE_STUDENT.equals(role))){
             return studentMapper.updateStudentEmail(id,email);
         }
         return 0L;
@@ -115,10 +118,10 @@ public class UserDao {
      */
     public User getUserById(Long id,String role){
         User user=new User();
-        if(("ROLE_STUDENT".equals(role))){
+        if((ROLE_STUDENT.equals(role))){
             Student student=studentMapper.selectStudentById(id);
             user.setUserByStudent(student);
-        }else if(("ROLE_TEACHER".equals(role))){
+        }else if((ROLE_TEACHER.equals(role))){
             Teacher teacher=teacherMapper.selectTeacherById(id);
             user.setUserByTeacher(teacher);
         }

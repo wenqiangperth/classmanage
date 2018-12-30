@@ -88,7 +88,7 @@ public class RequestService {
         teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
         for(CourseVO course:courses)
         {
-            if(teamValidVO.getTeamId()==course.getTeamId())
+            if(teamValidVO.getTeamId().equals(course.getTeamId()))
             {
                 teamValidVO.setCourse(courseDao.getCourseById(course.getCourseId()));
 

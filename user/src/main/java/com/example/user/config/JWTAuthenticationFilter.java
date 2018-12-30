@@ -29,6 +29,7 @@ import java.util.Map;
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     private static final String MYSECRET="wenqiangwang";
     private static final int EXPIRATION=60000;
+    private static final String BR="Bearer ";
 
 
 
@@ -41,7 +42,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader("Authorization");
 
 
-        if (header == null || !header.startsWith("Bearer ")) {
+        if (header == null || !header.startsWith(BR)) {
             chain.doFilter(request, response);
             return;
         }
