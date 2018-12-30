@@ -34,6 +34,7 @@ public interface QuestionMapper {
      * 查询，某展示下，某人 的提问
      * @param attendanceId
      * @param studentId
+     * @param isSelected
      * @return
      */
     @Select("select * from question where attendance_id=#{attendanceId} and student_id=#{studentId} and is_selected=#{isSelected}")

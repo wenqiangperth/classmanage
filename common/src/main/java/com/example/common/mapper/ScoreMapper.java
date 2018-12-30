@@ -33,6 +33,13 @@ public interface ScoreMapper {
     })
     public Score selectRoundScore(@Param("roundId")Long roundId,@Param("teamId")Long teamId);
 
+    /**
+     * 查询讨论课成绩
+     * @param seminarId
+     * @param teamId
+     * @param courseId
+     * @return
+     */
     @Select("select ss.* from seminar_score ss,klass_seminar ks,klass k " +
             "where k.id=ks.klass_id and ks.id=ss.klass_seminar_id and k.course_id=#{courseId}" +
             " and ks.seminar_id=#{seminarId} and ss.team_id=#{teamId}")
@@ -78,6 +85,12 @@ public interface ScoreMapper {
     @ResultMap(value = "scoreMap")
     public ArrayList<Score> selectSeminarScore(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
 
+    /**
+     * 通过ClassSeminarIdAndTeamId查讨论课成绩
+     * @param classSeminarId
+     * @param teamId
+     * @return
+     */
     @Select("select * from seminar_score where klass_seminar_id=#{classSeminarId} and team_id=#{teamId}")
     @ResultMap(value = "scoreMap")
     public Score selectSeminarScoreByClassSeminarIdAndTeamId(@Param("classSeminarId")Long classSeminarId,@Param("teamId")Long teamId);

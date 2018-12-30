@@ -50,6 +50,7 @@ public interface AttendanceMapper {
 
     /**
      * 添加report存储路径
+     * @param fileName
      * @param filePath
      * @param attendanceId
      * @return
@@ -67,6 +68,7 @@ public interface AttendanceMapper {
 
     /**
      * 添加ppt存储路径
+     * @param fileName
      * @param filePath
      * @param attendanceId
      * @return
@@ -125,6 +127,11 @@ public interface AttendanceMapper {
     @ResultMap(value = "attendanceMap")
     public Attendance getAtteandanceByTeamOrderAndKlassSeminarId(@Param("klassSeminarId")Long klassSeminarId,@Param("teamOrder")int teamOrder);
 
+    /**
+     * 通过klass_seminar_id获得attendance
+     * @param klassSeminarId
+     * @return
+     */
     @Select("select * from attendance where klass_seminar_id=#{klassSeminarId}")
     @Results(id = "attendanceMap",value = {
             @Result(property = "klassSeminarId",column = "klass_seminar_id"),
@@ -143,6 +150,7 @@ public interface AttendanceMapper {
      * @param teamId
      * @param teamOrder
      * @param classSeminarId
+     * @param isPresent
      * @return
      */
     @Insert("insert into attendance(team_id,team_order,klass_seminar_id,is_present) values(#{teamId},#{teamOrder},#{classSeminarId},#{isPresent})")

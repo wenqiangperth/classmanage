@@ -11,6 +11,11 @@ import java.util.ArrayList;
 @Repository
 public interface TeamOrStrategyMapper {
 
+    /**
+     * 通过id查组队策略
+     * @param id
+     * @return
+     */
     @Select("select * from team_or_strategy where id=#{id}")
     @Results({
             @Result(property = "strategyName",column = "strategy_name"),

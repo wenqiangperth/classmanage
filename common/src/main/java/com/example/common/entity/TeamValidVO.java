@@ -11,10 +11,10 @@ import lombok.Data;
  **/
 @Data
 public class TeamValidVO {
-    private long id;
-    private long teamId;
+    private Long id;
+    private Long teamId;
     private Team team;
-    private long teacherId;
+    private Long teacherId;
     private Course course;
     private Klass klass;
     private String reason;

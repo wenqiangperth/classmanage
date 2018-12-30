@@ -389,7 +389,8 @@ public class CourseDao {
         teamShareVO.setMainCourseName(mainCourse.getCourseName());
         teamShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
         teamShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
-        teamShareVO.setMainCourse(0);    //未用字段
+        teamShareVO.setMainCourse(0);
+        //未用字段
         Course subCourse = courseMapper.getCourseById(teamShareVO.getSubCourseId());
         teamShareVO.setSubCourseName(subCourse.getCourseName());
         teamShareVO.setMainCourseTeacherId(subCourse.getTeacherId());

@@ -22,7 +22,7 @@ public class TeamShareVO {
     private String subCourseName;
     private String subCourseTeacherName;
     private Long status;
-    private int mainCourse;
+    private Integer mainCourse;
 
     public void setStatus(Long tempStatus)
     {
