@@ -19,7 +19,10 @@ import java.util.ArrayList;
 @Repository
 public interface TeacherMapper {
 
-
+    /**
+     * 查询老师总数
+     * @return
+     */
     @Select("select count(id) from teacher")
     public Long selectTeacherNum();
 
@@ -67,12 +70,19 @@ public interface TeacherMapper {
     /**
      * 更新：password
      * @param password
+     * @param oldPassword
      * @param id
      * @return
      */
     @Update("update teacher set password=#{password} where id=#{id} and password=#{oldPassword}")
     public Long updateTeacherPassword(@Param("password")String password,@Param("oldPassword")String oldPassword,@Param("id") Long id);
 
+    /**
+     * 修改老师密码
+     * @param password
+     * @param id
+     * @return
+     */
     @Update("update teacher set password=#{password} where id=#{id}")
     public Long updateTeacherPasswordByAdmin(@Param("password")String password,@Param("id")Long id);
 

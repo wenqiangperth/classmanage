@@ -10,6 +10,12 @@ import java.util.ArrayList;
 @Mapper
 @Repository
 public interface TeamStrategyMapper {
+
+    /**
+     * 通过课程id查组队策略
+     * @param courseId
+     * @return
+     */
     @Select("select * from team_strategy where course_id=#{courseId}")
     @Results({
             @Result(property = "courseId",column = "course_id"),

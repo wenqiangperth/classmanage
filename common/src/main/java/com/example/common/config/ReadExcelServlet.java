@@ -63,7 +63,12 @@ public class ReadExcelServlet {
         return list;
 
     }
-    //读取excel
+
+    /**
+     * 读取excel
+     * @param filePath
+     * @return
+     */
     public static Workbook readExcel(String filePath){
         Workbook wb = null;
         if(filePath==null){

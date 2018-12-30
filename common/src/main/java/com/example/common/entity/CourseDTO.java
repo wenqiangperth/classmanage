@@ -20,7 +20,7 @@ public class CourseDTO {
     private Long minCount;
     private Long maxCount;
     private ArrayList<CourseLimit> courseLimit;
-    private int flag;
+    private Integer flag;
     private ArrayList<ArrayList<Long>> conflictCourseId;
 
 //    public void setCourseCourseLimits(MemberLimitStrategy temp)

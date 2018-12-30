@@ -49,6 +49,7 @@ public interface TeamMapper {
     /**
      * 删除队伍和学生关系
      * @param teamId
+     * @param studentId
      * @return
      */
     @Delete("delete from team_student where team_id=#{teamId}")
@@ -57,6 +58,7 @@ public interface TeamMapper {
     /**
      * 删除队伍和单个学生关系
      * @param teamId
+     * @param studentId
      * @return
      */
     @Delete("delete from team_student where team_id=#{teamId} and student_id=#{studentId}")

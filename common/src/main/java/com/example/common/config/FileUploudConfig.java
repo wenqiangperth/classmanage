@@ -35,7 +35,11 @@ public class FileUploudConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploudConfig.class);
 
-    //文件上传相关代码
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     */
     public String upload(MultipartFile file) {
         if (file.isEmpty()) {
             return "文件为空";
@@ -99,13 +103,16 @@ public class FileUploudConfig {
                 //TODO:未对文件不存在时进行操作，后期优化。
                 if(file.exists())
                 {
-                    zipSource = new FileInputStream(file);//将需要压缩的文件格式化为输入流
+                    //将需要压缩的文件格式化为输入流
+                    zipSource = new FileInputStream(file);
                     /**
                      * 压缩条目不是具体独立的文件，而是压缩包文件列表中的列表项，称为条目，就像索引一样这里的name就是文件名,
                      * 文件名和之前的重复就会导致文件被覆盖
                      */
-                    ZipEntry zipEntry = new ZipEntry(realFileName);//在压缩目录中文件的名字
-                    zipStream.putNextEntry(zipEntry);//定位该压缩条目位置，开始写入文件到压缩包中
+                    //在压缩目录中文件的名字
+                    ZipEntry zipEntry = new ZipEntry(realFileName);
+                    //定位该压缩条目位置，开始写入文件到压缩包中
+                    zipStream.putNextEntry(zipEntry);
                     bufferStream = new BufferedInputStream(zipSource, 1024 * 10);
                     int read = 0;
                     byte[] buf = new byte[1024 * 10];
@@ -184,9 +191,14 @@ public class FileUploudConfig {
     }
 
 
-
-
-    //文件下载相关代码
+    /**
+     * 文件下载相关代码
+     * @param request
+     * @param response
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
     public String downloadFile(HttpServletRequest request, HttpServletResponse response,String fileName) throws IOException{
         //String fileName = "思想汇报.docx";
         /*if (fileName != null) {
@@ -241,9 +253,11 @@ public class FileUploudConfig {
     }
 
 
-
-
-    //多文件上传
+    /**
+     * 多文件上传
+     * @param request
+     * @return
+     */
     public String handleFileUpload(HttpServletRequest request) {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)
                 .getFiles("file");

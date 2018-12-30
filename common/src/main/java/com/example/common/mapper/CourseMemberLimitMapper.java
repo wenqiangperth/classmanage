@@ -4,10 +4,17 @@ import com.example.common.entity.MemberLimitStrategy;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+/**
+ *
+ */
 @Mapper
 @Repository
 public interface CourseMemberLimitMapper {
-
+    /**
+     * 选择班级组队人数限制
+     * @param id
+     * @return
+     */
     @Select("select * from course_member_limit_strategy where id=#{id}")
     @Results({
             @Result(property = "courseId",column = "course_id"),

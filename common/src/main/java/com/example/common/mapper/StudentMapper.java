@@ -64,7 +64,7 @@ public interface StudentMapper {
 
     /**
      * 查询：根据学生id获取他的所有课程
-     * @param stundetId
+     * @param studentId
      * @return
      */
     @Select("select c.id,c.teacher_id,c.course_name,c.introduction,c.presentation_percentage," +
@@ -92,6 +92,12 @@ public interface StudentMapper {
     @Update("update student set password=#{password} where id=#{id}")
     public Long updateStundentPassword(@Param("password") String password,@Param("id")Long id);
 
+    /**
+     * 管理员修改学生密码
+     * @param password
+     * @param id
+     * @return
+     */
     @Update("update student set password=#{password} where id=#{id}")
     public Long updateStundentPasswordByAdmin(@Param("password") String password,@Param("id")Long id);
 
@@ -162,6 +168,11 @@ public interface StudentMapper {
     @ResultMap(value="studentMap")
     public Student findStudentByAccountAndStudentName(@Param(value="account") String account,@Param(value="studentName") String studentName);
 
+    /**
+     * 添加学生
+     * @param student
+     * @return
+     */
     @Insert("insert into student(account,password,is_active,student_name,email) values(#{account},#{password},#{isActive},#{studentName},#{email})")
     public Long insertStudent(Student student);
 }
