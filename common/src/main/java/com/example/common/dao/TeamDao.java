@@ -89,6 +89,11 @@ public class TeamDao {
         return team;
     }
 
+    public Team getTeamInfoById(Long teamId)
+    {
+        return teamMapper.selectTeamById(teamId);
+    }
+
     /**
      * 根据ID获取team包括组员
      * @param teamId

@@ -123,7 +123,7 @@ public class CourseService {
         return courseDao.getAllSeminarShare(courseId);
     }
 
-    public ArrayList<Team> getAllTeamByCourseId(long courseId)
+    public ArrayList<Team> getAllTeamByCourseId(Long courseId)
     {
         ArrayList<Klass> klasses=courseDao.getAllClassByCourseId(courseId);
         ArrayList<Long> teamIds=new ArrayList<>();
@@ -134,7 +134,7 @@ public class CourseService {
         }
         for(Long teamId:teamIds)
         {
-            Team temp=teamDao.getTeamById(teamId,courseId);
+            Team temp=teamDao.getTeamInfoById(teamId);
 //            ArrayList<Student> selectStudents=new ArrayList<>();
 //            for (Student tempStudent:(temp.getStudents()))
 //            {
@@ -144,7 +144,7 @@ public class CourseService {
 //                }
 //            }
 //            temp.setStudents(selectStudents);
-//            teams.add(temp);
+            teams.add(temp);
         }
         return teams;
     }
