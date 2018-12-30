@@ -68,8 +68,8 @@ public class TeamService {
      * @param teamId
      * @return
      */
-    public Team getTeamById(Long teamId){
-        return teamDao.getTeamById(teamId);
+    public Team getTeamById(Long teamId,Long courseId){
+        return teamDao.getTeamById(teamId,courseId);
     }
 
     /**

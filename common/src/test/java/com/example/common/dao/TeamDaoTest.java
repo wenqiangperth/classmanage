@@ -19,7 +19,7 @@ public class TeamDaoTest {
     private TeamMapper teamMapper;
     @Test
     public void deleteTeamById() {
-        Team team=teamDao.getTeamById(8L);
+        Team team=teamDao.getTeamByTeamId(8L);
         System.out.println(team.toString());
     }
 

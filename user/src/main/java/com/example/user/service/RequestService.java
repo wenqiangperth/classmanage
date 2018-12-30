@@ -35,7 +35,7 @@ public class RequestService {
     @Autowired
     private RoundDao roundDao;
 
-    public ArrayList<TeamShareVO> getAllTeamShareRequestBycourseId(long teacherId)
+    public ArrayList<TeamShareVO> getAllTeamShareRequestByTeacherId(long teacherId)
     {
         ArrayList<CourseVO> courses=courseDao.getAllCourseByTeacherId(teacherId);
         ArrayList<TeamShareVO> teamShareVOS=new ArrayList<>();
@@ -69,7 +69,7 @@ public class RequestService {
         for(TeamValidVO teamValidVO:teamValidVOS)
         {
             if(teamValidVO!=null) {
-                teamValidVO.setTeam(teamDao.getTeamById(teamValidVO.getTeamId()));
+                teamValidVO.setTeam(teamDao.getTeamByTeamId(teamValidVO.getTeamId()));
                 System.out.println(teamValidVO);
                 teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
                 teamValidVO.setCourse(courseDao.getCourseById(teamValidVO.getKlass().getCourseId()));
@@ -84,7 +84,7 @@ public class RequestService {
     {
         TeamValidVO teamValidVO=requestDao.getTeamValidByTeamValidId(teamValidId);
         ArrayList<CourseVO> courses = courseDao.getAllCourseByTeacherId(teamValidVO.getTeacherId());
-        teamValidVO.setTeam(teamDao.getTeamById(teamValidVO.getTeamId()));
+        teamValidVO.setTeam(teamDao.getTeamByTeamId(teamValidVO.getTeamId()));
         teamValidVO.setKlass(klassDao.getClassByClassId(teamValidVO.getTeam().getKlassId()));
         for(CourseVO course:courses)
         {
@@ -109,7 +109,7 @@ public class RequestService {
                 klassDao.deleteAllKlassTeamByClassId(klass.getId());
             }
             for (Team team : teams) {
-                team=teamDao.getTeamById(team.getId());
+                team=teamDao.getTeamByTeamId(team.getId());
                 teamDao.deleteTeamById(team.getId());
             }
             Long mainCourseId = courseDao.getTeamShareByTeamShareId(teamShareId).getMainCourseId();
@@ -123,7 +123,7 @@ public class RequestService {
             {
                 int max=0;
                 Long maxKlassId=0L;
-                mainTeam=teamDao.getTeamById(mainTeam.getId());
+                mainTeam=teamDao.getTeamByTeamId(mainTeam.getId());
                 ArrayList<Long> classIds=new ArrayList<Long>();
                 for(Student student:(mainTeam.getStudents()))
                 {

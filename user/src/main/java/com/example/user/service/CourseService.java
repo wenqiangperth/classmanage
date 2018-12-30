@@ -134,17 +134,17 @@ public class CourseService {
         }
         for(Long teamId:teamIds)
         {
-            Team temp=teamDao.getTeamById(teamId);
-            ArrayList<Student> selectStudents=new ArrayList<>();
-            for (Student tempStudent:(temp.getStudents()))
-            {
-                if(courseDao.isSelectCourse(courseId,tempStudent.getId())==1)
-                {
-                    selectStudents.add(tempStudent);
-                }
-            }
-            temp.setStudents(selectStudents);
-            teams.add(temp);
+            Team temp=teamDao.getTeamById(teamId,courseId);
+//            ArrayList<Student> selectStudents=new ArrayList<>();
+//            for (Student tempStudent:(temp.getStudents()))
+//            {
+//                if(courseDao.isSelectCourse(courseId,tempStudent.getId())==1)
+//                {
+//                    selectStudents.add(tempStudent);
+//                }
+//            }
+//            temp.setStudents(selectStudents);
+//            teams.add(temp);
         }
         return teams;
     }

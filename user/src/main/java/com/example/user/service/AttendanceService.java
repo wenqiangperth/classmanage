@@ -75,7 +75,7 @@ public class AttendanceService {
 
         }
         attendanceDao.updateQuestionIsSelected(chooseQuestion.getId());
-        Team team=teamDao.getTeamById(chooseQuestion.getTeamId());
+        Team team=teamDao.getTeamByTeamId(chooseQuestion.getTeamId());
         chooseQuestion.setTeam(team);
         return chooseQuestion;
     }

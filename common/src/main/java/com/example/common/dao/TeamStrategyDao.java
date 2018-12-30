@@ -40,7 +40,7 @@ public class TeamStrategyDao {
 
 
     public boolean isTeamValid(Long teamId){
-        Team team=teamDao.getTeamById(teamId);
+        Team team=teamDao.getTeamByTeamId(teamId);
         ArrayList<TeamStrategy>teamStrategies=teamStrategyMapper.selectTeamStrategyByCourseId(team.getCourseId());
         if(teamStrategies!=null) {
             System.out.println("3"+teamStrategies);
@@ -122,22 +122,24 @@ public class TeamStrategyDao {
             return true;
         }
         ArrayList<Student>students=team.getStudents();
-        for (Student student:students
+        int isOk=0;
+        for (Long courseId:courseIds
         ) {
-            ArrayList<Course>courses=studentMapper.getAllCoursesByStundetId(student.getId());
             int count=0;
-            for (Course course:courses
+            for (Student student:students
             ) {
-                for (Long courseId:courseIds
-                ) {
-                    if(courseId.equals(course.getId())){
-                        count++;
-                    }
+                if(studentMapper.isSelectCourse(student.getId(),courseId)!=null) {
+                    count=1;
+                    break;
+                }
+                if(isOk==0&&count>0) {
+                    isOk = 1;
+                }
+                if(isOk==1&&count>0) {
+                    return false;
                 }
             }
-            if(count>=2){
-                return false;
-            }
+
         }
         return true;
     }

@@ -37,8 +37,8 @@ public class TeamController {
      * @return小组
      */
     @GetMapping(value = "/{teamId}")
-    public Team getTeamById(@PathVariable("teamId")Long teamId){
-        return teamService.getTeamById(teamId);
+    public Team getTeamById(@PathVariable("teamId")Long teamId,@RequestParam("courseId")Long courseId){
+        return teamService.getTeamById(teamId,courseId);
     }
 
     /**

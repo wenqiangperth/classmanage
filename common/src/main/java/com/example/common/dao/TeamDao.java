@@ -70,12 +70,32 @@ public class TeamDao {
         return teamMapper.getAllTeamIdByClassId(klassId);
     }
 
+
+    public Team getTeamById(Long teamId,Long courseId){
+        ArrayList<Student>students=teamMapper.selectStudentsByTeamId(teamId);
+        ArrayList<Student> selectStudents=new ArrayList<>();
+        for (Student tempStudent:students)
+        {
+            if(courseMapper.isSelectCourse(courseId,tempStudent.getId())==1)
+            {
+                selectStudents.add(tempStudent);
+            }
+        }
+        Team team=teamMapper.selectTeamById(teamId);
+        if(team==null){
+            return null;
+        }
+        team.setStudents(selectStudents);
+        return team;
+    }
+
     /**
      * 根据ID获取team包括组员
      * @param teamId
      * @return
      */
-    public Team getTeamById(Long teamId){
+    public Team getTeamByTeamId(Long teamId)
+    {
         ArrayList<Student>students=teamMapper.selectStudentsByTeamId(teamId);
         Team team=teamMapper.selectTeamById(teamId);
         if(team==null){
@@ -96,7 +116,7 @@ public class TeamDao {
      */
     @Transactional(rollbackFor = Exception.class)
     public Long deleteTeamById(Long id){
-        Team team=getTeamById(id);
+        Team team=getTeamByTeamId(id);
         ArrayList<Student>students=team.getStudents();
         teamMapper.deleteKlassTeam(team.getKlassId(),team.getId());
         for (Student student:students
@@ -123,6 +143,7 @@ public class TeamDao {
     public Long createTeamValidApplication(TeamValidApplication teamValidApplication){
         Course course=courseMapper.getCourseById(teamValidApplication.getCourseId());
         teamValidApplication.setTeacherId(course.getTeacherId());
+        teamMapper.updateTeamStatus(teamValidApplication.getTeamId(),2L);
         return teamMapper.insertTeamValidApplication(teamValidApplication);
     }
 

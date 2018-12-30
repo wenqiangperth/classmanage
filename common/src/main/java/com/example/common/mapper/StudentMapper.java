@@ -175,4 +175,13 @@ public interface StudentMapper {
      */
     @Insert("insert into student(account,password,is_active,student_name,email) values(#{account},#{password},#{isActive},#{studentName},#{email})")
     public Long insertStudent(Student student);
+
+    /**
+     * 查看是否学生选课
+     * @param studentId
+     * @param courseId
+     * @return
+     */
+    @Select("select klass_id from klass_student ks,klass k where ks.klass_id=k.id and ks.student_id=#{studentId} and k.course_id=#{courseId}")
+    public Long isSelectCourse(@Param("studentId") Long studentId,@Param("courseId") Long courseId);
 }
