@@ -19,8 +19,8 @@ import java.util.Map;
  **/
 @Component
 public class JwtTokenUtils {
-    private static final String mysecret="wenqiangwang";
-    private static final int expiration=600;
+    private static final String MYSECRET="wenqiangwang";
+    private static final int EXPIRATION=60000;
 
 
     public String generateToken(JwtUser user){
@@ -30,8 +30,8 @@ public class JwtTokenUtils {
         claims.put("role",user.getAuthorities().toArray()[0]);
         String token= Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-                .signWith(SignatureAlgorithm.HS512, mysecret)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION * 1000))
+                .signWith(SignatureAlgorithm.HS512, MYSECRET)
                 .compact();
         return token;
     }
@@ -42,8 +42,8 @@ public class JwtTokenUtils {
             final Claims claims = getClaimsFromToken(token);
             refreshedToken = Jwts.builder()
                     .setClaims(claims)
-                    .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-                    .signWith(SignatureAlgorithm.HS512, mysecret)
+                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION * 1000))
+                    .signWith(SignatureAlgorithm.HS512, MYSECRET)
                     .compact();
         } catch (Exception e) {
             refreshedToken = null;
@@ -65,7 +65,7 @@ public class JwtTokenUtils {
         Claims claims;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(mysecret)
+                    .setSigningKey(MYSECRET)
                     .parseClaimsJws(token.replace("Bearer ",""))
                     .getBody();
         } catch (Exception e) {

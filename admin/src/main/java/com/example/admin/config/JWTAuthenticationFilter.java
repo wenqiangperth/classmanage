@@ -26,8 +26,8 @@ import java.util.Map;
  * @Version 1.0
  **/
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
-    private static final String mysecret="wenqiangwang";
-    private static final int expiration=600000;
+    private static final String MYSECRET="wenqiangwang";
+    private static final int EXPIRATION=600000;
 //    @Autowired
 //    private JwtTokenUtils jwtTokenUtils;
 
@@ -53,7 +53,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
         if (token != null) {
             try {
                  claims= Jwts.parser()
-                        .setSigningKey(mysecret)
+                        .setSigningKey(MYSECRET)
                         .parseClaimsJws(token.replace("Bearer ", ""))
                         .getBody();
                 ArrayList<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
@@ -75,8 +75,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
 
         String refreshedToken = Jwts.builder()
                 .setClaims(claims)
-                .setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
-                .signWith(SignatureAlgorithm.HS512, mysecret)
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION * 1000))
+                .signWith(SignatureAlgorithm.HS512, MYSECRET)
                 .compact();
         response.setHeader("Access-Control-Expose-Headers","Authorization" );
         response.setHeader("Authorization", "Bearer " + refreshedToken);

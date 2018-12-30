@@ -27,8 +27,8 @@ public interface QuestionMapper {
      * @param attendanceId
      * @return
      */
-    @Select("select count(id) from question where klass_seminar_id=#{klassSeminarId} and attendance_id=#{attendanceId} and is_selected=0")
-    public Long selectQuestionNumByKlassSeminarIdAndAttendanceId(@Param("klassSeminarId")Long klassSeminarId,@Param("attendanceId")Long attendanceId);
+    @Select("select count(id) from question where klass_seminar_id=#{klassSeminarId} and attendance_id=#{attendanceId} and is_selected=#{isSelected}")
+    public int selectQuestionNumByKlassSeminarIdAndAttendanceId(@Param("klassSeminarId")Long klassSeminarId,@Param("attendanceId")Long attendanceId,@Param("isSelected") int isSelected);
 
     /**
      * 查询，某展示下，某人 的提问
@@ -88,6 +88,14 @@ public interface QuestionMapper {
     @Delete("delete from question where klass_seminar_id=#{klassSeminarId} and is_selected=0")
     public Long deleteQuestion(@Param("klassSeminarId")Long klassSeminarId);
 
+    /**
+     * 设置分数
+     * @param score
+     * @param id
+     * @return
+     */
+    @Update("update question set score=#{score} where id=#{id}")
+    public Long updateQuestionScore(@Param("score")double score,@Param("id")Long id);
 
 
 }

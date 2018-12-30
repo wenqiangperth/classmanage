@@ -59,9 +59,9 @@ public class UserDao {
      * @return
      */
     public Long updateUserPassword(User user,String role){
-        if(role.equals("ROLE_TEACHER")){
+        if(("ROLE_TEACHER".equals(role))){
             return teacherMapper.updateTeacherPassword(user.getPassword(),user.getOldPassword(),user.getId());
-        }else if(role.equals("ROLE_STUDENT")){
+        }else if(("ROLE_STUDENT".equals(role))){
             return studentMapper.updateStundentPassword(user.getPassword(),user.getId());
         }
         return 0L;
@@ -75,9 +75,9 @@ public class UserDao {
      * @return
      */
     public Long updateUserEmail(Long id,String role,String email){
-        if(role.equals("ROLE_TEACHER")){
+        if(("ROLE_TEACHER".equals(role))){
             return teacherMapper.updateTeacherEmail(id,email);
-        }else if(role.equals("ROLE_STUDENT")){
+        }else if(("ROLE_STUDENT".equals(role))){
             return studentMapper.updateStudentEmail(id,email);
         }
         return 0L;
@@ -115,10 +115,10 @@ public class UserDao {
      */
     public User getUserById(Long id,String role){
         User user=new User();
-        if(role.equals("ROLE_STUDENT")){
+        if(("ROLE_STUDENT".equals(role))){
             Student student=studentMapper.selectStudentById(id);
             user.setUserByStudent(student);
-        }else if(role.equals("ROLE_TEACHER")){
+        }else if(("ROLE_TEACHER".equals(role))){
             Teacher teacher=teacherMapper.selectTeacherById(id);
             user.setUserByTeacher(teacher);
         }

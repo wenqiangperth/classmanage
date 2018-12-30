@@ -57,8 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/websocket/{seminarKlassId}/{userId}/{role}").permitAll()
 
                 .antMatchers("/user/information").hasAnyRole("TEACHER","STUDENT")
-                .antMatchers("/user/password").hasRole("STUDENT")
-                .antMatchers("/user/email").hasRole("STUDENT")
+                .antMatchers("/user/password").hasAnyRole("TEACHER","STUDENT")
+                .antMatchers("/user/email").hasAnyRole("TEACHER","STUDENT")
 
                 .antMatchers("/student/active").hasRole("STUDENT")
 
@@ -70,11 +70,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/course/{courseId}/class").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}/round").hasAnyRole("TEACHER","STUDENT")
 
+                .antMatchers("/seminar/{klassseminarId}/enterseminar").permitAll()
                 .antMatchers("/seminar/{seminarId}").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/course/{courseId}/round").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/seminar/{seminarId}").hasAnyRole("TEACHER","STUDENT")
-                .antMatchers("/seminar").hasRole("TEACHER")
-                .antMatchers("/seminar/{seminarId}/class/{classId}/attendance").hasRole("STUDENT")
+                .antMatchers("/seminar").hasAnyRole("TEACHER","STUDENT")
+                .antMatchers("/seminar/{seminarId}/class/{classId}/attendance").hasAnyRole("STUDENT","TEACHER")
                // .antMatchers("/user/*").permitAll()
                // .antMatchers("/user/information").hasRole("TEACHER")
                 //.antMatchers("/user/password").hasRole("TEACHER")

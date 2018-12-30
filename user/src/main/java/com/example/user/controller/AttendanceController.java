@@ -1,8 +1,11 @@
 package com.example.user.controller;
 
 import com.example.common.config.FileUploudConfig;
+import com.example.common.entity.Attendance;
 import com.example.common.entity.Question;
+import com.example.common.entity.Score;
 import com.example.user.service.AttendanceService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,6 +30,22 @@ public class AttendanceController {
     private AttendanceService attendanceService;
 
 
+    @PutMapping(value = "/question/{questionId}/score")
+    public Long updateQuestionScore(@RequestBody Score score, @PathVariable("questionId")Long id){
+        return attendanceService.updateQuestionScore(score.getQuestionScore(),id);
+    }
+
+    /**
+     * 设置展示状态
+     * @param attendanceId
+     * @param attendance
+     * @return
+     */
+    @PutMapping(value = "/{attendanceId}/status")
+    public Long updateAttendanceId(@PathVariable("attendanceId")Long attendanceId, @RequestBody Attendance attendance){
+        attendance.setId(attendanceId);
+        return attendanceService.updateAttendanceStatus(attendance);
+    }
 
     /**
      * 抽取提问
@@ -35,7 +54,9 @@ public class AttendanceController {
      */
     @GetMapping(value = "/{attendanceId}/question")
     public Question getQuestionByAttendance(@PathVariable("attendanceId")Long atteandanceId){
-        return attendanceService.getQuestionByAttendanceId(atteandanceId);
+        Question question=attendanceService.getQuestionByAttendanceId(atteandanceId);
+        System.out.println(question+"perth");
+        return question;
     }
 
     /**
@@ -50,7 +71,7 @@ public class AttendanceController {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         String fileName=fileUploudConfig.upload(file);
         String filePath=FILEPATH+fileName;
-        if((!filePath.equals("文件为空"))&&(!filePath.equals("上传失败"))) {
+        if((!("文件为空".equals(filePath)))&&(!("上传失败".equals(filePath)))) {
             attendanceService.setAttendanceReport(fileName,filePath, attendanceId);
         }
         return filePath;
@@ -85,7 +106,7 @@ public class AttendanceController {
         FileUploudConfig fileUploudConfig=new FileUploudConfig();
         String fileName=fileUploudConfig.upload(file);
         String filePath=FILEPATH+fileName;
-        if((!filePath.equals("文件为空"))&&(!filePath.equals("上传失败"))) {
+        if((!("文件为空".equals(filePath)))&&(!("上传失败".equals(filePath)))) {
             attendanceService.setAttendancePpt(fileName,filePath, attendanceId);
         }
         return filePath;

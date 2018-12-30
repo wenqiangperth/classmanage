@@ -22,6 +22,9 @@ import java.util.ArrayList;
 @Repository
 public interface SeminarMapper {
 
+    @Select("select id from klass_seminar where klass_id=#{klassId} and seminar_id=#{seminarId}")
+    public Long getKlassSeminarId(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
+
     /**
      * 插入:seminar
      * @param seminar

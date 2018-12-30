@@ -20,6 +20,7 @@ import java.util.ArrayList;
 @Repository
 public interface AttendanceMapper {
 
+
     /**
      * 查询当前正在展示的attendance
      * @param klassSeminarId

@@ -33,10 +33,10 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @Component
 public class WebSocketController {
 
-    private final static String studentRole="ROLE_STUDENT";
-    private final static String nextGroup="下一组展示";
-    private final static String chooseQuestion="抽取提问";
-    private final static String askQuestion="提问";
+    private final static String STUDENTROLE="ROLE_STUDENT";
+    private final static String NEXTGROUP="下一组展示";
+    private final static String CHOOSEQUESTION="抽取提问";
+    private final static String ASKQUESTION="提问";
 //    private final static String nowQuestionNum="当前提问人数";
 
     private static int onlineCount = 0;
@@ -89,26 +89,26 @@ public class WebSocketController {
      * @param */
     @OnMessage
     public void onMessage(String message,Session session) throws IOException, EncodeException {
-        System.out.println(message);
+        System.out.println("消息："+message+this.getSeminarKlassId());
 
-        if(message.equals(nextGroup)){
+        if(message.equals(NEXTGROUP)){
             for (WebSocketController webSocketController:webSocketSet
                  ) {
                 if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
-                    if (webSocketController.getRole().equals(studentRole)) {
-                        webSocketController.sendMessage(nextGroup);
+                    if (webSocketController.getRole().equals(STUDENTROLE)) {
+                        webSocketController.sendMessage(NEXTGROUP);
                     }
                 }
             }
-        }else if(message.equals(askQuestion)){
+        }else if(message.equals(ASKQUESTION)){
             for (WebSocketController webSocketController:webSocketSet
                  ) {
                 if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {
-                    webSocketController.sendMessage(askQuestion);
+                    webSocketController.sendMessage(ASKQUESTION);
                 }
             }
-        }else if(message.startsWith(chooseQuestion)){
-            Long studentId=Long.parseLong(message.replace(chooseQuestion,""));
+        }else if(message.startsWith(CHOOSEQUESTION)){
+            Long studentId=Long.parseLong(message.replace(CHOOSEQUESTION,""));
             for (WebSocketController webSocketController:webSocketSet
                  ) {
                 if(this.getSeminarKlassId().equals(webSocketController.getSeminarKlassId())) {

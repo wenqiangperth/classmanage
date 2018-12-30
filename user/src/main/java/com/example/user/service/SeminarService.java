@@ -32,12 +32,12 @@ public class SeminarService {
 
     /**
      * 获取当前提问人数
-     * @param klassSeminatId
+     * @param klassSeminarId
      * @param attendanceId
      * @return
      */
-    public Long getQuestionNumByKlassSeminarIdAndAttendanceId(Long klassSeminatId,Long attendanceId){
-        return attendanceDao.selectQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminatId,attendanceId);
+    public int getQuestionNumByKlassSeminarIdAndAttendanceId(Long klassSeminarId,Long attendanceId){
+        return attendanceDao.selectQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminarId,attendanceId);
     }
 
     /**

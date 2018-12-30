@@ -28,7 +28,13 @@ public class AttendanceService {
     private TeamDao teamDao;
 
 
+    public Long updateQuestionScore(double score,Long id){
+        return attendanceDao.updateQuestionScore(score,id);
+    }
 
+    public Long updateAttendanceStatus(Attendance attendance){
+        return attendanceDao.updateAttendanceStatus(attendance);
+    }
 
 
     public Attendance getAttendanceById(Long attendanceId){

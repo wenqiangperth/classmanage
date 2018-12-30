@@ -18,4 +18,11 @@ public class Score {
     private double questionScore;
     private double reportScore;
     private String seminarName;
+
+    public void setSeminarName(String seminarName){
+        this.seminarName=seminarName;
+    }
+    public double getPresentationScore(){
+        return this.presentationScore;
+    }
 }

@@ -65,10 +65,10 @@ public class CourseService {
      */
     public ArrayList<CourseVO> getAllCourseById(String role, Long id)
     {
-        if(role.equals("ROLE_STUDENT")){
+        if(("ROLE_STUDENT").equals(role)){
             return courseDao.getAllCourseByStudentId(id);
         }
-        else if(role.equals("ROLE_TEACHER")){
+        else if(("ROLE_TEACHER".equals(role))){
             return courseDao.getAllCourseByTeacherId(id);
         }
         return null;

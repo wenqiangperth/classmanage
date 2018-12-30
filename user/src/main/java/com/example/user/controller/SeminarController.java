@@ -2,6 +2,7 @@ package com.example.user.controller;
 
 import com.example.common.config.FileUploudConfig;
 import com.example.common.entity.*;
+import com.example.common.mapper.SeminarMapper;
 import com.example.user.service.SeminarService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,10 @@ public class SeminarController {
     @Autowired
     private SeminarService seminarService;
 
-    private final static String websever="localhost:8081";
+    @Autowired
+    private SeminarMapper seminarMapper;
+
+    private final static String WEBSEVER="47.107.103.28:8081";
 
 //    /**
 //     * 给前端websockt的url
@@ -64,8 +68,11 @@ public class SeminarController {
      * @return
      */
     @GetMapping(value = "/{klassseminarId}/attendance/{attendanceId}/questionnumber")
-    public Long getQuestionNumByKlassSeminarIdAndAttendanceId(@PathVariable("klassseminarId")Long klassSeminarId,@PathVariable("attendanceId")Long attendanceId){
-        return seminarService.getQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminarId,attendanceId);
+    public int getQuestionNumByKlassSeminarIdAndAttendanceId(@PathVariable("klassseminarId")Long klassSeminarId,@PathVariable("attendanceId")Long attendanceId){
+        System.out.println(klassSeminarId+"perth"+attendanceId);
+        int i=seminarService.getQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminarId,attendanceId);
+        System.out.println("dasas"+i);
+        return i;
     }
 
     /**
@@ -75,12 +82,19 @@ public class SeminarController {
      * @return
      */
     @GetMapping(value = "/{klassseminarId}/enterseminar")
-    public String enterWebSocketTeacher(@PathVariable("klassseminarId")Long klassSeminarId,HttpServletRequest httpServletRequest){
+    public String enterWebSocket(@PathVariable("klassseminarId")Long klassSeminarId,HttpServletRequest httpServletRequest){
         Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
         String role=httpServletRequest.getAttribute("role").toString();
-        return "ws://"+websever+"/websocket/"+klassSeminarId+"/"+userId+"/"+role;
+        return "ws://"+WEBSEVER+"/websocket/"+klassSeminarId+"/"+userId+"/"+role;
     }
 
+    @GetMapping(value = "/{seminarId}/class/{klassId}/enterseminar")
+    public String enterSeminar(HttpServletRequest httpServletRequest, @PathVariable("seminarId")Long seminarId,@PathVariable("klassId")Long klassId){
+        Long userId=Long.parseLong(httpServletRequest.getAttribute("id").toString());
+        String role=httpServletRequest.getAttribute("role").toString();
+        Long klassSeminarId=seminarMapper.getKlassSeminarId(klassId,seminarId);
+        return "ws://"+WEBSEVER+"/websocket/"+klassSeminarId+"/"+userId+"/"+role;
+    }
 
     /**
      * 提问
@@ -236,13 +250,18 @@ public class SeminarController {
         return seminarService.updateTeamSeminarScore(score,seminarId);
     }
 
+    /**
+     * 更新展示成绩
+     * @param klassSeminarId
+     * @param teamId
+     * @param presentationScore
+     * @return
+     */
     @PutMapping(value = "/{klassseminarId}/team/{teamId}/presentationscore")
-    public Long updateTeamSeminarPresentationScore(@PathVariable(name = "klassseminarId")Long klassSeminarId,@PathVariable(name = "teamId")Long teamId,@RequestBody double presentationScore){
-        Score score=new Score();
-        score.setSeminarOrRoundId(klassSeminarId);
-        score.setTeamId(teamId);
-        score.setPresentationScore(presentationScore);
-        return seminarService.updateTeamSeminarPresentationScore(score);
+    public Long updateTeamSeminarPresentationScore(@PathVariable(name = "klassseminarId")Long klassSeminarId,@PathVariable(name = "teamId")Long teamId,@RequestBody Score presentationScore){
+        presentationScore.setSeminarOrRoundId(klassSeminarId);
+        presentationScore.setTeamId(teamId);
+        return seminarService.updateTeamSeminarPresentationScore(presentationScore);
     }
 
     /**
@@ -328,7 +347,10 @@ public class SeminarController {
     @GetMapping(value="/{seminarId}/class/{classId}/attendance")
     public ArrayList<Attendance> getAllAttendance(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId)
     {
-        return seminarService.getAllAttendance(seminarId,classId);
+
+       ArrayList<Attendance> attendances= seminarService.getAllAttendance(seminarId,classId);
+
+        return attendances;
     }
 
     /**

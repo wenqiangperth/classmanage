@@ -153,7 +153,7 @@ public class CourseController {
      * @param courseId
      * @return
      */
-  @GetMapping(value="/{courseId}/noTeam")
+  @GetMapping(value="/{courseId}/noteam")
   public ArrayList<Student> getAllNoTeamByCourseId(@PathVariable(value="courseId")long courseId)
   {
       return courseService.getAllNoTeamByCourseId(courseId);

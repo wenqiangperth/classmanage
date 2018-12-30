@@ -20,7 +20,7 @@ import java.io.IOException;
 @Order(Ordered.HIGHEST_PRECEDENCE)//控制过滤器的级别
 public class CorsFilter implements Filter {
 
-    final static org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
+    final static org.slf4j.Logger Logger = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
 
 
     @Override

@@ -28,14 +28,22 @@ public class AttendanceDao {
     @Autowired
     private TeamMapper teamMapper;
 
+    public Long updateQuestionScore(double score,Long id){
+        return questionMapper.updateQuestionScore(score,id);
+    }
+
+    public Long updateAttendanceStatus(Attendance attendance){
+        return attendanceMapper.updateAttendanceIsPresent(attendance);
+    }
+
     /**
      * 获取当前提问数
      * @param klassSeminarId
      * @param attendanceId
      * @return
      */
-    public Long selectQuestionNumByKlassSeminarIdAndAttendanceId(Long klassSeminarId,Long attendanceId){
-        return questionMapper.selectQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminarId,attendanceId);
+    public int selectQuestionNumByKlassSeminarIdAndAttendanceId(Long klassSeminarId,Long attendanceId){
+        return questionMapper.selectQuestionNumByKlassSeminarIdAndAttendanceId(klassSeminarId,attendanceId,0);
     }
 
     /**
