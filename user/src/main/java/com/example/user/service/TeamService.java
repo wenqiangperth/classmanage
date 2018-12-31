@@ -54,12 +54,16 @@ public class TeamService {
         team.setTeamSerial(teamSerial);
         Klass klass=klassDao.getClassByClassId(team.getKlassId());
         team.setKlassSerial(klass.getKlassSerial());
+        team.setStatus(0);
         Long teamId=teamDao.addTeam(team);
         if(isTeamValid(team.getId())){
             team.setStatus(1);
         }else{
             team.setStatus(0);
         }
+        Long status=0L;
+        status=status+team.getStatus();
+        teamDao.updateTeamStatus(teamId,status);
         return teamId;
     }
 

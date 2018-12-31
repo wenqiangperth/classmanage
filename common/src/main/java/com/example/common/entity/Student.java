@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 public class Student {
-    private long id;
+    private Long id;
     private String account;
     private String password;
     private int isActive;

@@ -43,7 +43,6 @@ public class TeamStrategyDao {
         Team team=teamDao.getTeamByTeamId(teamId);
         ArrayList<TeamStrategy>teamStrategies=teamStrategyMapper.selectTeamStrategyByCourseId(team.getCourseId());
         if(teamStrategies!=null) {
-            System.out.println("3"+teamStrategies);
             for (TeamStrategy teamStrategy : teamStrategies) {
                 if (!isStrategyOK(team, teamStrategy.getStrategyName(), teamStrategy.getStrategyId())) {
                     return false;
@@ -55,7 +54,6 @@ public class TeamStrategyDao {
 
     public boolean isStrategyOK(Team team,String strategyName,Long id){
         boolean isok=false;
-        System.out.println("1"+strategyName);
         switch (strategyName){
             case "TeamAndStrategy":isok=isTeamAndStrategy(team,id);break;
             case "TeamOrStrategy":isok=isTeamOrStrategy(team,id);break;
@@ -100,7 +98,6 @@ public class TeamStrategyDao {
         if(memberLimitStrategy==null){
             return true;
         }
-        System.out.println(team);
         int num=team.getStudents().size();
         if(memberLimitStrategy.getMinMember()<=num){
             if(memberLimitStrategy.getMaxMember()<=0){
@@ -163,7 +160,6 @@ public class TeamStrategyDao {
         if(teamAndStrategies==null){
             return true;
         }
-        System.out.println("2"+teamAndStrategies);
         for (TeamAndOrStrategy teamAndStrategy:teamAndStrategies) {
             if(!isStrategyOK(team,teamAndStrategy.getStrategyName(),teamAndStrategy.getStrategyId())){
                 return false;

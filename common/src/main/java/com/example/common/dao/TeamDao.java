@@ -32,7 +32,6 @@ public class TeamDao {
      */
     @Transactional(rollbackFor = Exception.class)
     public Long addTeam(Team team){
-        System.out.println(team);
         Long i=teamMapper.insertTeam(team);
         if(i<=0){return i;}
         Student leaderStudent=new Student();
@@ -44,7 +43,7 @@ public class TeamDao {
         students.add(leaderStudent);
         Long teamId=team.getId();
         for (Student student:students) {
-            if(student.getId()!=0) {
+            if(student!=null&&student.getId()!=null) {
                 Long j = teamMapper.insertTeamStudent(teamId, student.getId());
                 if (j <= 0) {
                     return j;

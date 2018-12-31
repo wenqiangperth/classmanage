@@ -217,9 +217,7 @@ public class CourseDao {
 
     public ArrayList<Klass> getAllClassByCourseId(long courseId)
     {
-         ArrayList<Klass> klasses= klassMapper.getAllClassByCourseId(courseId);
-        System.out.println(courseId+"perth");
-        System.out.println(klasses);
+        ArrayList<Klass> klasses= klassMapper.getAllClassByCourseId(courseId);
         return klasses;
     }
 
@@ -344,9 +342,10 @@ public class CourseDao {
 
     public Team getTeamByCourseIdAndStudentId(long studentId,long courseId)
     {
-        long classId = klassMapper.getClassIdByCourseIdAndStudentId(courseId,studentId);
-        long teamId=teamMapper.selectTeamIdByStudentIdAndCourseIdAndClassId(studentId,courseId,classId);
+        Klass klass= klassMapper.getKlassByCourseIdAndStudentId(courseId,studentId);
+        long teamId=teamMapper.selectTeamIdByStudentIdAndCourseIdAndClassId(studentId,courseId,klass.getId());
         Team team = teamMapper.selectTeamById(teamId);
+        team.setKlassSerial(klass.getKlassSerial());
         team.setStudents(teamMapper.selectStudentsByTeamId(teamId));
         return team;
     }

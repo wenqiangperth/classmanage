@@ -150,8 +150,13 @@ public Long insertKlassStudent(@Param("klassId") Long klassId,@Param("studentId"
      * @param studentId
      * @return
      */
-    @Select("select klass_id from klass_student where course_id=#{courseId} and student_id=#{studentId}")
+    @Select("select id from klass_student where course_id=#{courseId} and student_id=#{studentId}")
     public Long getClassIdByCourseIdAndStudentId(@Param(value="courseId") Long courseId,@Param(value="studentId") Long studentId);
+
+    @Select("select * from klass_student where course_id=#{courseId} and student_id=#{studentId}")
+    @ResultMap(value = "klassMap")
+    public Klass getKlassByCourseIdAndStudentId(@Param(value="courseId") Long courseId,@Param(value="studentId") Long studentId);
+
 
     /**
      * 根据klassid删除所有klass_round关系
