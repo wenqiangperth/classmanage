@@ -320,7 +320,6 @@ public class SeminarController {
     @GetMapping(value="/{seminarId}/class/{classId}/attendance")
     public ArrayList<Attendance> getAllAttendance(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId)
     {
-
        ArrayList<Attendance> attendances= seminarService.getAllAttendance(seminarId,classId);
 
         return attendances;
@@ -330,8 +329,7 @@ public class SeminarController {
      * 报名讨论课
      * @param seminarId
      * @param classId
-     * @param teamId
-     * @param teamOrder
+     * @param attendance
      * @return
      */
     @PostMapping(value="/{seminarId}/class/{classId}/attendance")

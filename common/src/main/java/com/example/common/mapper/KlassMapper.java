@@ -153,7 +153,7 @@ public Long insertKlassStudent(@Param("klassId") Long klassId,@Param("studentId"
     @Select("select id from klass_student where course_id=#{courseId} and student_id=#{studentId}")
     public Long getClassIdByCourseIdAndStudentId(@Param(value="courseId") Long courseId,@Param(value="studentId") Long studentId);
 
-    @Select("select * from klass_student where course_id=#{courseId} and student_id=#{studentId}")
+    @Select("select k.* from klass_student ks,klass k where ks.klass_id=k.id and ks.course_id=#{courseId} and ks.student_id=#{studentId}")
     @ResultMap(value = "klassMap")
     public Klass getKlassByCourseIdAndStudentId(@Param(value="courseId") Long courseId,@Param(value="studentId") Long studentId);
 

@@ -267,25 +267,17 @@ public class SeminarDao {
     {
         Long classSeminarId=seminarMapper.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
         ArrayList<Attendance> attendances= attendanceMapper.getAllAttendanceByKlassSeminarId(classSeminarId);
+        Seminar seminar=seminarMapper.getSeminarByKlassSeminarId(classSeminarId);
         for(Attendance attendance:attendances)
         {
             Team team=teamMapper.selectTeamById(attendance.getTeamId());
             team.setKlassSerial(klassMapper.getKlassByKlassId(team.getKlassId()).getKlassSerial());
             attendance.setTeam(team);
             Score score=scoreMapper.selectSeminarScoreByClassSeminarIdAndTeamId(classSeminarId,attendance.getTeamId());
-            Seminar seminar=seminarMapper.getSeminarByKlassSeminarId(classSeminarId);
-            score.setSeminarName(seminar.getSeminarName());
-            attendance.setScore(score);
-//            if(attendance!=null) {
-//                attendance.setTeam(teamMapper.selectTeamById(attendance.getTeamId()));
-//                Score score = scoreMapper.selectSeminarScoreByClassSeminarIdAndTeamId(classSeminarId, attendance.getTeamId());
-//                System.out.println(classSeminarId);
-//                Seminar seminar = seminarMapper.getSeminarByKlassSeminarId(classSeminarId);
-//                System.out.println(seminar);
-//                score.setSeminarName(seminar.getSeminarName());
-//                System.out.println(score);
-//                attendance.setScore(score);
-//            }
+            if(score!=null) {
+                score.setSeminarName(seminar.getSeminarName());
+                attendance.setScore(score);
+            }
         }
         return attendances;
     }

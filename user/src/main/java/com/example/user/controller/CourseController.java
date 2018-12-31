@@ -180,6 +180,7 @@ public class CourseController {
   public Team getTeamByCourseIdAndStudentId(HttpServletRequest request,@PathVariable(value="courseId")Long courseId)
   {
       long studentId=Long.parseLong(request.getAttribute("id").toString());
+      System.out.println(studentId);
       return courseService.getTeamByCourseIdAndStudentId(studentId,courseId);
   }
 

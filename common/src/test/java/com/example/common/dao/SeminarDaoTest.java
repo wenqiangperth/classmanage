@@ -34,28 +34,33 @@ public class SeminarDaoTest {
 
     @Test
     public void aa(){
-
-        Long classSeminarId=seminarMapper.getClassSeminarIdBySeminarIdAndClassId(22l,5l);
-        System.out.println(classSeminarId+"allala");
-        ArrayList<Attendance> attendances= attendanceMapper.getAllAttendanceByKlassSeminarId(classSeminarId);
+        ArrayList<Attendance>attendances=seminarDao.getAllAttendance(22L,23L);
         System.out.println(attendances);
-        Seminar seminar=seminarMapper.getSeminarByKlassSeminarId(classSeminarId);
-        for(Attendance attendance:attendances)
-        {
-            Team team=teamMapper.selectTeamById(attendance.getTeamId());
-            team.setKlassSerial(klassMapper.getKlassByKlassId(team.getKlassId()).getKlassSerial());
-            attendance.setTeam(team);
-            Score score=scoreMapper.selectSeminarScoreByClassSeminarIdAndTeamId(classSeminarId,attendance.getTeamId());
 
-            Score score1=new Score();
-            System.out.println("之前"+seminar.getSeminarName());
-            double a=score.getPresentationScore();
-           score1.setPresentationScore(a);
-           // score.setSeminarName("dadas");
-            score1.setSeminarName(seminar.getSeminarName());
-        }
-        //ArrayList<Attendance>attendances=seminarDao.getAllAttendance(5L,22L);
-        System.out.println(attendances);
+//        Long classSeminarId=seminarMapper.getClassSeminarIdBySeminarIdAndClassId(23l,22l);
+//        System.out.println(classSeminarId+"allala");
+//        ArrayList<Attendance> attendances= attendanceMapper.getAllAttendanceByKlassSeminarId(classSeminarId);
+//        System.out.println(attendances);
+//        Seminar seminar=seminarMapper.getSeminarByKlassSeminarId(classSeminarId);
+//        for(Attendance attendance:attendances)
+//        {
+//            Team team=teamMapper.selectTeamById(attendance.getTeamId());
+//            team.setKlassSerial(klassMapper.getKlassByKlassId(team.getKlassId()).getKlassSerial());
+//            attendance.setTeam(team);
+//            Score score=scoreMapper.selectSeminarScoreByClassSeminarIdAndTeamId(classSeminarId,attendance.getTeamId());
+//
+//            System.out.println(score);
+//            score.setSeminarName(seminar.getSeminarName());
+//            attendance.setScore(score);
+////            Score score1=new Score();
+//            System.out.println("之前"+seminar.getSeminarName());
+//            double a=score.getPresentationScore();
+////           score1.setPresentationScore(a);
+//           // score.setSeminarName("dadas");
+////            score1.setSeminarName(seminar.getSeminarName());
+//        }
+//        //ArrayList<Attendance>attendances=seminarDao.getAllAttendance(5L,22L);
+//        System.out.println(attendances);
     }
 
     @Test
