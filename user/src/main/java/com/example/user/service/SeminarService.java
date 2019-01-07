@@ -8,6 +8,7 @@ import com.example.common.mapper.CourseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
@@ -236,6 +237,11 @@ public class SeminarService {
     {
         Long klassSeminarId=seminarDao.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
         return seminarDao.updateReportScoreByKlassSeminarIdTeamId(klassSeminarId,teamId,reportScore);
+    }
+
+
+    public Long updateReportDDL(KlassSeminar klassSeminar){
+        return seminarDao.updateReportDDL(klassSeminar);
     }
 
 

@@ -30,6 +30,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class ReadExcelServlet {
     private final static String XLS=".xls";
     private final static String XLSX=".xlsx";
+    private final static int FIRST_ROW=2;
 
     public  List<List<String>> readExcelInfo(String filePath) {
         Workbook wb =null;
@@ -37,6 +38,7 @@ public class ReadExcelServlet {
         Row row = null;
         List<List<String>> list = null;
         String cellData = null;
+        String cellDatas=null;
         wb = readExcel(filePath);
         if(wb != null){
             //用来存放表中数据
@@ -49,13 +51,14 @@ public class ReadExcelServlet {
             row = sheet.getRow(0);
             //获取最大列数
             int colnum = row.getPhysicalNumberOfCells();
-            for (int i = 1; i<rownum; i++) {
+            for (int i = FIRST_ROW; i<rownum; i++) {
                 List map = new ArrayList<String>();
                 row = sheet.getRow(i);
                 if(row !=null){
                     for (int j=0;j<colnum;j++){
                         cellData = (String) getCellFormatValue(row.getCell(j));
-                        map.add(cellData);
+                        cellDatas=cellData.replaceAll(" ","");
+                        map.add(cellDatas);
                     }
                 }else{
                     break;
@@ -101,11 +104,11 @@ public class ReadExcelServlet {
         if(cell!=null){
             //判断cell类型
             switch(cell.getCellType()){
-                case Cell.CELL_TYPE_NUMERIC: {
+                case NUMERIC: {
                     cellValue = String.valueOf(cell.getNumericCellValue());
                     break;
                 }
-                case Cell.CELL_TYPE_FORMULA:{
+                case FORMULA:{
                     //判断cell是否为日期格式
                     if(DateUtil.isCellDateFormatted(cell)){
                         //转换为日期格式YYYY-mm-dd
@@ -116,7 +119,7 @@ public class ReadExcelServlet {
                     }
                     break;
                 }
-                case Cell.CELL_TYPE_STRING:{
+                case STRING:{
                     cellValue = cell.getRichStringCellValue().getString();
                     break;
                 }

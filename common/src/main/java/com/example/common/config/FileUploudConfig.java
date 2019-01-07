@@ -202,44 +202,10 @@ public class FileUploudConfig {
      * @throws IOException
      */
     public String downloadFile(HttpServletRequest request, HttpServletResponse response,String fileName) throws IOException{
-        //String fileName = "思想汇报.docx";
-        /*if (fileName != null) {
-            File file = new File("E://test//"+fileName);
-            if (file.exists()) {
-                response.setContentType("application/force-download");
-                response.addHeader("Content-Disposition","attachment;fileName=" +new String(fileName.getBytes("UTF-8"),"iso-8859-1"));
-                //response.addHeader("Content-Disposition","attachment;fileName=" +fileName);
-                byte[] buffer = new byte[1024];
-                FileInputStream fis = null;
-                BufferedInputStream bis = null;
-                try {
-                    fis = new FileInputStream(file);
-                    bis = new BufferedInputStream(fis);
-                    OutputStream os = response.getOutputStream();
-                    int i = bis.read(buffer);
-                    while (i != -1) {
-                        os.write(buffer, 0, i);
-                        i = bis.read(buffer);
-                    }
-                    System.out.println("下载成功...");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                } finally {
-                    if (bis != null) {
-                        bis.close();
-                    }
-                    if (fis != null){
-                        fis.close();
-                    }
-                }
-            }
-        }*/
-        //String fileName = path.substring(path.lastIndexOf("\\") +1 ,path.length());
-        File file = new File(FILEPATH+fileName);
+           File file = new File(FILEPATH+fileName);
         if (!file.exists()){
             logger.error("路径有误，文件不存在！");
         }
-        //new String(fileName.getBytes("UTF-8"),"ISO-8859-1");
         response.setHeader("content-disposition","attachment;filename=" + URLEncoder.encode(fileName,"UTF-8"));
         response.setContentType("content-type:octet-stream");
         BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file));

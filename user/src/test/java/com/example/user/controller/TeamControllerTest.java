@@ -24,8 +24,8 @@ public class TeamControllerTest {
     private TeamMapper teamMapper;
     @Test
     public void getTeamById() {
-        //Team team=teamService.getTeamById(8L);
-       // System.out.println(team.toString());
+        Team team=teamService.getTeamById(8L,16L);
+        System.out.println(team.toString());
     }
     @Test
     public void deleteTeamById(){

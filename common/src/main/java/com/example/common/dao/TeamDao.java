@@ -75,7 +75,7 @@ public class TeamDao {
         ArrayList<Student> selectStudents=new ArrayList<>();
         for (Student tempStudent:students)
         {
-            if(courseMapper.isSelectCourse(courseId,tempStudent.getId())==1)
+            if(courseMapper.isSelectCourse(courseId,tempStudent.getId())>0)
             {
                 selectStudents.add(tempStudent);
             }
@@ -122,7 +122,7 @@ public class TeamDao {
     public Long deleteTeamById(Long id){
         Team team=getTeamByTeamId(id);
         ArrayList<Student>students=team.getStudents();
-        teamMapper.deleteKlassTeam(team.getKlassId(),team.getId());
+        teamMapper.deleteKlassTeam(team.getId());
         for (Student student:students
              ) {
             teamMapper.deleteTeamStudentByTeamId(team.getId(),student.getId());

@@ -59,11 +59,11 @@ public class KlassService {
             student.setStudentName(temps.get(1));
             student.setIsActive(0);
             student.setPassword("123456");
-            Student s=studentDao.findStudentByAccountAndStudentName(student.getAccount(),student.getStudentName());
+            Student s=studentDao.findStudentByAccount(student.getAccount());
             if(s==null)
             {
                 studentDao.insertStudent(student);
-                s=studentDao.findStudentByAccountAndStudentName(student.getAccount(),student.getStudentName());
+                s=studentDao.findStudentByAccount(student.getAccount());
             }
             System.out.println(s.getAccount());
             System.out.println(s.getStudentName());

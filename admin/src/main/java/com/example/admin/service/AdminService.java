@@ -29,6 +29,13 @@ public class AdminService {
     @Autowired
     private TeacherDao teacherDao;
 
+
+
+
+    public Long getStudentNum(){
+        return studentDao.getStudentNum();
+    }
+
     public Long selectTeacherNum(){
         return teacherDao.seleceTeacherNum();
     }
@@ -98,6 +105,14 @@ public class AdminService {
         }
     }
 
+    public Student addStudent(Student student){
+        student.setIsActive(0);
+        Long i=studentDao.insertStudent(student);
+        if(i<=0){
+            return null;
+        }
+        return student;
+    }
 
     /**
      * 插入：增加teacher

@@ -35,6 +35,11 @@ public class AdminController {
         return adminService.getAllStudent(pageNum,pageSize);
     }
 
+    @GetMapping(value = "/student/number")
+    public Long getStudentNum(){
+        return adminService.getStudentNum();
+    }
+
     /**
      * 查询：name or account->student
      * @param accountOrName
@@ -60,15 +65,21 @@ public class AdminController {
         return null;
     }
 
+    @PostMapping(value = "/admin/student")
+    public Student addStudent(@RequestBody Student student){
+        return adminService.addStudent(student);
+    }
+
+
     /**
      * 更新:学生密码
      * @param studentId
-     * @param password
+     * @param student
      * @return
      */
     @PutMapping(value = "/student/{studentId}/password")
-    public Long updateStudentPassword(@PathVariable("studentId")Long studentId,@RequestParam(name = "password")String password){
-        return adminService.updateStudentPassword(studentId,password);
+    public Long updateStudentPassword(@PathVariable("studentId")Long studentId,@RequestBody Student student){
+        return adminService.updateStudentPassword(studentId,student.getPassword());
     }
 
 
@@ -126,7 +137,7 @@ public class AdminController {
      * @param teacher
      * @return
      */
-    @PutMapping(value = "teacher/{teacherId}/information")
+    @PutMapping(value = "/teacher/{teacherId}/information")
     public Teacher updateTeacherInformation(@PathVariable(name = "teacherId")Long teacherId,@RequestBody Teacher teacher){
         teacher.setId(teacherId);
         if(adminService.updateTeacherInformation(teacher)>0){
@@ -138,12 +149,12 @@ public class AdminController {
     /**
      * 更新：password
      * @param teacherId
-     * @param password
+     * @param teacher
      * @return
      */
     @PutMapping(value = "/teacher/{teacherId}/password")
-    public Long updateTeacherPassword(@PathVariable(name = "teacherId")Long teacherId,@Param("password")String password){
-        return adminService.updateTeacherPassword(teacherId,password);
+    public Long updateTeacherPassword(@PathVariable(name = "teacherId")Long teacherId,@RequestBody Teacher teacher){
+        return adminService.updateTeacherPassword(teacherId,teacher.getPassword());
     }
 
     /**

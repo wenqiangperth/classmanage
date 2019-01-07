@@ -35,7 +35,7 @@ public class SeminarController {
     @Autowired
     private SeminarMapper seminarMapper;
 
-    private final static String WEBSEVER="47.107.103.28:8081";
+    private final static String WEBSEVER="47.107.103.28:8082";
 
 
     /**
@@ -333,25 +333,37 @@ public class SeminarController {
      * @return
      */
     @PostMapping(value="/{seminarId}/class/{classId}/attendance")
-    public Long updateAttendanceByClassSeminarId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody Attendance attendance)
+    public Long addAttendanceByClassSeminarId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody Attendance attendance)
     {
-        System.out.println(attendance.getTeamId());
-        return seminarService.updateAttendanceByClassSeminarId(seminarId,classId,attendance.getTeamId(),attendance.getTeamOrder());
+         return seminarService.updateAttendanceByClassSeminarId(seminarId,classId,attendance.getTeamId(),attendance.getTeamOrder());
     }
 
     /**
      * 修改书面报告成绩
      * @param seminarId
      * @param classId
-     * @param scores
+     * @param scoreDTO
      * @return
      */
     @PutMapping(value="/{seminarId}/class/{classId}/reportScore")
-    public Long updateReportScoreByTeamId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody ArrayList<Score> scores)
+    public Long updateReportScoreByTeamId(@PathVariable(value="seminarId")Long seminarId,@PathVariable(value="classId")Long classId,@RequestBody ScoreDTO scoreDTO)
     {
-        for(Score score:scores) {
-            seminarService.updateReportScoreByTeamId(seminarId, classId, score.getTeamId(), score.getReportScore());
+        System.out.println(scoreDTO);
+        for(Attendance attendance:(scoreDTO.getAttendances())) {
+            seminarService.updateReportScoreByTeamId(seminarId, classId, attendance.getScore().getTeamId(), attendance.getScore().getReportScore());
         }
         return 1L;
+    }
+
+    /**
+     * 设置讨论报告截止时间,同时计算成绩
+     * @param klassSeminarId
+     * @param klassSeminar
+     * @return
+     */
+    @PutMapping(value = "/{klassSeminarId}/reportddl")
+    public Long updateReportDDL(@PathVariable(value = "klassSeminarId")Long klassSeminarId,@RequestBody KlassSeminar klassSeminar){
+        klassSeminar.setId(klassSeminarId);
+        return seminarService.updateReportDDL(klassSeminar);
     }
 }

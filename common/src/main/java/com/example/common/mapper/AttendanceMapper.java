@@ -5,6 +5,7 @@ import com.example.common.entity.Question;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 
@@ -132,7 +133,7 @@ public interface AttendanceMapper {
      * @param klassSeminarId
      * @return
      */
-    @Select("select * from attendance where klass_seminar_id=#{klassSeminarId}")
+    @Select("select * from attendance where klass_seminar_id=#{klassSeminarId} order by team_order asc")
     @Results(id = "attendanceMap",value = {
             @Result(property = "klassSeminarId",column = "klass_seminar_id"),
             @Result(property = "teamId",column = "team_id"),
@@ -155,4 +156,13 @@ public interface AttendanceMapper {
      */
     @Insert("insert into attendance(team_id,team_order,klass_seminar_id,is_present) values(#{teamId},#{teamOrder},#{classSeminarId},#{isPresent})")
     public Long insertAttendanceByClassSeminarId(@Param(value="teamId")Long teamId,@Param(value="teamOrder")int teamOrder,@Param(value="classSeminarId")Long classSeminarId,@Param("isPresent")int isPresent);
+
+    /**
+     * 查询是否存在team_order
+     * @param classSeminarId
+     * @param teamOrder
+     * @return
+     */
+    @Select("select count(*) from attendance where klass_seminar_id=#{classSeminarId} and team_order=#{teamOrder}")
+    public Long isExistTeamOrder(@Param("classSeminarId") Long classSeminarId,@Param("teamOrder") int teamOrder);
 }

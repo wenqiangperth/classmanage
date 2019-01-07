@@ -52,7 +52,7 @@ public class AttendanceService {
             return null;
         }
         ArrayList<Question>allQuestions=attendanceDao.getAllQuestionByKlassSeminarId(questions.get(0).getKlassSeminarId());
-        Map<Long,Long>teamMaps=new HashMap<Long,Long>();
+        Map<Long,Long>teamMaps=new HashMap<Long,Long>(16);
         for (Question question:allQuestions
              ) {
             if(question.getIsSelected()==1){

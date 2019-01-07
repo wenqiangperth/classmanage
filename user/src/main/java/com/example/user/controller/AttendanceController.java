@@ -32,6 +32,12 @@ public class AttendanceController {
     private AttendanceService attendanceService;
 
 
+    /**
+     * 提问打分
+     * @param score
+     * @param id
+     * @return
+     */
     @PutMapping(value = "/question/{questionId}/score")
     public Long updateQuestionScore(@RequestBody Score score, @PathVariable("questionId")Long id){
         return attendanceService.updateQuestionScore(score.getQuestionScore(),id);
@@ -57,7 +63,6 @@ public class AttendanceController {
     @GetMapping(value = "/{attendanceId}/question")
     public Question getQuestionByAttendance(@PathVariable("attendanceId")Long atteandanceId){
         Question question=attendanceService.getQuestionByAttendanceId(atteandanceId);
-        System.out.println(question+"perth");
         return question;
     }
 

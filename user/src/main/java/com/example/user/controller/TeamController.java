@@ -38,6 +38,8 @@ public class TeamController {
      */
     @GetMapping(value = "/{teamId}")
     public Team getTeamById(@PathVariable("teamId")Long teamId,@RequestParam("courseId")Long courseId){
+        System.out.println(courseId);
+        System.out.println(teamId);
         return teamService.getTeamById(teamId,courseId);
     }
 
@@ -94,7 +96,6 @@ public class TeamController {
     @PostMapping(value = "/{teamId}/teamvalidrequest")
     public Long createTeamValidRequest(@PathVariable(name = "teamId")Long teamId, @RequestBody TeamValidApplication teamValidApplication){
         teamValidApplication.setTeamId(teamId);
-        System.out.println(teamValidApplication.toString());
         return teamService.createTeamValisApplication(teamValidApplication);
     }
 

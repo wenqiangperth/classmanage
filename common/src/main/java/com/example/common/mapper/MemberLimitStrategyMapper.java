@@ -5,6 +5,14 @@ import com.example.common.entity.MemberLimitStrategy;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+
+/**
+ * @ClassName MemberLimitStrategyMapper
+ * @Description
+ * @Author perth
+ * @Date 2018/12/17 0017 下午 7:58
+ * @Version 1.0
+ **/
 @Mapper
 @Repository
 public interface MemberLimitStrategyMapper {
@@ -17,7 +25,7 @@ public interface MemberLimitStrategyMapper {
     @Select("select * from member_limit_strategy where id=#{id}")
     @Results({
             @Result(property = "minMember",column = "min_member"),
-            @Result(property = "maxMember",column = "maxMember")
+            @Result(property = "maxMember",column = "max_Member")
     })
     public MemberLimitStrategy selectMemberLimitStrategyById(@Param("id")Long id);
 

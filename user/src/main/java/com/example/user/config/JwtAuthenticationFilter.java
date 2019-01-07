@@ -1,8 +1,9 @@
-package com.example.admin.config;
+package com.example.user.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,27 +21,25 @@ import java.util.Map;
 
 /**
  * @author perth
- * @ClassName JWTAuthenticationFilter
+ * @ClassName JwtAuthenticationFilter
  * @Description TODO
  * @Date 2018/12/18 22:45
  * @Version 1.0
  **/
-public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
+public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
     private static final String MYSECRET="wenqiangwang";
-    private static final int EXPIRATION=600000;
+    private static final int EXPIRATION=60000;
     private static final String BR="Bearer ";
-//    @Autowired
-//    private JwtTokenUtils jwtTokenUtils;
 
 
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String header = request.getHeader("Authorization");
-
 
 
         if (header == null || !header.startsWith(BR)) {
@@ -81,37 +80,12 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
                 .compact();
         response.setHeader("Access-Control-Expose-Headers","Authorization" );
         response.setHeader("Authorization", "Bearer " + refreshedToken);
-        request.setAttribute("id",claims.get("id").toString());
+        request.setAttribute("id",claims.get("id"));
         Map<String, Object> objectMap = (Map<String, Object>) claims.get("role");
         SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(objectMap.get("authority").toString());
         request.setAttribute("role",simpleGrantedAuthority.toString());
         chain.doFilter(request, response);
 
     }
-
-//    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-//        String token = request.getHeader("Authorization");
-//        if (token != null) {
-//            try {
-//                Claims claims = Jwts.parser()
-//                        .setSigningKey(mysecret)
-//                        .parseClaimsJws(token.replace("Bearer ", ""))
-//                        .getBody();
-//                ArrayList<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
-//                Map<String, Object> objectMap = (Map<String, Object>) claims.get("role");
-//                System.out.println(objectMap);
-//                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(objectMap.get("authority").toString());
-//                simpleGrantedAuthorities.add(simpleGrantedAuthority);
-//
-//                if (claims != null) {
-//                    return new UsernamePasswordAuthenticationToken(claims, "", simpleGrantedAuthorities);
-//                }
-//                return null;
-//            }catch (Exception e){
-//                System.out.println(e);
-//            }
-//        }
-//        return null;
-//    }
 
 }

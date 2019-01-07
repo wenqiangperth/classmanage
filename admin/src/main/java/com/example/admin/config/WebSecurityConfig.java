@@ -50,12 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                // .antMatchers("/admin/*").hasRole("ADMIN")
-                .antMatchers("/user/login").permitAll()
-                .antMatchers("/teacher").permitAll()
-               // .antMatchers("/user/*").permitAll()
-                .antMatchers("/user/information").hasRole("TEACHER")
-                .antMatchers("/user/email").hasRole("TEACHER")
-                .antMatchers("/user/password").permitAll()
+                .antMatchers("/admin/login").permitAll()
+
 
 
 
@@ -75,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .permitAll()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .csrf().disable();
 
     }
@@ -86,15 +82,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //密码使用BCryptPasswordEncoder()方法验证，因为这里使用了BCryptPasswordEncoder()方法验证。所以在注册用户的时候在接收前台明文密码之后也需要使用BCryptPasswordEncoder().encode(明文密码)方法加密密码。
                 .passwordEncoder(new MyPasswordEncoder());
 
-      /*  auth
-                .inMemoryAuthentication()
-                .withUser("22").password("per199822").roles("ADMIN");*/
     }
-    // 装载BCrypt密码编码器
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {

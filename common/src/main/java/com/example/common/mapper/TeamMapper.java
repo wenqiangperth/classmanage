@@ -75,12 +75,11 @@ public interface TeamMapper {
 
     /**
      * 删除klass_team关系
-     * @param klassId
      * @param teamId
      * @return
      */
-    @Delete("delete from klass_team where klass_id=#{klassId} and team_id=#{teamId}")
-    public Long deleteKlassTeam(@Param("klassId")Long klassId,@Param("teamId")Long teamId);
+    @Delete("delete from klass_team where team_id=#{teamId}")
+    public Long deleteKlassTeam(@Param("teamId")Long teamId);
 
     /**
      * 查询：从team表中根据course和leader查询team
@@ -161,7 +160,7 @@ public interface TeamMapper {
      */
     @Select("select s.id,s.account,s.password,s.is_active,s.student_name,s.email from team_student ks,student s where ks.team_id=#{teamId} and ks.student_id=s.id")
     @Results(id = "klassStudentMap",value = {
-            @Result(property = "isAcctive",column = "is_active"),
+            @Result(property = "isActive",column = "is_active"),
             @Result(property = "studentName",column = "student_name")
     })
     public ArrayList<Student> selectStudentsByTeamId(Long teamId);

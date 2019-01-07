@@ -22,9 +22,19 @@ public interface QuestionMapper {
 
 
     /**
+     * 查询提问最高分
+     * @param klassSeminarId
+     * @param teamId
+     * @return
+     */
+    @Select("select max(score) from question where klass_seminar_id=#{klassSeminarId} and team_id=#{teamId}")
+    public Double selectMaxQuestionScore(@Param("klassSeminarId")Long klassSeminarId,@Param("teamId")Long teamId);
+
+    /**
      * 获取某展示当前提问人数
      * @param klassSeminarId
      * @param attendanceId
+     * @param isSelected
      * @return
      */
     @Select("select count(id) from question where klass_seminar_id=#{klassSeminarId} and attendance_id=#{attendanceId} and is_selected=#{isSelected}")

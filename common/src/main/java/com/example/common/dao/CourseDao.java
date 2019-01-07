@@ -92,21 +92,6 @@ public class CourseDao {
     }
 
     public Course getCourseAndStrategyById(long courseId) {
-//        CourseDTO courseDTO=new CourseDTO();
-//        courseDTO.setCourse(courseMapper.getCourseById(courseId));
-//        for(TeamStrategy teamStrategy:(teamStrategyMapper.selectTeamStrategyByCourseId(courseId)))
-//        {
-//            switch (teamStrategy.getStrategyName()){
-//                case "TeamAndStrategy":teamAndStrategyMapper.selectTeamAndStrategyById(teamStrategy.getStrategyId());break;
-//                case "TeamOrStrategy":teamOrStrategyMapper.selectTeamOrStrategyById(teamStrategy.getStrategyId());break;
-//                case "CourseMemberLimitStrategy":courseDTO.setCourseCourseLimits(courseMemberLimitMapper.selectCourseMemberLimitStrategyById(teamStrategy.getStrategyId()));break;
-//                case "ConflictCourseStrategy":courseDTO.setConflictCourseIdTemp(conflictCourseStrategyMapper.selectConflictCourseStrategyById(teamStrategy.getStrategyId()));break;
-//                case "MemberLimitStrategy":courseDTO.setMaxCount(memberLimitStrategyMapper.selectMemberLimitStrategyById(teamStrategy.getStrategyId()).getMaxMember());
-//                                               courseDTO.setMinCount(memberLimitStrategyMapper.selectMemberLimitStrategyById(teamStrategy.getStrategyId()).getMinMember());break;
-//                default:break;
-//            }
-//        }
-//        return courseDTO;
         return courseMapper.getCourseById(courseId);
     }
 
@@ -119,8 +104,7 @@ public class CourseDao {
         Long maxMemberLimitStrategyId=memberLimitStrategyMapper.getMaxMemberLimitStrategyId();
         Long maxTeamAndStrategyId=teamAndStrategyMapper.getMaxTeamAndStrategyId();
         Long maxTeamOrStrategyId=teamOrStrategyMapper.getMaxTeamOrStrategyId();
-        //Long maxTeamStrategyId=teamStrategyMapper.getMaxTeamStrategyId();
-        int serial=0;
+         int serial=0;
         if(courseDTO.getConflictCourseId()!=null) {
             for (ArrayList<Long> conflictCourseStrategys : (courseDTO.getConflictCourseId())) {
                 if (conflictCourseStrategys != null) {
@@ -255,19 +239,27 @@ public class CourseDao {
     public ArrayList<TeamShareVO> getAllTeamShare(long courseId)
     {
         ArrayList<TeamShareVO> teamShareVOS=courseMapper.getAllTeamShare(courseId);
-        for(TeamShareVO teamShareVO:teamShareVOS){
-            Course mainCourse = courseMapper.getCourseById(teamShareVO.getMainCourseId());
-            teamShareVO.setMainCourseName(mainCourse.getCourseName());
-            teamShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
-            teamShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
-            if(courseId==teamShareVO.getMainCourseId()) {
-                teamShareVO.setMainCourse(1);
+        System.out.println("1");
+        for(TeamShareVO teamShareVO:teamShareVOS) {
+            if (teamShareVO != null) {
+                Course mainCourse = courseMapper.getCourseById(teamShareVO.getMainCourseId());
+                teamShareVO.setMainCourse(0);
+                teamShareVO.setMainCourseName(mainCourse.getCourseName());
+                teamShareVO.setMainCourseTeacherId(mainCourse.getTeacherId());
+                teamShareVO.setMainCourseTeacherName(teacherMapper.selectTeacherById(mainCourse.getTeacherId()).getTeacherName());
+                System.out.println("2");
+                if (courseId == teamShareVO.getMainCourseId()) {
+                    System.out.println("3");
+                    teamShareVO.setMainCourse(1);
+                }
+                System.out.println("4");
+                Course subCourse = courseMapper.getCourseById(teamShareVO.getSubCourseId());
+                teamShareVO.setSubCourseName(subCourse.getCourseName());
+                teamShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
+                teamShareVO.setSubCourseTeacherName(teacherMapper.selectTeacherById(subCourse.getTeacherId()).getTeacherName());
             }
-            Course subCourse = courseMapper.getCourseById(teamShareVO.getSubCourseId());
-            teamShareVO.setSubCourseName(subCourse.getCourseName());
-            teamShareVO.setMainCourseTeacherId(subCourse.getTeacherId());
-            teamShareVO.setSubCourseTeacherName(teacherMapper.selectTeacherById(subCourse.getTeacherId()).getTeacherName());
         }
+        System.out.println("5");
         return teamShareVOS;
     }
 

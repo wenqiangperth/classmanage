@@ -22,6 +22,11 @@ public class StudentDao {
     @Autowired
     private StudentMapper studentMapper;
 
+
+    public Long getStudentNum(){
+        return studentMapper.selectStudentNum();
+    }
+
     /**
      * 查询一个学生的所有课程
      * @param id
@@ -98,9 +103,9 @@ public class StudentDao {
         return studentMapper.updateStudentAcctive(student);
     }
 
-    public Student findStudentByAccountAndStudentName(String account,String studentName)
+    public Student findStudentByAccount(String account)
     {
-        return studentMapper.findStudentByAccountAndStudentName(account,studentName);
+        return studentMapper.findStudentByAccount(account);
     }
 
     public Long insertStudent(Student student)

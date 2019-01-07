@@ -17,7 +17,7 @@ import java.io.IOException;
  * @Version 1.0
  **/
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)//控制过滤器的级别
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
     final static org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(CorsFilter.class);
@@ -35,13 +35,9 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE,PUT,PATCH");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type,Origin, X-Requested-With,Accept,XFILENAME,XFILECATEGORY,XFILESIZE,Authorization");
-       // response.setHeader("Access-Control-Allow-Headers","*");
         response.setHeader("Access-Control-Allow-Credentials","true");
         //是否允许请求带有验证信息
 
-
-//        if ("OPTIONS".equalsIgnoreCase(((HttpServletRequest) req).getMethod())) {
-//            System.out.println("options");
         if(((HttpServletRequest)req).getMethod().equals(RequestMethod.OPTIONS.name())){
             response.setStatus(HttpServletResponse.SC_OK);
         } else {

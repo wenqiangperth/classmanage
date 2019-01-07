@@ -135,15 +135,6 @@ public class CourseService {
         for(Long teamId:teamIds)
         {
             Team temp=teamDao.getTeamInfoById(teamId);
-//            ArrayList<Student> selectStudents=new ArrayList<>();
-//            for (Student tempStudent:(temp.getStudents()))
-//            {
-//                if(courseDao.isSelectCourse(courseId,tempStudent.getId())==1)
-//                {
-//                    selectStudents.add(tempStudent);
-//                }
-//            }
-//            temp.setStudents(selectStudents);
             teams.add(temp);
         }
         return teams;

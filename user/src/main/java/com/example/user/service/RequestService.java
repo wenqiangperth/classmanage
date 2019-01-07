@@ -146,14 +146,9 @@ public class RequestService {
                     }
                 }
                 System.out.println(maxKlassId+" "+mainTeam.getId());
-                teamDao.insertKlassTeam(maxKlassId,mainTeam.getId());
-//                for(Student student:(mainTeam.getStudents()))
-//                {
-//                    if(courseDao.isSelectCourse(subCourseId,student.getId())!=0)
-//                    {
-//                        teamDao.insertTeamStudent(mainTeam.getId(),student.getId());
-//                    }
-//                }
+                if(max!=0) {
+                    teamDao.insertKlassTeam(maxKlassId, mainTeam.getId());
+                }
             }
             courseDao.updateTeamMainCourseIdByCourseId(mainCourseId,subCourseId);
          }

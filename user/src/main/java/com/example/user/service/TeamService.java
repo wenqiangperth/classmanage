@@ -51,7 +51,7 @@ public class TeamService {
              ) {
             if(teamSerial<team1.getTeamSerial()){teamSerial=team1.getTeamSerial();}
         }
-        team.setTeamSerial(teamSerial);
+        team.setTeamSerial(teamSerial+1);
         Klass klass=klassDao.getClassByClassId(team.getKlassId());
         team.setKlassSerial(klass.getKlassSerial());
         team.setStatus(0);

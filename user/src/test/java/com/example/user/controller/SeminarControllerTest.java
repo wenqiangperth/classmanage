@@ -1,7 +1,9 @@
 package com.example.user.controller;
 
 import com.example.common.entity.*;
+import com.example.user.service.AttendanceService;
 import com.example.user.service.SeminarService;
+import org.elasticsearch.index.shard.SearchOperationListener;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +15,26 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 
-//@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class SeminarControllerTest {
     @Autowired
     private SeminarService seminarService;
 
+    @Autowired
+    private AttendanceService attendanceService;
+
     @Test
     public void b(){
-//        Attendance attendance=seminarService.getAtteandanceByTeamOrderAndKlassSeminarId(9L,2);
-//        System.out.println(attendance);
+        KlassSeminar klassSeminar=new KlassSeminar();
+        klassSeminar.setId(12L);
+        klassSeminar.setReportDDL(null);
+        seminarService.updateReportDDL(klassSeminar);
+    }
+    @Test
+    public void bm(){
+        Long temp=seminarService.updateAttendanceByClassSeminarId(16L,23L,24L,4);
+        System.out.println(temp);
     }
 
     @Test

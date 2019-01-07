@@ -36,7 +36,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             httpServletResponse.setHeader("Access-Control-Expose-Headers","Authorization" );
             httpServletResponse.setHeader("Authorization", "Bearer " + token);
 
-            Map<String, Object> maps = new HashMap<String, Object>();
+            Map<String, Object> maps = new HashMap<String, Object>(8);
             maps.put("role", user.getAuthorities().toArray()[0]);
             maps.put("isActive", user.getIsActive());
             httpServletResponse.getWriter().write(maps.toString());

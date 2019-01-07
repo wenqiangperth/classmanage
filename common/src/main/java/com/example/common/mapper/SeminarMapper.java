@@ -22,6 +22,21 @@ import java.util.ArrayList;
 @Repository
 public interface SeminarMapper {
 
+    /**
+     * 设置报告截止时间
+     * @param reportDDL
+     * @param klassSeminarId
+     * @return
+     */
+    @Update("update klass_seminar set report_ddl=#{reportDDL} where id=#{klassSeminarId}")
+    public Long updateReportDDL(@Param("reportDDL")Date reportDDL,@Param("klassSeminarId")Long klassSeminarId);
+
+    /**
+     * 查询klassSeminarId
+     * @param klassId
+     * @param seminarId
+     * @return
+     */
     @Select("select id from klass_seminar where klass_id=#{klassId} and seminar_id=#{seminarId}")
     public Long getKlassSeminarId(@Param("klassId")Long klassId,@Param("seminarId")Long seminarId);
 
@@ -193,5 +208,41 @@ public interface SeminarMapper {
     @Select("select * from seminar s,klass_seminar ks  where s.id=ks.seminar_id and ks.id=#{klassSeminarId}")
     @ResultMap(value = "seminarMap")
     public Seminar getSeminarByKlassSeminarId(@Param("klassSeminarId")Long klassSeminarId);
+
+    /**
+     * 在seminar_score中插入数据
+     * @param classSeminarId
+     * @param teamId
+     * @return
+     */
+    @Insert("insert into seminar_score(klass_seminar_id,team_id) values(#{classSeminarId},#{teamId})")
+    public Long insertSeminarScoreByClassSeminarIdAndTeamId(@Param("classSeminarId")Long classSeminarId,@Param("teamId")Long teamId);
+
+    /**
+     * 删除seminarScore
+     * @param classSeminarId
+     * @param teamId
+     * @return
+     */
+    @Delete("delete from seminar_score where klass_seminar_id=#{classSeminarId} and team_id=#{teamId}")
+    public Long deleteSeminarScoreByClassSeminarIdAndTeamId(@Param("classSeminarId")Long classSeminarId,@Param("teamId")Long teamId);
+
+    /**
+     * 获得teamids
+     * @param klassSeminarId
+     * @return
+     */
+    @Select("select team_id from seminar_score where klass_seminar_id=#{klassSeminarId}")
+    public ArrayList<Long>selectAllTeamId(@Param("klassSeminarId")Long klassSeminarId);
+
+    /**
+     * 更新讨论课的提问成绩
+     * @param questionScore
+     * @param klassSeminarId
+     * @param teamId
+     * @return
+     */
+    @Select("update seminar_score set question_score=#{questionScore} where klass_seminar_id=#{klassSeminarId} and team_id=#{teamId}")
+    public Long updateQuestionScore(@Param("questionScore")double questionScore,@Param("klassSeminarId")Long klassSeminarId,@Param("teamId")Long teamId);
 
 }

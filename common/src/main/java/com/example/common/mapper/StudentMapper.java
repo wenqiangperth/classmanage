@@ -22,6 +22,13 @@ public interface StudentMapper {
 
 
     /**
+     * 查询一共有多少学生
+     * @return
+     */
+    @Select("select count(id) from student")
+    public Long selectStudentNum();
+
+    /**
      * 查询：获取所有学生
      * @return
      */
@@ -161,12 +168,11 @@ public interface StudentMapper {
     /**
      * 通过学号和姓名查询学生信息
      * @param account
-     * @param studentName
      * @return
      */
-    @Select("select * from student where account=#{account} and student_name=#{studentName}")
+    @Select("select * from student where account=#{account}")
     @ResultMap(value="studentMap")
-    public Student findStudentByAccountAndStudentName(@Param(value="account") String account,@Param(value="studentName") String studentName);
+    public Student findStudentByAccount(@Param(value="account") String account);
 
     /**
      * 添加学生

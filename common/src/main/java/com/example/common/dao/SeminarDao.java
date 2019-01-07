@@ -55,7 +55,7 @@ public class SeminarDao {
     }
 
     /**
-     * 创建:讨论课，klass_seminar关系
+     * 创建:讨论课，klass_seminar关系,以及seminarScore
      * @param seminar
      * @return
      */
@@ -87,6 +87,12 @@ public class SeminarDao {
         for (Klass klass:klasses
              ) {
             seminarMapper.insertKlassSeminar(klass.getId(),seminar.getId(),status);
+            Long klassSeminarId=seminarMapper.getKlassSeminarId(klass.getId(),seminar.getId());
+            ArrayList<Long>teamIds=teamMapper.getAllTeamIdByClassId(klass.getId());
+            for (Long teamId:teamIds
+                 ) {
+                seminarMapper.insertSeminarScoreByClassSeminarIdAndTeamId(klassSeminarId,teamId);
+            }
         }
 
         return seminar.getId();
@@ -271,7 +277,9 @@ public class SeminarDao {
         for(Attendance attendance:attendances)
         {
             Team team=teamMapper.selectTeamById(attendance.getTeamId());
-            team.setKlassSerial(klassMapper.getKlassByKlassId(team.getKlassId()).getKlassSerial());
+            if(team!=null) {
+                team.setKlassSerial(klassMapper.getKlassByKlassId(team.getKlassId()).getKlassSerial());
+            }
             attendance.setTeam(team);
             Score score=scoreMapper.selectSeminarScoreByClassSeminarIdAndTeamId(classSeminarId,attendance.getTeamId());
             if(score!=null) {
@@ -286,15 +294,45 @@ public class SeminarDao {
         return attendanceMapper.getAtteandanceByTeamOrderAndKlassSeminarId(klassSeminarId,teamOrder);
     }
 
+    /**
+     * 报名讨论课并且创建seminarScore
+     * @param seminarId
+     * @param classId
+     * @param teamId
+     * @param teamOrder
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
     public Long updateAttendanceByClassSeminarId(Long seminarId,Long classId,Long teamId,int teamOrder)
     {
         Long classSeminarId=seminarMapper.getClassSeminarIdBySeminarIdAndClassId(classId,seminarId);
+        if(attendanceMapper.isExistTeamOrder(classSeminarId,teamOrder)>0) {
+            return 0L;
+        }
         return attendanceMapper.insertAttendanceByClassSeminarId(teamId,teamOrder,classSeminarId,0);
     }
 
     public Long updateReportScoreByKlassSeminarIdTeamId(Long klassSeminarId,Long teamId,double reportScore)
     {
         return seminarMapper.updateReportScoreByKlassSeminarIdTeamId(klassSeminarId,teamId,reportScore);
+    }
+
+    /**
+     * 设置讨论课报告时间，计算成绩
+     * @param klassSeminar
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Long updateReportDDL(KlassSeminar klassSeminar){
+        ArrayList<Long>teamIds=seminarMapper.selectAllTeamId(klassSeminar.getId());
+        for (Long teamId:teamIds
+             ) {
+            Double score=questionMapper.selectMaxQuestionScore(klassSeminar.getId(),teamId);
+            if(score!=null) {
+                seminarMapper.updateQuestionScore(score, klassSeminar.getId(), teamId);
+            }
+        }
+        return seminarMapper.updateReportDDL(klassSeminar.getReportDDL(),klassSeminar.getId());
     }
 
 }

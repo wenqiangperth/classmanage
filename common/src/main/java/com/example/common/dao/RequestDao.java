@@ -9,6 +9,7 @@ import com.example.common.mapper.TeamMapper;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.common.mapper.RequestMapper;
 
@@ -50,6 +51,7 @@ public class RequestDao {
         return requestMapper.updateSeminarShareRequestById(seminarShareId,status);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public Long updateTeamValidRequestById(Long teamValidId,Long status)
     {
         Long teamId=teamMapper.findTeamIdByTeamValidId(teamValidId);

@@ -95,14 +95,18 @@ public class TeamStrategyDao {
 
     public boolean isMemberLimitStrategy(Team team,Long id){
         MemberLimitStrategy memberLimitStrategy=memberLimitStrategyMapper.selectMemberLimitStrategyById(id);
+        System.out.println(memberLimitStrategy);
         if(memberLimitStrategy==null){
             return true;
         }
         int num=team.getStudents().size();
+        System.out.println(num);
         if(memberLimitStrategy.getMinMember()<=num){
             if(memberLimitStrategy.getMaxMember()<=0){
+                System.out.println("ok");
                 return true;
             }else if(memberLimitStrategy.getMaxMember()>=num){
+                System.out.println("chenggong");
                 return true;
             }else {
                 return false;

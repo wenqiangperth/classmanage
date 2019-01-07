@@ -5,6 +5,7 @@ import com.example.common.entity.Question;
 import com.example.common.entity.Team;
 import com.example.common.mapper.AttendanceMapper;
 import com.example.common.mapper.QuestionMapper;
+import com.example.common.mapper.SeminarMapper;
 import com.example.common.mapper.TeamMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,9 @@ public class AttendanceDao {
 
     @Autowired
     private TeamMapper teamMapper;
+
+    @Autowired
+    private SeminarMapper seminarMapper;
 
     public Long updateQuestionScore(double score,Long id){
         return questionMapper.updateQuestionScore(score,id);
@@ -122,6 +126,8 @@ public class AttendanceDao {
 
     public Long deleteAttendanceByAttendanceId(Long attendanceId)
     {
+        Attendance attendance=attendanceMapper.selectAttendanceById(attendanceId);
+        seminarMapper.deleteSeminarScoreByClassSeminarIdAndTeamId(attendance.getKlassSeminarId(),attendance.getTeamId());
         return attendanceMapper.deleteAttendanceByAttendanceId(attendanceId);
     }
 }

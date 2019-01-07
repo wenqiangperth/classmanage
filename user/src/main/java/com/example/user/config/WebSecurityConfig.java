@@ -75,10 +75,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/seminar/{seminarId}").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/seminar").hasAnyRole("TEACHER","STUDENT")
                 .antMatchers("/seminar/{seminarId}/class/{classId}/attendance").hasAnyRole("STUDENT","TEACHER")
-               // .antMatchers("/user/*").permitAll()
-               // .antMatchers("/user/information").hasRole("TEACHER")
-                //.antMatchers("/user/password").hasRole("TEACHER")
-
 
 
 
@@ -97,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logout()
 //                .permitAll()
                 .and()
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .csrf().disable();
 
     }
@@ -112,11 +108,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .inMemoryAuthentication()
                 .withUser("22").password("per199822").roles("ADMIN");*/
     }
-    // 装载BCrypt密码编码器
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {

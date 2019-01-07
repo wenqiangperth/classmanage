@@ -11,7 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+/**
+ * @ClassName FailureHandler
+ * @Description
+ * @Author perth
+ * @Date 2018/12/17 0017 下午 7:58
+ * @Version 1.0
+ **/
 @Component
 public class FailureHandler implements AuthenticationFailureHandler {
     @Override

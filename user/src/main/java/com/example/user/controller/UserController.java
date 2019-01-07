@@ -48,9 +48,7 @@ public class UserController {
      */
     @GetMapping(value = "/password")
     public Long getUserPassword(@RequestParam(value = "account") String account) throws MessagingException {
-        //String role=(String)request.getAttribute("role");
-        //Long id=(Long)request.getAttribute("id");
-        return userService.getUserPassword(account);
+         return userService.getUserPassword(account);
     }
 
     /**
