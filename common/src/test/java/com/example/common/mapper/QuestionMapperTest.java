@@ -1,6 +1,5 @@
-package com.example.user.service;
+package com.example.common.mapper;
 
-import com.example.user.UserApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +10,18 @@ import static org.junit.Assert.*;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = UserApplication.class)
-public class TeamServiceTest {
+@SpringBootTest
+public class QuestionMapperTest {
 
     @Autowired
-    private TeamService teamService;
-
-
+    private QuestionMapper questionMapper;
 
     @Test
-    public void aa(){
-        teamService.addTeamMemberById(22L,150L);
+    public  void aa(){
+        double sc=questionMapper.selectMaxQuestionScore(26L,8L);
+        System.out.println(sc);
     }
+
 
 
 }
